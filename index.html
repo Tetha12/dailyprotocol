@@ -617,78 +617,20 @@ const App=()=>{
 
           {/* ═══ FITNESS ═══ */}
           {tab==='fitness'&&(
-            <div className="anim" style={{maxWidth:700,margin:'0 auto'}}>
-              <div className="glass" style={{padding:24,marginBottom:14,display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:13}}>
-                <div>
-                  <h2 style={{fontSize:26,fontWeight:800,color:'#fff',marginBottom:5}}>{dayName} — {ws?.type}</h2>
-                  <R style={{gap:6,flexWrap:'wrap'}}>
-                    <span style={{padding:'3px 9px',background:`${ws?.col}18`,border:`1px solid ${ws?.col}40`,borderRadius:7,fontSize:12,fontWeight:700,color:ws?.col}}>{ws?.type}</span>
-                    <span style={{padding:'3px 9px',background:'rgba(255,255,255,.03)',border:'1px solid rgba(255,255,255,.07)',borderRadius:7,fontSize:13,color:'#64748b'}}>{ws?.focus}</span>
-                  </R>
-                </div>
-                <div style={{textAlign:'center',background:'rgba(3,7,18,.5)',border:'1px solid rgba(255,255,255,.07)',borderRadius:14,padding:'13px 20px'}}>
-                  <div style={{fontSize:38,fontWeight:800,color:'#fff',lineHeight:1}}>{fp.done}<span style={{fontSize:18,color:'#334155'}}>/{fp.total}</span></div>
-                  <div style={{fontSize:12,color:'#475569',marginTop:1}}>SELESAI</div>
-                </div>
-              </div>
-              <PBar current={fp.done} total={fp.total} color={`linear-gradient(90deg,${ws?.col},${ws?.col}88)`}/>
-
-              {/* ── LATIHAN INTI ── */}
-              {primaryExes.length>0&&(
-                <div style={{marginTop:18}}>
-                  <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:10}}>
-                    <div style={{height:1,flex:1,background:'rgba(99,102,241,.2)'}}/>
-                    <span style={{fontSize:12,fontWeight:700,letterSpacing:'.12em',color:'#818cf8',background:'rgba(99,102,241,.1)',border:'1px solid rgba(99,102,241,.25)',borderRadius:6,padding:'3px 10px'}}>⚡ LATIHAN INTI</span>
-                    <div style={{height:1,flex:1,background:'rgba(99,102,241,.2)'}}/>
-                  </div>
-                  <C style={{gap:8}}>
-                    {primaryExes.map((ex,i)=>{
-                      const done=isExDone(ex);
-                      return(
-                        <div key={i} className={`ex-card primary-card ${done?'done':''}`} onClick={()=>toggleEx(ex)}>
-                          <div style={{width:44,height:44,borderRadius:12,border:`2px solid ${done?'#10b981':'rgba(99,102,241,.3)'}`,background:done?'rgba(16,185,129,.12)':'rgba(99,102,241,.06)',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,transition:'all .2s'}}>
-                            {done?<Icon name="check" size={17} className="text-emerald-400"/>:<span style={{fontSize:15,fontWeight:700,color:'#6366f1'}}>{i+1}</span>}
-                          </div>
-                          <div style={{flex:1}}>
-                            <div style={{fontSize:16,fontWeight:700,color:done?'#64748b':'#e2e8f0',textDecoration:done?'line-through':'none'}}>{ex.name}</div>
-                            <div style={{fontSize:13,color:'#475569',marginTop:1}}>{ex.detail} · <span style={{color:'#6366f1'}}>{ex.target}</span></div>
-                          </div>
-                          {done&&<Icon name="zap" size={12} className="text-emerald-500"/>}
-                        </div>
-                      );
-                    })}
-                  </C>
-                </div>
-              )}
-
-              {/* ── LATIHAN SAMPINGAN ── */}
-              {secondaryExes.length>0&&(
-                <div style={{marginTop:18}}>
-                  <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:10}}>
-                    <div style={{height:1,flex:1,background:'rgba(245,158,11,.2)'}}/>
-                    <span style={{fontSize:12,fontWeight:700,letterSpacing:'.12em',color:'#fbbf24',background:'rgba(245,158,11,.1)',border:'1px solid rgba(245,158,11,.25)',borderRadius:6,padding:'3px 10px'}}>+ LATIHAN SAMPINGAN</span>
-                    <div style={{height:1,flex:1,background:'rgba(245,158,11,.2)'}}/>
-                  </div>
-                  <C style={{gap:8}}>
-                    {secondaryExes.map((ex,i)=>{
-                      const done=isExDone(ex);
-                      return(
-                        <div key={i} className={`ex-card secondary-card ${done?'done':''}`} onClick={()=>toggleEx(ex)}>
-                          <div style={{width:44,height:44,borderRadius:12,border:`2px solid ${done?'#10b981':'rgba(245,158,11,.3)'}`,background:done?'rgba(16,185,129,.12)':'rgba(245,158,11,.06)',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,transition:'all .2s'}}>
-                            {done?<Icon name="check" size={17} className="text-emerald-400"/>:<span style={{fontSize:15,fontWeight:700,color:'#f59e0b'}}>{i+1}</span>}
-                          </div>
-                          <div style={{flex:1}}>
-                            <div style={{fontSize:16,fontWeight:700,color:done?'#64748b':'#e2e8f0',textDecoration:done?'line-through':'none'}}>{ex.name}</div>
-                            <div style={{fontSize:13,color:'#475569',marginTop:1}}>{ex.detail} · <span style={{color:'#f59e0b'}}>{ex.target}</span></div>
-                          </div>
-                          {done&&<Icon name="zap" size={12} className="text-emerald-500"/>}
-                        </div>
-                      );
-                    })}
-                  </C>
-                </div>
-              )}
-            </div>
+            <FitnessTab
+              safeWO={safeWO}
+              setWorkoutData={setWorkoutData}
+              dayName={dayName}
+              dateKey={dateKey}
+              safeExDone={safeExDone}
+              setExDone={setExDone}
+              ws={ws}
+              fp={fp}
+              primaryExes={primaryExes}
+              secondaryExes={secondaryExes}
+              isExDone={isExDone}
+              toggleEx={toggleEx}
+            />
           )}
 
           {/* ═══ ROADMAP ═══ */}
@@ -959,6 +901,402 @@ const App=()=>{
         </div>
       </Modal>
     </div>
+  );
+};
+
+
+// ═══════════════════════════════════════════════════════════════
+// FITNESS TAB — Today view + Weekly Planner + inline edit
+// ═══════════════════════════════════════════════════════════════
+const FitnessTab=({safeWO,setWorkoutData,dayName,dateKey,safeExDone,setExDone,ws,fp,primaryExes,secondaryExes,isExDone,toggleEx})=>{
+  const[view,setView]=useState('today'); // 'today' | 'weekly'
+  const[selectedDay,setSelectedDay]=useState(dayName);
+  const[editEx,setEditEx]=useState(null); // {isNew, dayKey, index?, name, detail, target, category}
+  const[editDayMeta,setEditDayMeta]=useState(false);
+
+  const R=({children,style={}})=><div style={{display:'flex',alignItems:'center',...style}}>{children}</div>;
+  const C=({children,style={}})=><div style={{display:'flex',flexDirection:'column',...style}}>{children}</div>;
+
+  const viewDay=view==='today'?dayName:selectedDay;
+  const viewWS=safeWO[viewDay]||{type:'Rest',focus:'-',col:'#64748b',exercises:[]};
+  const viewExes=viewWS.exercises||[];
+  const viewPrimary=viewExes.filter(e=>e.category==='primary');
+  const viewSecondary=viewExes.filter(e=>e.category==='secondary');
+  const isToday=viewDay===dayName;
+
+  const exKeyFor=(day,ex)=>`${dateKey}-${day}-${ex.name}`;
+  const isDoneFor=(day,ex)=>!!safeExDone[exKeyFor(day,ex)];
+  const toggleFor=(day,ex)=>setExDone(p=>{const s=typeof p==='object'&&p!==null?p:{};const k=exKeyFor(day,ex);return{...s,[k]:!s[k]};});
+
+  // Save gerakan
+  const saveEx=(data)=>{
+    const targetDay=data.dayKey||viewDay;
+    setWorkoutData(p=>{
+      const s=typeof p==='object'&&!Array.isArray(p)?p:{};
+      const day=s[targetDay]||{type:'',focus:'',col:'#6366f1',exercises:[]};
+      const list=[...(day.exercises||[])];
+      const ne={name:data.name,detail:data.detail,target:data.target,category:data.category||'primary'};
+      if(data.isNew){list.push(ne);}
+      else{list[data.index]=ne;}
+      return{...s,[targetDay]:{...day,exercises:list}};
+    });
+    setEditEx(null);
+  };
+
+  const deleteEx=(day,idx)=>{
+    if(!confirm('Hapus gerakan ini?'))return;
+    setWorkoutData(p=>{
+      const s=typeof p==='object'&&!Array.isArray(p)?p:{};
+      const d=s[day]||{exercises:[]};
+      const list=[...(d.exercises||[])];list.splice(idx,1);
+      return{...s,[day]:{...d,exercises:list}};
+    });
+  };
+
+  const moveEx=(day,from,to)=>{
+    setWorkoutData(p=>{
+      const s=typeof p==='object'&&!Array.isArray(p)?p:{};
+      const d=s[day]||{exercises:[]};
+      const list=[...(d.exercises||[])];
+      const[item]=list.splice(from,1);list.splice(to,0,item);
+      return{...s,[day]:{...d,exercises:list}};
+    });
+  };
+
+  const saveDayMeta=(day,field,val)=>{
+    setWorkoutData(p=>{
+      const s=typeof p==='object'&&!Array.isArray(p)?p:{};
+      const d=s[day]||{exercises:[]};
+      return{...s,[day]:{...d,[field]:val}};
+    });
+  };
+
+  // Weekly summary per day
+  const weekSummary=DAYS.map(d=>{
+    const wd=safeWO[d]||{type:'-',col:'#334155',exercises:[]};
+    const exs=wd.exercises||[];
+    const pri=exs.filter(e=>e.category==='primary').length;
+    const sec=exs.filter(e=>e.category==='secondary').length;
+    return{day:d,type:wd.type,col:wd.col,total:exs.length,pri,sec,focus:wd.focus};
+  });
+
+  const CategoryDivider=({label,col,borderCol})=>(
+    <div style={{display:'flex',alignItems:'center',gap:8,margin:'14px 0 8px'}}>
+      <div style={{height:1,flex:1,background:borderCol}}/>
+      <span style={{fontSize:11,fontWeight:700,letterSpacing:'.12em',color:col,background:`${col}18`,border:`1px solid ${col}40`,borderRadius:6,padding:'3px 10px'}}>{label}</span>
+      <div style={{height:1,flex:1,background:borderCol}}/>
+    </div>
+  );
+
+  const ExCard=({ex,i,day,editable=false})=>{
+    const done=isDoneFor(day,ex);
+    const isPrimary=ex.category==='primary';
+    const accentCol=isPrimary?'#6366f1':'#f59e0b';
+    const borderActive=isPrimary?'rgba(99,102,241,.25)':'rgba(245,158,11,.25)';
+    const realIdx=(safeWO[day]?.exercises||[]).findIndex((e,ri)=>e.name===ex.name&&(safeWO[day].exercises||[]).indexOf(e)===ri||(safeWO[day].exercises||[]).indexOf(ex)===ri);
+    const trueIdx=(safeWO[day]?.exercises||[]).indexOf(ex);
+    return(
+      <div style={{display:'flex',alignItems:'center',gap:8,padding:'10px 12px',borderRadius:12,background:done?'rgba(16,185,129,.04)':'rgba(3,7,18,.5)',border:`1px solid ${done?'rgba(16,185,129,.2)':borderActive}`,borderLeft:`3px solid ${done?'#10b981':accentCol}`,transition:'all .2s',gap:10}}>
+        {/* Checkbox — only clickable for today */}
+        <div onClick={()=>isToday&&toggleFor(day,ex)} style={{width:36,height:36,borderRadius:9,border:`2px solid ${done?'#10b981':accentCol+'66'}`,background:done?'rgba(16,185,129,.15)':accentCol+'0d',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,cursor:isToday?'pointer':'default',transition:'all .2s',opacity:isToday?1:.6}}>
+          {done?<Icon name="check" size={14}/>:<span style={{fontSize:13,fontWeight:800,color:accentCol}}>{i+1}</span>}
+        </div>
+        <div style={{flex:1,minWidth:0}}>
+          <div style={{fontSize:15,fontWeight:700,color:done?'#475569':'#e2e8f0',textDecoration:done?'line-through':'none',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{ex.name}</div>
+          <div style={{fontSize:12,color:'#475569'}}>{ex.detail} · <span style={{color:accentCol}}>{ex.target}</span></div>
+        </div>
+        {editable&&(
+          <div style={{display:'flex',gap:3,flexShrink:0}}>
+            {trueIdx>0&&<button onClick={()=>moveEx(day,trueIdx,trueIdx-1)} className="icon-btn"><Icon name="chevron-up" size={10}/></button>}
+            {trueIdx<(safeWO[day]?.exercises||[]).length-1&&<button onClick={()=>moveEx(day,trueIdx,trueIdx+1)} className="icon-btn"><Icon name="chevron-down" size={10}/></button>}
+            <button onClick={()=>setEditEx({isNew:false,dayKey:day,index:trueIdx,...ex})} className="icon-btn"><Icon name="pencil" size={10}/></button>
+            <button onClick={()=>deleteEx(day,trueIdx)} className="icon-btn red"><Icon name="trash-2" size={10}/></button>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  return(
+    <div className="anim">
+      {/* ── Header + view toggle ── */}
+      <R style={{justifyContent:'space-between',marginBottom:16,flexWrap:'wrap',gap:10}}>
+        <div>
+          <h2 style={{fontSize:22,fontWeight:800,color:'#fff',marginBottom:3}}>Fitness Tracker</h2>
+          <p style={{fontSize:13,color:'#475569'}}>Ceklis harian · tambah & edit gerakan langsung</p>
+        </div>
+        <div style={{display:'flex',gap:6,padding:'4px',background:'rgba(255,255,255,.04)',borderRadius:11,border:'1px solid rgba(255,255,255,.07)'}}>
+          {[{id:'today',label:'Hari Ini'},{id:'weekly',label:'Mingguan'}].map(v=>(
+            <button key={v.id} onClick={()=>setView(v.id)} style={{padding:'7px 16px',borderRadius:8,border:'none',background:view===v.id?'rgba(99,102,241,.2)':'transparent',color:view===v.id?'#818cf8':'#475569',fontWeight:700,fontSize:13,cursor:'pointer',fontFamily:'Space Grotesk,sans-serif',transition:'all .2s',borderWidth:view===v.id?1:0,borderStyle:'solid',borderColor:view===v.id?'rgba(99,102,241,.3)':'transparent'}}>
+              {v.label}
+            </button>
+          ))}
+        </div>
+      </R>
+
+      {/* ════ TODAY VIEW ════ */}
+      {view==='today'&&(
+        <C style={{gap:0,maxWidth:680,margin:'0 auto'}}>
+          {/* Session header */}
+          <div className="glass" style={{padding:20,marginBottom:12,display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:12}}>
+            <div style={{flex:1}}>
+              <R style={{gap:8,marginBottom:6,flexWrap:'wrap'}}>
+                <div style={{width:40,height:40,borderRadius:10,background:`${ws?.col}22`,border:`1px solid ${ws?.col}40`,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
+                  <Icon name="dumbbell" size={18} style={{color:ws?.col}}/>
+                </div>
+                <div>
+                  <div style={{fontSize:18,fontWeight:800,color:'#fff'}}>{dayName} — {ws?.type||'Rest'}</div>
+                  <div style={{fontSize:13,color:'#64748b'}}>{ws?.focus||'—'}</div>
+                </div>
+              </R>
+              <PBar current={fp.done} total={fp.total} color={`linear-gradient(90deg,${ws?.col},${ws?.col}99)`}/>
+              <div style={{fontSize:12,color:'#475569',marginTop:4,display:'flex',gap:10}}>
+                <span>{fp.done}/{fp.total} selesai</span>
+                <span style={{color:'#818cf8'}}>⚡ Inti: {primaryExes.length}</span>
+                <span style={{color:'#fbbf24'}}>+ Sampingan: {secondaryExes.length}</span>
+              </div>
+            </div>
+            <div style={{textAlign:'center',background:'rgba(3,7,18,.5)',border:'1px solid rgba(255,255,255,.07)',borderRadius:12,padding:'10px 18px'}}>
+              <div style={{fontSize:36,fontWeight:800,color:'#fff',lineHeight:1}}>{fp.done}<span style={{fontSize:16,color:'#334155'}}>/{fp.total}</span></div>
+              <div style={{fontSize:11,color:'#475569',marginTop:1,letterSpacing:'.08em'}}>SELESAI</div>
+            </div>
+          </div>
+
+          {/* Add buttons for today */}
+          <R style={{gap:8,marginBottom:12,flexWrap:'wrap'}}>
+            <button onClick={()=>setEditEx({isNew:true,dayKey:dayName,name:'',detail:'',target:'',category:'primary'})} style={{padding:'7px 14px',background:'rgba(99,102,241,.12)',border:'1px solid rgba(99,102,241,.25)',borderRadius:9,color:'#818cf8',fontWeight:700,fontSize:12,cursor:'pointer',display:'flex',alignItems:'center',gap:5,fontFamily:'Space Grotesk,sans-serif'}}>
+              <Icon name="plus" size={12}/>⚡ Tambah Latihan Inti
+            </button>
+            <button onClick={()=>setEditEx({isNew:true,dayKey:dayName,name:'',detail:'',target:'',category:'secondary'})} style={{padding:'7px 14px',background:'rgba(245,158,11,.1)',border:'1px solid rgba(245,158,11,.25)',borderRadius:9,color:'#fbbf24',fontWeight:700,fontSize:12,cursor:'pointer',display:'flex',alignItems:'center',gap:5,fontFamily:'Space Grotesk,sans-serif'}}>
+              <Icon name="plus" size={12}/>+ Tambah Sampingan
+            </button>
+          </R>
+
+          {/* Primary */}
+          {viewPrimary.length>0&&(
+            <>
+              <CategoryDivider label="⚡ LATIHAN INTI" col="#818cf8" borderCol="rgba(99,102,241,.2)"/>
+              <C style={{gap:7}}>
+                {viewPrimary.map((ex,i)=><ExCard key={ex.name+i} ex={ex} i={i} day={dayName} editable={true}/>)}
+              </C>
+            </>
+          )}
+
+          {/* Secondary */}
+          {viewSecondary.length>0&&(
+            <>
+              <CategoryDivider label="+ LATIHAN SAMPINGAN" col="#fbbf24" borderCol="rgba(245,158,11,.2)"/>
+              <C style={{gap:7}}>
+                {viewSecondary.map((ex,i)=><ExCard key={ex.name+i} ex={ex} i={i} day={dayName} editable={true}/>)}
+              </C>
+            </>
+          )}
+
+          {viewExes.length===0&&(
+            <div style={{textAlign:'center',padding:'32px 0',color:'#334155'}}>
+              <div style={{fontSize:32,marginBottom:8}}>🏖️</div>
+              <div style={{fontSize:15,fontWeight:600}}>Rest Day — Tidak ada gerakan</div>
+              <div style={{fontSize:13,marginTop:4}}>Tambah gerakan di atas atau lewati hari ini</div>
+            </div>
+          )}
+        </C>
+      )}
+
+      {/* ════ WEEKLY VIEW ════ */}
+      {view==='weekly'&&(
+        <C style={{gap:14}}>
+          {/* Day tabs */}
+          <div style={{display:'flex',gap:4,overflowX:'auto',paddingBottom:4}}>
+            {weekSummary.map(ws2=>{
+              const isActive=selectedDay===ws2.day;
+              const isTodays=ws2.day===dayName;
+              return(
+                <button key={ws2.day} onClick={()=>setSelectedDay(ws2.day)} style={{flexShrink:0,padding:'8px 14px',borderRadius:11,border:`1px solid ${isActive?ws2.col+'60':'rgba(255,255,255,.07)'}`,background:isActive?ws2.col+'18':'rgba(255,255,255,.03)',cursor:'pointer',textAlign:'center',transition:'all .2s',fontFamily:'Space Grotesk,sans-serif',minWidth:90}}>
+                  <div style={{fontSize:13,fontWeight:700,color:isActive?ws2.col:'#475569',display:'flex',alignItems:'center',justifyContent:'center',gap:4}}>
+                    {ws2.day}{isTodays&&<span style={{width:5,height:5,borderRadius:'50%',background:'#10b981',display:'inline-block'}}/>}
+                  </div>
+                  <div style={{fontSize:10,color:'#334155',marginTop:2,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:80}}>{ws2.type||'—'}</div>
+                  <div style={{fontSize:10,marginTop:1,display:'flex',gap:4,justifyContent:'center'}}>
+                    <span style={{color:'#6366f1'}}>⚡{ws2.pri}</span>
+                    <span style={{color:'#f59e0b'}}>+{ws2.sec}</span>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Selected day detail */}
+          {(()=>{
+            const d=selectedDay;
+            const wd=safeWO[d]||{type:'',focus:'',col:'#6366f1',exercises:[]};
+            const exs=wd.exercises||[];
+            const pri=exs.filter(e=>e.category==='primary');
+            const sec=exs.filter(e=>e.category==='secondary');
+            const isTodayDay=d===dayName;
+            return(
+              <C style={{gap:10}}>
+                {/* Day meta editor */}
+                <div style={{background:'rgba(15,23,42,.6)',border:`1px solid ${wd.col}30`,borderRadius:14,padding:16,borderLeft:`4px solid ${wd.col}`}}>
+                  <R style={{justifyContent:'space-between',marginBottom:10,flexWrap:'wrap',gap:8}}>
+                    <div>
+                      <R style={{gap:8}}>
+                        <span style={{fontSize:17,fontWeight:800,color:'#fff'}}>{d}</span>
+                        {isTodayDay&&<span style={{fontSize:11,padding:'2px 8px',background:'rgba(16,185,129,.12)',border:'1px solid rgba(16,185,129,.25)',borderRadius:5,color:'#34d399',fontWeight:700}}>HARI INI</span>}
+                        <span style={{fontSize:12,padding:'2px 8px',background:wd.col+'18',border:`1px solid ${wd.col}40`,borderRadius:5,color:wd.col,fontWeight:700}}>{wd.type||'—'}</span>
+                      </R>
+                      <div style={{fontSize:13,color:'#475569',marginTop:3}}>{wd.focus||'Belum ada fokus'}</div>
+                    </div>
+                    <button onClick={()=>setEditDayMeta(editDayMeta===d?false:d)} style={{padding:'6px 12px',background:'rgba(255,255,255,.05)',border:'1px solid rgba(255,255,255,.1)',borderRadius:8,color:'#94a3b8',fontSize:12,fontWeight:700,cursor:'pointer',display:'flex',alignItems:'center',gap:5,fontFamily:'Space Grotesk,sans-serif'}}>
+                      <Icon name="pencil" size={11}/>Edit Info
+                    </button>
+                  </R>
+
+                  {/* Inline day meta editor */}
+                  {editDayMeta===d&&(
+                    <div style={{borderTop:'1px solid rgba(255,255,255,.06)',paddingTop:12,display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}}>
+                      <div>
+                        <label style={{fontSize:10,fontWeight:700,color:'#475569',letterSpacing:'.08em',display:'block',marginBottom:4,textTransform:'uppercase'}}>Tipe Sesi</label>
+                        <input value={wd.type||''} onChange={e=>saveDayMeta(d,'type',e.target.value)} className="inp" style={{fontSize:13,padding:'8px 12px'}} placeholder="Push Day..."/>
+                      </div>
+                      <div>
+                        <label style={{fontSize:10,fontWeight:700,color:'#475569',letterSpacing:'.08em',display:'block',marginBottom:4,textTransform:'uppercase'}}>Fokus Otot</label>
+                        <input value={wd.focus||''} onChange={e=>saveDayMeta(d,'focus',e.target.value)} className="inp" style={{fontSize:13,padding:'8px 12px'}} placeholder="Dada, Bahu..."/>
+                      </div>
+                      <div style={{gridColumn:'1/-1'}}>
+                        <label style={{fontSize:10,fontWeight:700,color:'#475569',letterSpacing:'.08em',display:'block',marginBottom:5,textTransform:'uppercase'}}>Warna</label>
+                        <div style={{display:'flex',gap:5,flexWrap:'wrap'}}>
+                          {COLOR_PRESETS.map(c=>(
+                            <div key={c} onClick={()=>saveDayMeta(d,'col',c)} style={{width:22,height:22,borderRadius:5,background:c,cursor:'pointer',border:`2px solid ${wd.col===c?'#fff':'transparent'}`,transition:'all .2s',transform:wd.col===c?'scale(1.2)':'scale(1)'}}/>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  <R style={{gap:6,marginTop:10,flexWrap:'wrap'}}>
+                    <span style={{fontSize:12,color:'#475569'}}>Total: <b style={{color:'#fff'}}>{exs.length}</b></span>
+                    <span style={{fontSize:12,color:'#6366f1'}}>⚡ Inti: <b>{pri.length}</b></span>
+                    <span style={{fontSize:12,color:'#f59e0b'}}>+ Sampingan: <b>{sec.length}</b></span>
+                  </R>
+                </div>
+
+                {/* Add buttons */}
+                <R style={{gap:8,flexWrap:'wrap'}}>
+                  <button onClick={()=>setEditEx({isNew:true,dayKey:d,name:'',detail:'',target:'',category:'primary'})} style={{padding:'7px 13px',background:'rgba(99,102,241,.1)',border:'1px solid rgba(99,102,241,.2)',borderRadius:9,color:'#818cf8',fontWeight:700,fontSize:12,cursor:'pointer',display:'flex',alignItems:'center',gap:5,fontFamily:'Space Grotesk,sans-serif'}}>
+                    <Icon name="plus" size={11}/>⚡ Tambah Inti
+                  </button>
+                  <button onClick={()=>setEditEx({isNew:true,dayKey:d,name:'',detail:'',target:'',category:'secondary'})} style={{padding:'7px 13px',background:'rgba(245,158,11,.08)',border:'1px solid rgba(245,158,11,.2)',borderRadius:9,color:'#fbbf24',fontWeight:700,fontSize:12,cursor:'pointer',display:'flex',alignItems:'center',gap:5,fontFamily:'Space Grotesk,sans-serif'}}>
+                    <Icon name="plus" size={11}/>+ Tambah Sampingan
+                  </button>
+                </R>
+
+                {/* Exercise lists */}
+                {pri.length>0&&(
+                  <>
+                    <CategoryDivider label="⚡ LATIHAN INTI" col="#818cf8" borderCol="rgba(99,102,241,.2)"/>
+                    <C style={{gap:6}}>
+                      {pri.map((ex,i)=><ExCard key={ex.name+i} ex={ex} i={i} day={d} editable={true}/>)}
+                    </C>
+                  </>
+                )}
+                {sec.length>0&&(
+                  <>
+                    <CategoryDivider label="+ LATIHAN SAMPINGAN" col="#fbbf24" borderCol="rgba(245,158,11,.2)"/>
+                    <C style={{gap:6}}>
+                      {sec.map((ex,i)=><ExCard key={ex.name+i} ex={ex} i={i} day={d} editable={true}/>)}
+                    </C>
+                  </>
+                )}
+                {exs.length===0&&(
+                  <div style={{textAlign:'center',padding:'24px 0',color:'#334155'}}>
+                    <div style={{fontSize:28,marginBottom:6}}>🏖️</div>
+                    <div style={{fontSize:14,fontWeight:600}}>Belum ada gerakan untuk {d}</div>
+                  </div>
+                )}
+              </C>
+            );
+          })()}
+
+          {/* Weekly overview grid */}
+          <div style={{marginTop:8}}>
+            <div style={{fontSize:11,fontWeight:700,color:'#334155',letterSpacing:'.1em',textTransform:'uppercase',marginBottom:10}}>Ringkasan Mingguan</div>
+            <div style={{display:'grid',gridTemplateColumns:'repeat(7,1fr)',gap:6}}>
+              {weekSummary.map(ws2=>{
+                const isTd=ws2.day===dayName;
+                const totalDoneToday=ws2.day===dayName?fp.done:0;
+                return(
+                  <div key={ws2.day} onClick={()=>setSelectedDay(ws2.day)} style={{padding:'8px 6px',borderRadius:10,background:selectedDay===ws2.day?ws2.col+'18':'rgba(255,255,255,.02)',border:`1px solid ${selectedDay===ws2.day?ws2.col+'40':'rgba(255,255,255,.06)'}`,cursor:'pointer',textAlign:'center',transition:'all .2s'}}>
+                    <div style={{fontSize:10,fontWeight:700,color:isTd?'#10b981':'#475569',marginBottom:4}}>{ws2.day.slice(0,3)}{isTd?'●':''}</div>
+                    <div style={{width:'100%',height:3,borderRadius:2,background:'rgba(255,255,255,.05)',marginBottom:4,overflow:'hidden'}}>
+                      <div style={{height:'100%',width:`${ws2.total?Math.round((totalDoneToday/ws2.total)*100):0}%`,background:ws2.col,borderRadius:2}}/>
+                    </div>
+                    <div style={{fontSize:9,color:'#6366f1',fontWeight:700}}>⚡{ws2.pri}</div>
+                    <div style={{fontSize:9,color:'#f59e0b'}}>+{ws2.sec}</div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </C>
+      )}
+
+      {/* ── Exercise Form Modal ── */}
+      {editEx&&(
+        <div className="overlay" style={{zIndex:200}} onClick={e=>e.target===e.currentTarget&&setEditEx(null)}>
+          <div style={{background:'#0a0f1e',border:'1px solid rgba(255,255,255,.09)',borderRadius:20,width:'100%',maxWidth:500,padding:28,boxShadow:'0 40px 80px rgba(0,0,0,.7)'}}>
+            <R style={{justifyContent:'space-between',marginBottom:18}}>
+              <div>
+                <div style={{fontSize:17,fontWeight:700,color:'#fff',fontFamily:'Outfit,sans-serif'}}>{editEx.isNew?'Tambah':'Edit'} Gerakan</div>
+                <div style={{fontSize:12,color:'#475569',marginTop:2}}>Hari: <b style={{color:'#818cf8'}}>{editEx.dayKey}</b></div>
+              </div>
+              <button onClick={()=>setEditEx(null)} style={{padding:6,borderRadius:8,background:'rgba(255,255,255,.05)',border:'none',cursor:'pointer',color:'#94a3b8',display:'flex'}}><Icon name="x" size={15}/></button>
+            </R>
+            <InlineExForm initial={editEx} onSave={saveEx} onCancel={()=>setEditEx(null)}/>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const InlineExForm=({initial,onSave,onCancel})=>{
+  const[name,setName]=useState(initial.name||'');
+  const[detail,setDetail]=useState(initial.detail||'');
+  const[target,setTarget]=useState(initial.target||'');
+  const[category,setCategory]=useState(initial.category||'primary');
+  const submit=(e)=>{e.preventDefault();onSave({...initial,name,detail,target,category});};
+  return(
+    <form onSubmit={submit} style={{display:'flex',flexDirection:'column',gap:12}}>
+      <div>
+        <label style={{fontSize:11,fontWeight:700,color:'#475569',letterSpacing:'.08em',display:'block',marginBottom:5,textTransform:'uppercase'}}>Nama Gerakan</label>
+        <input value={name} onChange={e=>setName(e.target.value)} className="inp" required placeholder="Misal: Bench Press, Dead Bug..."/>
+      </div>
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}}>
+        <div>
+          <label style={{fontSize:11,fontWeight:700,color:'#475569',letterSpacing:'.08em',display:'block',marginBottom:5,textTransform:'uppercase'}}>Set & Rep</label>
+          <input value={detail} onChange={e=>setDetail(e.target.value)} className="inp" required placeholder="3 x 10-12"/>
+        </div>
+        <div>
+          <label style={{fontSize:11,fontWeight:700,color:'#475569',letterSpacing:'.08em',display:'block',marginBottom:5,textTransform:'uppercase'}}>Target Otot</label>
+          <input value={target} onChange={e=>setTarget(e.target.value)} className="inp" required placeholder="Dada, Core..."/>
+        </div>
+      </div>
+      <div>
+        <label style={{fontSize:11,fontWeight:700,color:'#475569',letterSpacing:'.08em',display:'block',marginBottom:8,textTransform:'uppercase'}}>Kategori</label>
+        <div style={{display:'flex',gap:8}}>
+          {[{val:'primary',label:'⚡ Latihan Inti',col:'#818cf8',bg:'rgba(99,102,241,.12)',border:'rgba(99,102,241,.4)'},{val:'secondary',label:'+ Sampingan',col:'#fbbf24',bg:'rgba(245,158,11,.12)',border:'rgba(245,158,11,.4)'}].map(opt=>(
+            <div key={opt.val} onClick={()=>setCategory(opt.val)} style={{flex:1,padding:'10px 8px',borderRadius:10,border:`2px solid ${category===opt.val?opt.border:'rgba(255,255,255,.07)'}`,background:category===opt.val?opt.bg:'rgba(255,255,255,.02)',cursor:'pointer',textAlign:'center',transition:'all .2s'}}>
+              <div style={{fontSize:13,fontWeight:700,color:category===opt.val?opt.col:'#475569'}}>{opt.label}</div>
+              <div style={{fontSize:10,color:'#334155',marginTop:2}}>{opt.val==='primary'?'Fokus utama':'Pelengkap'}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div style={{display:'flex',gap:8,marginTop:4}}>
+        <button type="button" onClick={onCancel} style={{flex:1,padding:'10px',borderRadius:10,background:'rgba(255,255,255,.05)',border:'1px solid rgba(255,255,255,.1)',color:'#94a3b8',fontWeight:700,cursor:'pointer',fontSize:14,fontFamily:'Space Grotesk,sans-serif'}}>Batal</button>
+        <button type="submit" className="btn btn-sm" style={{flex:2}}>Simpan Gerakan</button>
+      </div>
+    </form>
   );
 };
 
