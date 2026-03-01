@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FRIDAY OS v25.0</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%236366f1'/><stop offset='100%25' stop-color='%23818cf8'/></linearGradient></defs><rect width='32' height='32' rx='8' fill='url(%23g)'/><text x='16' y='23' font-family='Arial Black,sans-serif' font-size='20' font-weight='900' text-anchor='middle' fill='white'>D</text></svg>">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%236366f1'/><stop offset='100%25' stop-color='%23818cf8'/></linearGradient></defs><rect width='32' height='32' rx='8' fill='url(%23g)'/><text x='16' y='23' font-family='Arial Black,sans-serif' font-size='20' font-weight='900' text-anchor='middle' fill='white'>F</text></svg>">
   <script src="https://cdn.tailwindcss.com"></script>
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -17,86 +17,164 @@
   </script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
-    *{box-sizing:border-box;margin:0;padding:0;}
-    body{font-family:'Space Grotesk',sans-serif;background:#030712;color:#e2e8f0;overflow:hidden;font-size:18px;}
-    h1,h2,h3,h4{font-family:'Outfit',sans-serif;}
-    .mono{font-family:'JetBrains Mono',monospace;}
-    ::-webkit-scrollbar{width:6px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:rgba(99,102,241,.3);border-radius:10px;}
-    .grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(99,102,241,.025)1px,transparent 1px),linear-gradient(90deg,rgba(99,102,241,.025)1px,transparent 1px);background-size:48px 48px;}
-    .glass{background:rgba(15,23,42,.7);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.07);border-radius:22px;}
-    .glass-btn{transition:all .25s;cursor:pointer;}
-    .glass-btn:hover{border-color:rgba(99,102,241,.4);background:rgba(15,23,42,.92);transform:translateY(-2px);box-shadow:0 20px 40px rgba(0,0,0,.4);}
-    .glow{position:fixed;border-radius:50%;pointer-events:none;z-index:0;filter:blur(80px);}
-    .btn{background:linear-gradient(135deg,#6366f1,#818cf8);color:#fff;font-weight:700;border-radius:16px;padding:14px 28px;border:none;cursor:pointer;box-shadow:0 8px 24px rgba(99,102,241,.3);font-family:'Outfit',sans-serif;font-size:16px;letter-spacing:.05em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .2s;width:100%;}
-    .btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 12px 32px rgba(99,102,241,.4);}
-    .btn:disabled{opacity:.5;cursor:not-allowed;}
-    .btn-sm{padding:8px 16px;font-size:13px;border-radius:10px;width:auto;}
-    .btn-danger{background:linear-gradient(135deg,#ef4444,#f87171);}
-    .btn-success{background:linear-gradient(135deg,#10b981,#34d399);}
-    .btn-warn{background:linear-gradient(135deg,#f59e0b,#fbbf24);}
-    .prog{height:10px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden;}
-    .prog-fill{height:100%;border-radius:99px;transition:width 1.2s cubic-bezier(.34,1.56,.64,1);}
-    .tab{display:flex;align-items:center;gap:14px;padding:12px 18px;border-radius:15px;font-weight:600;font-size:16px;transition:all .2s;cursor:pointer;border:1px solid transparent;color:#64748b;background:transparent;width:100%;text-align:left;font-family:'Space Grotesk',sans-serif;}
-    .tab:hover{color:#fff;background:rgba(255,255,255,.04);}
-    .tab.on{color:#fff;background:rgba(99,102,241,.12);border-color:rgba(99,102,241,.25);}
-    .ex-card{background:rgba(15,23,42,.5);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:16px 20px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all .2s;}
-    .ex-card:hover{border-color:rgba(99,102,241,.25);}
-    .ex-card.done{border-color:rgba(16,185,129,.25);background:rgba(16,185,129,.04);}
-    .ex-card.primary-card{border-left:3px solid #6366f1;}
-    .ex-card.secondary-card{border-left:3px solid #f59e0b;}
-    .overlay{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.85);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:center;padding:16px;}
-    .modal{background:#0a0f1e;border:1px solid rgba(255,255,255,.09);border-radius:26px;width:100%;max-width:900px;max-height:92vh;display:flex;flex-direction:column;box-shadow:0 40px 80px rgba(0,0,0,.7);}
-    .modal-lg{max-width:1100px;}
-    @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-    .anim{animation:fadeUp .3s ease forwards;}
-    @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-    .blink{animation:blink 1s step-end infinite;}
-    @keyframes scan{0%{top:0;opacity:1}100%{top:100%;opacity:0}}
-    .scanwrap{position:relative;overflow:hidden;}
-    .scanwrap::after{content:'';position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(99,102,241,.7),transparent);animation:scan 2.5s linear infinite;}
-    @keyframes pulseRing{0%{transform:scale(.95);opacity:.8}70%{transform:scale(1.15);opacity:0}100%{transform:scale(1.15);opacity:0}}
-    .pring{position:relative;}
-    .pring::after{content:'';position:absolute;inset:-6px;border-radius:22px;border:2px solid rgba(99,102,241,.5);animation:pulseRing 2s ease-out infinite;}
-    @keyframes spin{to{transform:rotate(360deg)}}
-    .spin{animation:spin 1s linear infinite;display:inline-flex;}
-    @keyframes syncPulse{0%,100%{opacity:.3}50%{opacity:1}}
-    .sync{animation:syncPulse 2s ease-in-out infinite;}
-    input.inp,select.inp,textarea.inp{width:100%;background:rgba(3,7,18,.9);border:1px solid rgba(255,255,255,.09);border-radius:12px;padding:14px 18px;color:#fff;font-size:16px;outline:none;transition:all .2s;font-family:'Space Grotesk',sans-serif;}
-    input.inp:focus,select.inp:focus,textarea.inp:focus{border-color:rgba(99,102,241,.5);box-shadow:0 0 0 3px rgba(99,102,241,.08);}
-    input.inp::placeholder,textarea.inp::placeholder{color:rgba(255,255,255,.18);}
-    select.inp option{background:#0a0f1e;color:#fff;}
-    textarea.inp{resize:vertical;min-height:80px;}
-    .sidebar{height:100vh;background:rgba(5,8,20,.95);border-right:1px solid rgba(255,255,255,.05);backdrop-filter:blur(24px);display:flex;flex-direction:column;transition:width .35s cubic-bezier(.4,0,.2,1);overflow:hidden;position:relative;z-index:40;flex-shrink:0;}
-    .pcard{background:rgba(15,23,42,.5);border:1px solid rgba(255,255,255,.06);border-radius:18px;padding:24px;cursor:pointer;transition:all .25s;}
-    .pcard:hover{border-color:rgba(99,102,241,.3);background:rgba(15,23,42,.9);transform:translateY(-2px);box-shadow:0 16px 40px rgba(0,0,0,.4);}
-    .mobnav{position:fixed;bottom:0;left:0;right:0;background:rgba(5,8,20,.97);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-around;align-items:center;padding:10px 4px 22px;z-index:50;}
-    .mobbtn{display:flex;flex-direction:column;align-items:center;gap:4px;padding:9px 11px;border-radius:12px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border:none;background:transparent;color:#334155;transition:all .2s;font-family:'Space Grotesk',sans-serif;}
-    .mobbtn.on{color:#818cf8;}
-    .vcard{background:rgba(15,23,42,.5);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all .2s;}
-    .vcard:hover{border-color:rgba(99,102,241,.3);}
-    .vcard.done{border-color:rgba(16,185,129,.25);background:rgba(16,185,129,.04);}
-    .tag{display:inline-flex;padding:3px 9px;border-radius:6px;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;}
-    .icon-btn{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:5px;color:#94a3b8;cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;justify-content:center;}
-    .icon-btn:hover{background:rgba(99,102,241,0.2);color:#818cf8;border-color:rgba(99,102,241,0.4);}
-    .icon-btn.red:hover{background:rgba(239,68,68,0.2);color:#f87171;border-color:rgba(239,68,68,0.4);}
-    /* Workout category badges */
-    .badge-primary{background:rgba(99,102,241,.15);color:#818cf8;border:1px solid rgba(99,102,241,.3);}
-    .badge-secondary{background:rgba(245,158,11,.15);color:#fbbf24;border:1px solid rgba(245,158,11,.3);}
-    /* Day selector */
-    .day-btn{padding:8px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);color:#64748b;font-weight:700;font-size:13px;cursor:pointer;transition:all .2s;font-family:'Space Grotesk',sans-serif;}
-    .day-btn:hover{border-color:rgba(99,102,241,.4);color:#fff;}
-    .day-btn.active{background:rgba(99,102,241,.15);border-color:rgba(99,102,241,.4);color:#818cf8;}
-    /* Color picker squares */
-    .col-swatch{width:32px;height:32px;border-radius:8px;cursor:pointer;border:2px solid transparent;transition:all .2s;flex-shrink:0;}
-    .col-swatch.selected{border-color:#fff;transform:scale(1.15);}
-    /* Settings panel tabs */
-    .stab{padding:10px 18px;border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;border:1px solid transparent;color:#64748b;background:transparent;transition:all .2s;font-family:'Space Grotesk',sans-serif;}
-    .stab.on{background:rgba(99,102,241,.12);border-color:rgba(99,102,241,.25);color:#fff;}
-    /* Section divider */
-    .section-label{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#334155;padding:8px 0 6px;}
-    /* Drag handles */
-    .drag-handle{cursor:grab;color:#334155;display:inline-flex;padding:4px;border-radius:4px;}
-    .drag-handle:hover{color:#64748b;}
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: linear-gradient(135deg, #020617, #0f172a, #170f2e);
+      background-size: 200% 200%;
+      animation: gradientBG 15s ease infinite;
+      color: #e2e8f0;
+      overflow: hidden;
+      font-size: 18px;
+    }
+    
+    h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(99,102,241,.3); border-radius: 10px; }
+    
+    .grid-bg {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image: linear-gradient(rgba(255,255,255,.015) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,.015) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    
+    /* GLASSMORPHISM CORE */
+    .glass {
+      background: rgba(15, 23, 42, 0.35);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+      border-radius: 24px;
+    }
+    
+    .glass-btn { transition: all .3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; }
+    .glass-btn:hover {
+      border-color: rgba(99,102,241,.4);
+      background: rgba(255, 255, 255, 0.08);
+      transform: translateY(-2px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Ambient Orbs */
+    .orb-1 {
+      position: fixed; width: 600px; height: 600px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, rgba(0,0,0,0) 70%);
+      top: -150px; left: -150px; z-index: 0; pointer-events: none; filter: blur(50px);
+    }
+    .orb-2 {
+      position: fixed; width: 500px; height: 500px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(236,72,153,0.1) 0%, rgba(0,0,0,0) 70%);
+      bottom: -150px; right: -100px; z-index: 0; pointer-events: none; filter: blur(60px);
+    }
+    
+    .btn {
+      background: linear-gradient(135deg, rgba(99,102,241,0.8), rgba(129,140,248,0.8));
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #fff; font-weight: 700; border-radius: 16px; padding: 14px 28px; cursor: pointer;
+      box-shadow: 0 8px 24px rgba(99,102,241,.2); font-family: 'Outfit', sans-serif;
+      font-size: 16px; letter-spacing: .05em; text-transform: uppercase;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      transition: all .3s; width: 100%;
+    }
+    .btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(99,102,241,.4); background: linear-gradient(135deg, rgba(99,102,241,1), rgba(129,140,248,1)); }
+    .btn:disabled { opacity: .5; cursor: not-allowed; }
+    .btn-sm { padding: 8px 16px; font-size: 13px; border-radius: 10px; width: auto; }
+    .btn-danger { background: linear-gradient(135deg, rgba(239,68,68,0.8), rgba(248,113,113,0.8)); }
+    
+    .prog { height: 10px; background: rgba(255,255,255,.05); border-radius: 99px; overflow: hidden; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); }
+    .prog-fill { height: 100%; border-radius: 99px; transition: width 1.2s cubic-bezier(.34,1.56,.64,1); }
+    
+    .tab {
+      display: flex; align-items: center; gap: 14px; padding: 12px 18px; border-radius: 15px;
+      font-weight: 600; font-size: 16px; transition: all .2s; cursor: pointer; border: 1px solid transparent;
+      color: #64748b; background: transparent; width: 100%; text-align: left; font-family: 'Space Grotesk', sans-serif;
+    }
+    .tab:hover { color: #fff; background: rgba(255,255,255,.05); }
+    .tab.on { color: #fff; background: rgba(99,102,241,.15); border-color: rgba(99,102,241,.3); backdrop-filter: blur(10px); }
+    
+    .pcard {
+      background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,.08); border-radius: 20px; padding: 24px;
+      cursor: pointer; transition: all .3s;
+    }
+    .pcard:hover { border-color: rgba(99,102,241,.4); background: rgba(255, 255, 255, 0.05); transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,.4); }
+    
+    .overlay { position: fixed; inset: 0; z-index: 100; background: rgba(0,0,0,.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); display: flex; align-items: center; justify-content: center; padding: 16px; }
+    .modal {
+      background: rgba(10, 15, 30, 0.7); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
+      border: 1px solid rgba(255,255,255,.12); border-radius: 28px; width: 100%; max-width: 900px; max-height: 92vh;
+      display: flex; flex-direction: column; box-shadow: 0 40px 80px rgba(0,0,0,.6);
+    }
+    .modal-lg { max-width: 1100px; }
+    
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    .anim { animation: fadeUp .4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+    .blink { animation: blink 1s step-end infinite; }
+    @keyframes scan { 0% { top: 0; opacity: 1; } 100% { top: 100%; opacity: 0; } }
+    .scanwrap { position: relative; overflow: hidden; }
+    .scanwrap::after { content: ''; position: absolute; left: 0; right: 0; height: 1px; background: linear-gradient(90deg,transparent,rgba(99,102,241,.8),transparent); animation: scan 2.5s linear infinite; }
+    @keyframes pulseRing { 0% { transform: scale(.95); opacity: .8; } 70% { transform: scale(1.15); opacity: 0; } 100% { transform: scale(1.15); opacity: 0; } }
+    .pring { position: relative; }
+    .pring::after { content: ''; position: absolute; inset: -6px; border-radius: 22px; border: 2px solid rgba(99,102,241,.5); animation: pulseRing 2s ease-out infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spin { animation: spin 1s linear infinite; display: inline-flex; }
+    @keyframes syncPulse { 0%, 100% { opacity: .3; } 50% { opacity: 1; } }
+    .sync { animation: syncPulse 2s ease-in-out infinite; }
+    
+    input.inp, select.inp, textarea.inp {
+      width: 100%; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 12px; padding: 14px 18px; color: #fff; font-size: 16px; outline: none; transition: all .2s; font-family: 'Space Grotesk', sans-serif;
+    }
+    input.inp:focus, select.inp:focus, textarea.inp:focus { border-color: rgba(99,102,241,.6); box-shadow: 0 0 0 3px rgba(99,102,241,.15); background: rgba(0,0,0,0.5); }
+    input.inp::placeholder, textarea.inp::placeholder { color: rgba(255,255,255,.3); }
+    textarea.inp { resize: vertical; min-height: 80px; }
+    
+    .sidebar {
+      height: 100vh; background: rgba(10, 15, 30, 0.4); border-right: 1px solid rgba(255,255,255,.08);
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); display: flex; flex-direction: column;
+      transition: width .35s cubic-bezier(.4,0,.2,1); overflow: hidden; position: relative; z-index: 40; flex-shrink: 0;
+    }
+    
+    .mobnav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(10, 15, 30, 0.6); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-top: 1px solid rgba(255,255,255,.08); display: flex; justify-content: space-around; align-items: center; padding: 10px 4px 22px; z-index: 50; }
+    .mobbtn { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 9px 11px; border-radius: 12px; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; border: none; background: transparent; color: #64748b; transition: all .2s; font-family: 'Space Grotesk', sans-serif; }
+    .mobbtn.on { color: #818cf8; }
+    
+    .vcard { background: rgba(0,0,0,.2); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: all .2s; }
+    .vcard:hover { border-color: rgba(99,102,241,.4); background: rgba(255,255,255,.03); }
+    .vcard.done { border-color: rgba(16,185,129,.3); background: rgba(16,185,129,.05); }
+    
+    .tag { display: inline-flex; padding: 3px 9px; border-radius: 6px; font-size: 12px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+    .icon-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 6px; color: #94a3b8; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+    .icon-btn:hover { background: rgba(99,102,241,0.25); color: #c7d2fe; border-color: rgba(99,102,241,0.5); }
+    .icon-btn.red:hover { background: rgba(239,68,68,0.25); color: #fecaca; border-color: rgba(239,68,68,0.5); }
+    
+    .day-btn { padding: 8px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.05); color: #94a3b8; font-weight: 700; font-size: 13px; cursor: pointer; transition: all .2s; font-family: 'Space Grotesk', sans-serif; backdrop-filter: blur(4px); }
+    .day-btn:hover { border-color: rgba(99,102,241,.5); color: #fff; background: rgba(255,255,255,.1); }
+    .day-btn.active { background: rgba(99,102,241,.2); border-color: rgba(99,102,241,.5); color: #e0e7ff; box-shadow: 0 4px 12px rgba(99,102,241,.2); }
+    
+    .col-swatch { width: 32px; height: 32px; border-radius: 8px; cursor: pointer; border: 2px solid transparent; transition: all .2s; flex-shrink: 0; }
+    .col-swatch.selected { border-color: #fff; transform: scale(1.15); box-shadow: 0 0 10px rgba(255,255,255,.4); }
+    
+    .stab { padding: 10px 18px; border-radius: 10px; font-weight: 600; font-size: 14px; cursor: pointer; border: 1px solid transparent; color: #94a3b8; background: transparent; transition: all .2s; font-family: 'Space Grotesk', sans-serif; }
+    .stab.on { background: rgba(99,102,241,.2); border-color: rgba(99,102,241,.4); color: #fff; box-shadow: 0 4px 15px rgba(99,102,241,.15); }
+    
+    .section-label { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #64748b; padding: 8px 0 6px; }
   </style>
 </head>
 <body>
@@ -115,8 +193,7 @@ const FB = {
 let _db=null;
 const getDB=()=>{if(_db)return _db;const{initializeApp,getFirestore}=window.firebaseModules;_db=getFirestore(initializeApp(FB));return _db;};
 
-
-// ── ICONS (inline SVG, no CDN dependency) ──
+// ── ICONS ──
 const ICONS={
   'cpu':<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>,
   'log-in':<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>,
@@ -150,7 +227,6 @@ const Icon=({name,size=20,className='',style={}})=>{
   return React.cloneElement(svg,{width:size,height:size,style:{display:'inline-flex',flexShrink:0,...style},className});
 };
 
-
 const PBar=({current,total,color='linear-gradient(90deg,#6366f1,#818cf8)'})=>(
   <div className="prog"><div className="prog-fill" style={{width:`${Math.min(100,Math.max(0,(current/(total||1))*100))}%`,background:color}}/></div>
 );
@@ -160,11 +236,11 @@ const Modal=({isOpen,onClose,title,children,large=false})=>{
   return(
     <div className="overlay" onClick={e=>e.target===e.currentTarget&&onClose()}>
       <div className={`modal anim${large?' modal-lg':''}`}>
-        <div style={{padding:'20px 28px',borderBottom:'1px solid rgba(255,255,255,.07)',display:'flex',justifyContent:'space-between',alignItems:'center',borderRadius:'24px 24px 0 0',background:'rgba(255,255,255,.02)',flexShrink:0}}>
+        <div style={{padding:'24px 28px',borderBottom:'1px solid rgba(255,255,255,.07)',display:'flex',justifyContent:'space-between',alignItems:'center',borderRadius:'24px 24px 0 0',background:'rgba(255,255,255,.03)',flexShrink:0}}>
           <h3 style={{fontSize:20,fontWeight:700,color:'#fff',fontFamily:'Outfit,sans-serif',display:'flex',alignItems:'center',gap:10}}>{title}</h3>
-          <button onClick={onClose} style={{padding:7,borderRadius:9,background:'rgba(255,255,255,.05)',border:'none',cursor:'pointer',color:'#94a3b8',display:'flex'}}><Icon name="x" size={18}/></button>
+          <button onClick={onClose} style={{padding:8,borderRadius:10,background:'rgba(255,255,255,.08)',border:'1px solid rgba(255,255,255,.1)',cursor:'pointer',color:'#e2e8f0',display:'flex',transition:'all 0.2s'}} onMouseOver={e=>e.currentTarget.style.background='rgba(255,255,255,.15)'} onMouseOut={e=>e.currentTarget.style.background='rgba(255,255,255,.08)'}><Icon name="x" size={18}/></button>
         </div>
-        <div style={{padding:'22px 28px',overflowY:'auto',flex:1}}>{children}</div>
+        <div style={{padding:'24px 28px',overflowY:'auto',flex:1}}>{children}</div>
       </div>
     </div>
   );
@@ -176,7 +252,8 @@ const AuthGate=({onLogin})=>{
   const[loading,setLoading]=useState(false);
   const[error,setError]=useState('');
   const[typed,setTyped]=useState('');
-  const msg='FRIDAY OS v25.0 — 60-Day Challenge Protocol...';
+  const msg='FRIDAY OS v25.0 — 3-Month Challenge Protocol...';
+  
   useEffect(()=>{let i=0;const t=setInterval(()=>{setTyped(msg.slice(0,++i));if(i>=msg.length)clearInterval(t);},40);return()=>clearInterval(t);},[]);
   const submit=async(e)=>{
     e.preventDefault();
@@ -193,27 +270,28 @@ const AuthGate=({onLogin})=>{
     finally{setLoading(false);}
   };
   return(
-    <div style={{minHeight:'100vh',background:'#030712',display:'flex',alignItems:'center',justifyContent:'center',position:'relative',overflow:'hidden'}}>
+    <div style={{minHeight:'100vh',display:'flex',alignItems:'center',justifyContent:'center',position:'relative',overflow:'hidden'}}>
       <div className="grid-bg"/>
-      <div className="glow" style={{width:500,height:500,background:'rgba(99,102,241,.1)',top:-150,left:-150}}/>
+      <div className="orb-1"/>
+      <div className="orb-2"/>
       <div className="anim" style={{position:'relative',zIndex:10,width:'100%',maxWidth:420,padding:'0 20px'}}>
-        <div className="mono" style={{color:'rgba(99,102,241,.6)',fontSize:13,marginBottom:12,letterSpacing:'.1em'}}>{typed}<span className="blink">▋</span></div>
+        <div className="mono" style={{color:'rgba(99,102,241,.8)',fontSize:13,marginBottom:12,letterSpacing:'.1em'}}>{typed}<span className="blink">▋</span></div>
         <div className="glass scanwrap" style={{padding:36}}>
-          <div style={{textAlign:'center',marginBottom:24}}>
-            <div className="pring" style={{display:'inline-flex',width:64,height:64,background:'linear-gradient(135deg,#6366f1,#818cf8)',borderRadius:18,alignItems:'center',justifyContent:'center',boxShadow:'0 0 40px rgba(99,102,241,.35)',marginBottom:12}}>
-              <Icon name="cpu" size={26} className="text-white"/>
+          <div style={{textAlign:'center',marginBottom:28}}>
+            <div className="pring" style={{display:'inline-flex',width:68,height:68,background:'linear-gradient(135deg,rgba(99,102,241,0.9),rgba(129,140,248,0.9))',borderRadius:20,alignItems:'center',justifyContent:'center',boxShadow:'0 0 30px rgba(99,102,241,.4)',marginBottom:16, border: '1px solid rgba(255,255,255,0.2)'}}>
+              <Icon name="cpu" size={30} className="text-white"/>
             </div>
-            <h1 style={{fontSize:36,fontWeight:900,color:'#fff',letterSpacing:'-.02em',marginBottom:4}}>FRIDAY <span style={{color:'#818cf8'}}>OS</span></h1>
-            <p className="mono" style={{fontSize:12,color:'#475569',letterSpacing:'.15em',textTransform:'uppercase'}}>v25.0 · 60-Day Challenge</p>
+            <h1 style={{fontSize:40,fontWeight:900,color:'#fff',letterSpacing:'-.02em',marginBottom:4}}>FRIDAY <span style={{color:'#818cf8'}}>OS</span></h1>
+            <p className="mono" style={{fontSize:12,color:'#94a3b8',letterSpacing:'.15em',textTransform:'uppercase'}}>v25.0 · Glassmorphism Edition</p>
           </div>
-          <form onSubmit={submit} style={{display:'flex',flexDirection:'column',gap:12}}>
-            {error&&<div style={{background:'rgba(239,68,68,.08)',border:'1px solid rgba(239,68,68,.2)',borderRadius:10,padding:'10px 14px',color:'#f87171',fontSize:15}}>{error}</div>}
+          <form onSubmit={submit} style={{display:'flex',flexDirection:'column',gap:14}}>
+            {error&&<div style={{background:'rgba(239,68,68,.15)',border:'1px solid rgba(239,68,68,.3)',borderRadius:12,padding:'12px 14px',color:'#fecaca',fontSize:15}}>{error}</div>}
             <div style={{position:'relative'}}>
-              <span className="mono" style={{position:'absolute',left:14,top:'50%',transform:'translateY(-50%)',color:'#6366f1',fontSize:14,fontWeight:600,userSelect:'none',pointerEvents:'none'}}>&gt;_</span>
-              <input type="text" value={username} onChange={e=>setUsername(e.target.value.replace(/[^a-zA-Z0-9_]/g,''))} className="inp mono" style={{paddingLeft:40}} placeholder="nama_kamu" autoComplete="off" autoCapitalize="none" maxLength={30} required/>
+              <span className="mono" style={{position:'absolute',left:16,top:'50%',transform:'translateY(-50%)',color:'#818cf8',fontSize:15,fontWeight:600,userSelect:'none',pointerEvents:'none'}}>&gt;_</span>
+              <input type="text" value={username} onChange={e=>setUsername(e.target.value.replace(/[^a-zA-Z0-9_]/g,''))} className="inp mono" style={{paddingLeft:44, height: 54}} placeholder="ID_Boss" autoComplete="off" autoCapitalize="none" maxLength={30} required/>
             </div>
-            <button type="submit" className="btn" disabled={loading||username.length<3}>
-              {loading?<><span className="spin"><Icon name="loader-2" size={14}/></span>Connecting...</>:<><Icon name="log-in" size={14}/>Masuk Sistem</>}
+            <button type="submit" className="btn" disabled={loading||username.length<3} style={{height: 54}}>
+              {loading?<><span className="spin"><Icon name="loader-2" size={16}/></span>Connecting...</>:<><Icon name="log-in" size={16}/>Masuk Sistem</>}
             </button>
           </form>
         </div>
@@ -266,12 +344,11 @@ const DEFAULT_ROADMAP=[
   {id:'rt',title:'React.js Ecosystem',week:'6–7',desc:'Dynamic SPA: hooks, context, routing, state management.',color1:'#8b5cf6',color2:'#6366f1',pl:'https://www.youtube.com/watch?v=kcnwI_5nKyA&list=PLFIM0718LjIUu3X2zYNqomEWs3sYd-fV1',
     videos:[{id:'rt01',title:'#01 – Pengenalan React.js',url:'https://www.youtube.com/watch?v=kcnwI_5nKyA'},{id:'rt02',title:'#02 – JSX & Component',url:'https://www.youtube.com/watch?v=kcnwI_5nKyA&list=PLFIM0718LjIUu3X2zYNqomEWs3sYd-fV1&index=2'}],
     casestudies:[{id:'rtcs1',title:'Case Study 1 – Todo App + Context',desc:'Full CRUD, filter, persistent.'}]},
-  {id:'nd',title:'Node.js Backend',week:'8',desc:'REST API: Express, auth JWT, middleware, deploy.',color1:'#10b981',color2:'#059669',pl:'https://www.youtube.com/watch?v=sSLJx5t4OJ4&list=PLFIM0718LjIW-XBdVOerYgKegBtD6rSfD',
+  {id:'nd',title:'Node.js Backend',week:'8-12',desc:'REST API: Express, auth JWT, middleware, deploy.',color1:'#10b981',color2:'#059669',pl:'https://www.youtube.com/watch?v=sSLJx5t4OJ4&list=PLFIM0718LjIW-XBdVOerYgKegBtD6rSfD',
     videos:[{id:'nd01',title:'#01 – Pengenalan Node.js',url:'https://www.youtube.com/watch?v=sSLJx5t4OJ4'},{id:'nd02',title:'#02 – NPM & Package Management',url:'https://www.youtube.com/watch?v=sSLJx5t4OJ4&list=PLFIM0718LjIW-XBdVOerYgKegBtD6rSfD&index=2'}],
     casestudies:[{id:'ndcs1',title:'Case Study 1 – REST API Blog (CRUD + Auth)',desc:'Register, login, CRUD posts, JWT.'}]}
 ];
 
-// SCAPULAR WINGING — fixed every day, cannot be edited
 const SCAPULAR_EXERCISES=[
   {name:"Child's Pose",detail:'2 x Tahan 30-45 detik',target:'Thoracic Mobility',category:'scapular'},
   {name:"Scapular Y in Child's Pose",detail:'2 x 8-10 Reps',target:'Lower Trapezius',category:'scapular'},
@@ -282,7 +359,6 @@ const SCAPULAR_EXERCISES=[
   {name:'YTW Prone',detail:'2 x 8 Reps per huruf',target:'Lower & Mid Trap',category:'scapular'},
 ];
 
-// DEFAULT WORKOUT — only primary exercises per day, scapular is fixed globally
 const DEFAULT_WORKOUT={
   'Senin':{type:'Push Day (Gym)',focus:'Dada, Bahu, Trisep',col:'#ef4444',exercises:[
     {name:'Incline Dumbbell Press',detail:'3 x 10-12',target:'Dada Atas',category:'primary'},
@@ -352,8 +428,8 @@ const App=()=>{
   const[calModal,setCalModal]=useState(false);
   const[nutModal,setNutModal]=useState(false);
   const[editRMItem,setEditRMItem]=useState(null);
-  const[settingsOpen,setSettingsOpen]=useState(false); // Mega settings modal
-  const[settingsTab,setSettingsTab]=useState('roadmap'); // 'roadmap' | 'workout'
+  const[settingsOpen,setSettingsOpen]=useState(false);
+  const[settingsTab,setSettingsTab]=useState('roadmap');
 
   // Firebase data
   const[roadmapData,setRoadmapData,rReady]=useSync('roadmap_data',DEFAULT_ROADMAP,uid);
@@ -373,19 +449,27 @@ const App=()=>{
 
   const isReady=rReady&&wReady&&cReady&&eReady&&rpReady&&lReady&&woReady;
 
+  // Timeline: Starts March 2nd (of the current year based on execution context), for 90 Days
   const today=new Date();
-  // Timeline: Day 1 = BESOK, challenge 60 hari ke depan
-  const tomorrow=new Date(today);tomorrow.setDate(today.getDate()+1);tomorrow.setHours(0,0,0,0);
-  const start=new Date(tomorrow);
-  const end=new Date(start);end.setDate(start.getDate()+60);
+  
+  // Set start to March 2nd. Month is 0-indexed in JS (2 = March).
+  const start=new Date(today.getFullYear(), 2, 2); 
+  start.setHours(0,0,0,0);
+  
+  const TOTAL_DAYS = 90;
+  const end=new Date(start);
+  end.setDate(start.getDate() + TOTAL_DAYS);
+  
   const diffDays=Math.floor((today-start)/86400000);
-  const dayNDisplay=Math.max(0,Math.min(60,diffDays+1));
-  const pct=Math.round((dayNDisplay/60)*100);
+  // Cap between day 0 and TOTAL_DAYS
+  const dayNDisplay=Math.max(0,Math.min(TOTAL_DAYS, diffDays+1));
+  const pct=Math.round((dayNDisplay/TOTAL_DAYS)*100);
+  
   const dayNames=['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
   const dayName=dayNames[today.getDay()];
   const dateKey=today.toISOString().split('T')[0];
   const fmtDate=today.toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});
-  const missionDayIndex=Math.max(0,Math.min(59,dayNDisplay-1));
+  const missionDayIndex=Math.max(0,Math.min(TOTAL_DAYS - 1, diffDays));
 
   const ws=safeWO[dayName]||{type:'Rest',focus:'-',col:'#64748b',exercises:[]};
   const exKey=(ex)=>`${dateKey}-${dayName}-${ex.name}`;
@@ -403,7 +487,13 @@ const App=()=>{
     });
     const ms=[];let vi=0,ci=0;
     const vids=all.filter(v=>v.type==='video'),cases=all.filter(v=>v.type==='case');
-    for(let d=0;d<60;d++){const dm=[];for(let i=0;i<2;i++)if(vi<vids.length)dm.push(vids[vi++]);if(d%5===4&&ci<cases.length)dm.push(cases[ci++]);ms.push(dm);}
+    // Generating missions for TOTAL_DAYS
+    for(let d=0;d<TOTAL_DAYS;d++){
+      const dm=[];
+      for(let i=0;i<2;i++) if(vi<vids.length) dm.push(vids[vi++]);
+      if(d%5===4&&ci<cases.length) dm.push(cases[ci++]);
+      ms.push(dm);
+    }
     return ms;
   },[safeRM]);
 
@@ -416,11 +506,13 @@ const App=()=>{
 
   if(!uid)return<AuthGate onLogin={setUid}/>;
   if(!isReady)return(
-    <div style={{minHeight:'100vh',background:'#030712',display:'flex',alignItems:'center',justifyContent:'center',flexDirection:'column',gap:16}}>
-      <div className="pring" style={{display:'inline-flex',width:64,height:64,background:'linear-gradient(135deg,#6366f1,#818cf8)',borderRadius:18,alignItems:'center',justifyContent:'center'}}>
-        <Icon name="cpu" size={26} className="text-white spin"/>
+    <div style={{minHeight:'100vh',display:'flex',alignItems:'center',justifyContent:'center',flexDirection:'column',gap:16, position: 'relative'}}>
+      <div className="grid-bg"/>
+      <div className="orb-1"/>
+      <div className="pring" style={{display:'inline-flex',width:68,height:68,background:'rgba(255,255,255,0.05)', backdropFilter:'blur(20px)', borderRadius:20,alignItems:'center',justifyContent:'center', border: '1px solid rgba(255,255,255,0.1)'}}>
+        <Icon name="cpu" size={30} className="text-white spin"/>
       </div>
-      <div className="mono" style={{color:'#818cf8',fontWeight:600}}>SINKRONISASI...</div>
+      <div className="mono" style={{color:'#818cf8',fontWeight:600, letterSpacing: '0.1em'}}>SINKRONISASI FRIDAY OS...</div>
     </div>
   );
 
@@ -470,49 +562,45 @@ const App=()=>{
   };
 
   return(
-    <div style={{display:'flex',height:'100vh',background:'#030712',overflow:'hidden',position:'relative'}}>
+    <div style={{display:'flex',height:'100vh',overflow:'hidden',position:'relative'}}>
       <div className="grid-bg"/>
-      <div className="glow" style={{width:700,height:700,background:'rgba(99,102,241,.07)',top:-250,left:-200}}/>
+      <div className="orb-1"/>
+      <div className="orb-2"/>
 
       {/* SIDEBAR */}
       {!mob&&(
         <div className="sidebar" style={{width:collapsed?82:290}}>
-          <div style={{padding:collapsed?'18px 0':'20px 16px',borderBottom:'1px solid rgba(255,255,255,.05)',display:'flex',alignItems:'center',gap:10,justifyContent:collapsed?'center':'flex-start'}}>
-            <div style={{width:40,height:40,background:'linear-gradient(135deg,#6366f1,#818cf8)',borderRadius:10,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
-              <Icon name="cpu" size={17} className="text-white"/>
+          <div style={{padding:collapsed?'18px 0':'24px 20px',borderBottom:'1px solid rgba(255,255,255,.08)',display:'flex',alignItems:'center',gap:12,justifyContent:collapsed?'center':'flex-start'}}>
+            <div style={{width:42,height:42,background:'linear-gradient(135deg,rgba(99,102,241,0.9),rgba(129,140,248,0.9))',borderRadius:12,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0, border: '1px solid rgba(255,255,255,0.2)', boxShadow: '0 4px 15px rgba(99,102,241,0.3)'}}>
+              <Icon name="cpu" size={20} className="text-white"/>
             </div>
-            {!collapsed&&<div><div style={{fontSize:20,fontWeight:900,color:'#fff',fontFamily:'Outfit'}}>FRIDAY <span style={{color:'#818cf8'}}>OS</span></div><div className="mono" style={{fontSize:11,color:'#1e293b'}}>v25.0</div></div>}
+            {!collapsed&&<div><div style={{fontSize:22,fontWeight:900,color:'#fff',fontFamily:'Outfit'}}>FRIDAY <span style={{color:'#818cf8'}}>OS</span></div><div className="mono" style={{fontSize:11,color:'#94a3b8'}}>v25.0 Glass</div></div>}
           </div>
-          {!collapsed&&<div style={{margin:'12px',padding:'12px 14px',background:'rgba(99,102,241,.07)',borderRadius:12,border:'1px solid rgba(99,102,241,.15)',display:'flex',alignItems:'center',gap:8}}>
-            <div style={{width:32,height:32,background:'linear-gradient(135deg,#6366f1,#8b5cf6)',borderRadius:7,display:'flex',alignItems:'center',justifyContent:'center',fontWeight:800,fontSize:13,color:'#fff',flexShrink:0}}>{uid.charAt(0).toUpperCase()}</div>
+          {!collapsed&&<div style={{margin:'16px',padding:'14px 16px',background:'rgba(255,255,255,0.03)',borderRadius:16,border:'1px solid rgba(255,255,255,.08)',display:'flex',alignItems:'center',gap:12, backdropFilter: 'blur(10px)'}}>
+            <div style={{width:38,height:38,background:'linear-gradient(135deg,#6366f1,#8b5cf6)',borderRadius:10,display:'flex',alignItems:'center',justifyContent:'center',fontWeight:800,fontSize:16,color:'#fff',flexShrink:0, boxShadow: '0 4px 10px rgba(99,102,241,0.3)'}}>{uid.charAt(0).toUpperCase()}</div>
             <div style={{flex:1,minWidth:0}}>
-              <div className="mono" style={{fontSize:13,color:'#c7d2fe',fontWeight:600,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>Boss {uid}</div>
-              <div style={{fontSize:12,color:'#334155'}}>Day {dayNDisplay}/60 · {pct}%</div>
+              <div className="mono" style={{fontSize:14,color:'#e0e7ff',fontWeight:700,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>Boss {uid}</div>
+              <div style={{fontSize:12,color:'#94a3b8', marginTop: 2}}>Day {dayNDisplay}/{TOTAL_DAYS} · {pct}%</div>
             </div>
-            <div className="sync" style={{width:5,height:5,borderRadius:'50%',background:'#10b981',flexShrink:0}}/>
+            <div className="sync" style={{width:6,height:6,borderRadius:'50%',background:'#34d399',flexShrink:0, boxShadow: '0 0 8px #34d399'}}/>
           </div>}
-          {!collapsed&&<div style={{margin:'0 12px 8px',padding:'9px 12px',background:'rgba(16,185,129,.06)',borderRadius:9,border:'1px solid rgba(16,185,129,.15)'}}>
-            <div style={{fontSize:11,color:'#34d399',fontWeight:700,marginBottom:3,letterSpacing:'.06em'}}>ROADMAP</div>
-            <PBar current={totalDone} total={allVideoIds.length} color="linear-gradient(90deg,#10b981,#059669)"/>
-            <div style={{fontSize:11,color:'#334155',marginTop:3}}>{totalDone}/{allVideoIds.length} selesai</div>
-          </div>}
-          <div style={{flex:1,padding:'4px 8px',display:'flex',flexDirection:'column',gap:1}}>
+          
+          <div style={{flex:1,padding:'8px 12px',display:'flex',flexDirection:'column',gap:4}}>
             {tabs.map(t=>(
-              <button key={t.id} onClick={()=>setTab(t.id)} className={`tab ${tab===t.id?'on':''}`} style={{justifyContent:collapsed?'center':'flex-start',padding:collapsed?'11px 0':'10px 14px'}}>
-                <Icon name={t.icon} size={20}/>{!collapsed&&<span style={{fontSize:15}}>{t.label}</span>}
+              <button key={t.id} onClick={()=>setTab(t.id)} className={`tab ${tab===t.id?'on':''}`} style={{justifyContent:collapsed?'center':'flex-start',padding:collapsed?'14px 0':'12px 16px'}}>
+                <Icon name={t.icon} size={20} style={{color: tab===t.id ? '#fff' : '#94a3b8'}}/>{!collapsed&&<span>{t.label}</span>}
               </button>
             ))}
           </div>
-          <div style={{padding:'8px',borderTop:'1px solid rgba(255,255,255,.04)'}}>
-            {/* Settings Button */}
-            <button onClick={()=>{setSettingsTab('roadmap');setSettingsOpen(true);}} className="tab" style={{justifyContent:collapsed?'center':'flex-start',marginBottom:2,padding:collapsed?'10px 0':'10px 14px',color:'#818cf8'}}>
-              <Icon name="settings-2" size={19}/>{!collapsed&&<span style={{fontSize:15}}>Manage</span>}
+          <div style={{padding:'12px',borderTop:'1px solid rgba(255,255,255,.08)'}}>
+            <button onClick={()=>{setSettingsTab('roadmap');setSettingsOpen(true);}} className="tab" style={{justifyContent:collapsed?'center':'flex-start',marginBottom:4,padding:collapsed?'12px 0':'12px 16px',color:'#818cf8'}}>
+              <Icon name="settings-2" size={20}/>{!collapsed&&<span>Manage</span>}
             </button>
-            <button onClick={()=>setCollapsed(p=>!p)} className="tab" style={{justifyContent:collapsed?'center':'flex-start',marginBottom:2,padding:collapsed?'10px 0':'10px 14px'}}>
-              <Icon name={collapsed?'chevrons-right':'chevrons-left'} size={19}/>{!collapsed&&<span style={{fontSize:15}}>Collapse</span>}
+            <button onClick={()=>setCollapsed(p=>!p)} className="tab" style={{justifyContent:collapsed?'center':'flex-start',marginBottom:4,padding:collapsed?'12px 0':'12px 16px'}}>
+              <Icon name={collapsed?'chevrons-right':'chevrons-left'} size={20}/>{!collapsed&&<span>Collapse</span>}
             </button>
-            <button onClick={logout} className="tab" style={{color:'#f87171',justifyContent:collapsed?'center':'flex-start',padding:collapsed?'10px 0':'10px 14px'}}>
-              <Icon name="log-out" size={19}/>{!collapsed&&<span style={{fontSize:15}}>Logout</span>}
+            <button onClick={logout} className="tab" style={{color:'#f87171',justifyContent:collapsed?'center':'flex-start',padding:collapsed?'12px 0':'12px 16px'}}>
+              <Icon name="log-out" size={20}/>{!collapsed&&<span>Logout</span>}
             </button>
           </div>
         </div>
@@ -521,103 +609,102 @@ const App=()=>{
       {/* MAIN */}
       <main style={{flex:1,overflowY:'auto',position:'relative',zIndex:10,paddingBottom:mob?88:0}}>
         {/* Header */}
-        <div style={{position:'sticky',top:0,zIndex:30,background:'rgba(3,7,18,.94)',backdropFilter:'blur(24px)',borderBottom:'1px solid rgba(255,255,255,.05)',padding:'16px 24px',display:'flex',justifyContent:'space-between',alignItems:'center',gap:12,flexWrap:'wrap'}}>
+        <div style={{position:'sticky',top:0,zIndex:30,background:'rgba(10, 15, 30, 0.5)',backdropFilter:'blur(24px)',WebkitBackdropFilter: 'blur(24px)',borderBottom:'1px solid rgba(255,255,255,.08)',padding:'16px 28px',display:'flex',justifyContent:'space-between',alignItems:'center',gap:12,flexWrap:'wrap'}}>
           <div>
-            <R style={{gap:11,marginBottom:3}}>
-              <div style={{width:38,height:38,borderRadius:11,background:'linear-gradient(135deg,#6366f1,#818cf8)',display:'flex',alignItems:'center',justifyContent:'center',boxShadow:'0 0 20px rgba(99,102,241,.4)',flexShrink:0}}>
-                <span style={{fontFamily:'Outfit,sans-serif',fontWeight:900,fontSize:22,color:'#fff',lineHeight:1}}>D</span>
+            <R style={{gap:12,marginBottom:4}}>
+              <div style={{width:42,height:42,borderRadius:12,background:'linear-gradient(135deg,rgba(99,102,241,0.9),rgba(129,140,248,0.9))',display:'flex',alignItems:'center',justifyContent:'center',boxShadow:'0 0 20px rgba(99,102,241,.4)',flexShrink:0, border: '1px solid rgba(255,255,255,0.2)'}}>
+                <span style={{fontFamily:'Outfit,sans-serif',fontWeight:900,fontSize:24,color:'#fff',lineHeight:1}}>F</span>
               </div>
-              <span style={{fontSize:20,fontWeight:700,color:'#fff'}}>Command Center</span>
-              <span className="mono" style={{fontSize:12,color:'#6366f1',background:'rgba(99,102,241,.1)',border:'1px solid rgba(99,102,241,.2)',borderRadius:5,padding:'2px 6px'}}>Boss {uid}</span>
+              <span style={{fontSize:22,fontWeight:800,color:'#fff'}}>Command Center</span>
+              <span className="mono" style={{fontSize:12,color:'#e0e7ff',background:'rgba(99,102,241,.2)',border:'1px solid rgba(99,102,241,.4)',borderRadius:6,padding:'3px 8px'}}>Boss {uid}</span>
             </R>
-            <div style={{fontSize:13,color:'#475569',display:'flex',gap:8}}><span>{fmtDate}</span><span style={{color:'#334155'}}>·</span><span style={{color:'#818cf8',fontWeight:600}}>Day {dayNDisplay}/60</span></div>
+            <div style={{fontSize:13,color:'#94a3b8',display:'flex',gap:8}}><span>{fmtDate}</span><span style={{color:'#475569'}}>·</span><span style={{color:'#a5b4fc',fontWeight:700}}>Day {dayNDisplay}/{TOTAL_DAYS}</span></div>
           </div>
-          <R style={{gap:6}}>
-            {mob&&<button onClick={()=>{setSettingsTab('roadmap');setSettingsOpen(true);}} style={{padding:'8px 12px',background:'rgba(99,102,241,.1)',border:'1px solid rgba(99,102,241,.2)',borderRadius:10,color:'#818cf8',cursor:'pointer',display:'flex',alignItems:'center',gap:6,fontSize:13,fontWeight:700,fontFamily:'Space Grotesk,sans-serif'}}>
-              <Icon name="settings-2" size={15}/>Manage
+          <R style={{gap:8}}>
+            {mob&&<button onClick={()=>{setSettingsTab('roadmap');setSettingsOpen(true);}} style={{padding:'10px 14px',background:'rgba(99,102,241,.15)',border:'1px solid rgba(99,102,241,.3)',borderRadius:12,color:'#e0e7ff',cursor:'pointer',display:'flex',alignItems:'center',gap:6,fontSize:13,fontWeight:700,fontFamily:'Space Grotesk,sans-serif', backdropFilter:'blur(4px)'}}>
+              <Icon name="settings-2" size={16}/>Manage
             </button>}
             {[{fn:()=>setCalModal(true),label:'PROGRESS',val:`${pct}%`,col:'#818cf8',icon:'calendar'},{fn:()=>setNutModal(true),label:'BERAT',val:`${weight.current}kg`,col:'#34d399',icon:'scale'}].map(h=>(
-              <button key={h.label} onClick={h.fn} className="glass glass-btn" style={{padding:'9px 14px',display:'flex',alignItems:'center',gap:10}}>
-                <div><div style={{fontSize:11,color:h.col,fontWeight:700,letterSpacing:'.05em'}}>{h.label}</div><div style={{fontSize:22,fontWeight:800,color:'#fff'}}>{h.val}</div></div>
-                <Icon name={h.icon} size={16} style={{color:h.col}}/>
+              <button key={h.label} onClick={h.fn} className="glass glass-btn" style={{padding:'10px 16px',display:'flex',alignItems:'center',gap:12}}>
+                <div style={{textAlign:'left'}}><div style={{fontSize:11,color:h.col,fontWeight:700,letterSpacing:'.08em', marginBottom: 2}}>{h.label}</div><div style={{fontSize:22,fontWeight:800,color:'#fff', lineHeight: 1}}>{h.val}</div></div>
+                <Icon name={h.icon} size={20} style={{color:h.col}}/>
               </button>
             ))}
-            {mob&&<button onClick={logout} style={{padding:'8px 10px',background:'rgba(239,68,68,.08)',border:'1px solid rgba(239,68,68,.15)',borderRadius:10,color:'#f87171',cursor:'pointer',display:'flex'}}><Icon name="log-out" size={16}/></button>}
+            {mob&&<button onClick={logout} style={{padding:'10px 12px',background:'rgba(239,68,68,.15)',border:'1px solid rgba(239,68,68,.3)',borderRadius:12,color:'#fecaca',cursor:'pointer',display:'flex', backdropFilter:'blur(4px)'}}><Icon name="log-out" size={18}/></button>}
           </R>
         </div>
 
-        <div style={{padding:'20px 18px',maxWidth:1100,margin:'0 auto'}}>
+        <div style={{padding:'24px 28px',maxWidth:1150,margin:'0 auto'}}>
 
           {/* ═══ DAILY ═══ */}
           {tab==='daily'&&(
-            <div className="anim" style={{display:'flex',flexDirection:'column',gap:12}}>
-              <div style={{display:'grid',gridTemplateColumns:mob?'1fr':'1fr 1.7fr',gap:14}}>
+            <div className="anim" style={{display:'flex',flexDirection:'column',gap:16}}>
+              <div style={{display:'grid',gridTemplateColumns:mob?'1fr':'1fr 1.6fr',gap:16}}>
                 {/* Fitness card */}
-                <div className="glass" style={{padding:24,display:'flex',flexDirection:'column',gap:14}}>
+                <div className="glass" style={{padding:28,display:'flex',flexDirection:'column',gap:18}}>
                   <R style={{justifyContent:'space-between'}}>
-                    <div style={{padding:9,background:`${ws?.col}18`,borderRadius:10}}><Icon name="dumbbell" size={20} style={{color:ws?.col}}/></div>
-                    <span style={{fontSize:12,fontWeight:700,color:ws?.col,background:`${ws?.col}12`,border:`1px solid ${ws?.col}30`,borderRadius:6,padding:'2px 7px'}}>{ws?.type}</span>
+                    <div style={{padding:10,background:`${ws?.col}20`,borderRadius:12, border: `1px solid ${ws?.col}40`}}><Icon name="dumbbell" size={24} style={{color:ws?.col}}/></div>
+                    <span style={{fontSize:13,fontWeight:700,color:ws?.col,background:`${ws?.col}15`,border:`1px solid ${ws?.col}30`,borderRadius:8,padding:'4px 10px'}}>{ws?.type}</span>
                   </R>
                   <div>
-                    <h3 style={{fontSize:22,fontWeight:700,color:'#fff',marginBottom:2}}>Fitness Hari Ini</h3>
-                    <p style={{fontSize:14,color:'#64748b'}}>{ws?.focus}</p>
+                    <h3 style={{fontSize:26,fontWeight:800,color:'#fff',marginBottom:4}}>Fitness Hari Ini</h3>
+                    <p style={{fontSize:15,color:'#94a3b8'}}>{ws?.focus}</p>
                   </div>
-                  {/* Mini category preview */}
-                  <div style={{display:'flex',gap:8}}>
-                    <span style={{fontSize:12,padding:'3px 8px',borderRadius:6,background:'rgba(99,102,241,.12)',color:'#818cf8',border:'1px solid rgba(99,102,241,.25)',fontWeight:700}}>⚡ Inti: {primaryExes.length}</span>
-                    <span style={{fontSize:12,padding:'3px 8px',borderRadius:6,background:'rgba(16,185,129,.12)',color:'#34d399',border:'1px solid rgba(16,185,129,.25)',fontWeight:700}}>🩻 Scapular: {secondaryExes.length}</span>
+                  <div style={{display:'flex',gap:10}}>
+                    <span style={{fontSize:13,padding:'4px 10px',borderRadius:8,background:'rgba(99,102,241,.15)',color:'#a5b4fc',border:'1px solid rgba(99,102,241,.3)',fontWeight:700}}>⚡ Inti: {primaryExes.length}</span>
+                    <span style={{fontSize:13,padding:'4px 10px',borderRadius:8,background:'rgba(16,185,129,.15)',color:'#6ee7b7',border:'1px solid rgba(16,185,129,.3)',fontWeight:700}}>🩻 Scapular: {secondaryExes.length}</span>
                   </div>
                   <div>
-                    <R style={{justifyContent:'space-between',fontSize:14,color:'#64748b',marginBottom:5}}><span>Gerakan</span><span style={{color:'#fff',fontWeight:700}}>{fp.done}/{fp.total}</span></R>
-                    <PBar current={fp.done} total={fp.total} color={`linear-gradient(90deg,${ws?.col},${ws?.col}88)`}/>
+                    <R style={{justifyContent:'space-between',fontSize:15,color:'#94a3b8',marginBottom:8}}><span>Gerakan</span><span style={{color:'#fff',fontWeight:800}}>{fp.done}/{fp.total}</span></R>
+                    <PBar current={fp.done} total={fp.total} color={`linear-gradient(90deg,${ws?.col},${ws?.col}aa)`}/>
                   </div>
-                  <button onClick={()=>setTab('fitness')} className="btn" style={{background:`linear-gradient(135deg,${ws?.col},${ws?.col}cc)`,fontSize:13,padding:'12px 20px'}}>
-                    <Icon name="play" size={13}/> Mulai Workout
+                  <button onClick={()=>setTab('fitness')} className="btn" style={{background:`linear-gradient(135deg,${ws?.col}dd,${ws?.col})`,fontSize:14,padding:'14px 24px', marginTop: 8}}>
+                    <Icon name="play" size={16}/> Mulai Workout
                   </button>
                 </div>
                 {/* Coding missions */}
-                <div className="glass" style={{padding:24,display:'flex',flexDirection:'column',gap:13}}>
-                  <R style={{gap:9,justifyContent:'space-between'}}>
-                    <R style={{gap:9}}>
-                      <div style={{padding:8,background:'rgba(99,102,241,.1)',borderRadius:10}}><Icon name="code-2" size={17} className="text-indigo-400"/></div>
+                <div className="glass" style={{padding:28,display:'flex',flexDirection:'column',gap:16}}>
+                  <R style={{gap:12,justifyContent:'space-between'}}>
+                    <R style={{gap:12}}>
+                      <div style={{padding:10,background:'rgba(99,102,241,.15)',borderRadius:12, border: '1px solid rgba(99,102,241,.3)'}}><Icon name="code-2" size={22} className="text-indigo-400"/></div>
                       <div>
-                        <h3 style={{fontSize:17,fontWeight:700,color:'#fff'}}>Target Harian</h3>
-                        <p style={{fontSize:13,color:'#475569'}}>Day {dayNDisplay} — ceklis tersambung ke Roadmap</p>
+                        <h3 style={{fontSize:20,fontWeight:800,color:'#fff'}}>Target Harian</h3>
+                        <p style={{fontSize:14,color:'#94a3b8'}}>Day {dayNDisplay} — ceklis otomatis ke Roadmap</p>
                       </div>
                     </R>
-                    <span className="mono" style={{fontSize:12,color:'#475569',background:'rgba(255,255,255,.04)',border:'1px solid rgba(255,255,255,.07)',borderRadius:6,padding:'3px 8px',whiteSpace:'nowrap'}}>{totalDone}/{allVideoIds.length}</span>
+                    <span className="mono" style={{fontSize:14,color:'#cbd5e1',background:'rgba(255,255,255,.05)',border:'1px solid rgba(255,255,255,.1)',borderRadius:8,padding:'4px 10px',fontWeight:700}}>{totalDone}/{allVideoIds.length}</span>
                   </R>
-                  {todayMissions.length===0&&<div style={{textAlign:'center',padding:'16px 0',color:'#334155',fontSize:14}}>🎉 Target hari ini selesai!</div>}
-                  <C style={{gap:7}}>
+                  {todayMissions.length===0&&<div style={{textAlign:'center',padding:'24px 0',color:'#94a3b8',fontSize:15}}>🎉 Target hari ini selesai! Bosan? Lanjut ke Roadmap.</div>}
+                  <C style={{gap:10}}>
                     {todayMissions.map(m=>{
                       const done=safeRprog[m.id];
                       return(
-                        <div key={m.id} style={{background:done?'rgba(16,185,129,.04)':'rgba(3,7,18,.6)',border:`1px solid ${done?'rgba(16,185,129,.2)':'rgba(255,255,255,.06)'}`,borderRadius:11,padding:11,display:'flex',gap:10,alignItems:'flex-start'}}>
-                          <div style={{width:24,height:24,borderRadius:7,border:`2px solid ${done?'#10b981':'rgba(255,255,255,.15)'}`,background:done?'#10b981':'transparent',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,marginTop:1,cursor:'pointer'}} onClick={()=>toggleRprog(m.id)}>
-                            {done&&<Icon name="check" size={10} className="text-white"/>}
+                        <div key={m.id} style={{background:done?'rgba(16,185,129,.05)':'rgba(0,0,0,.25)',border:`1px solid ${done?'rgba(16,185,129,.25)':'rgba(255,255,255,.08)'}`,borderRadius:14,padding:14,display:'flex',gap:12,alignItems:'flex-start', transition:'all 0.3s'}}>
+                          <div style={{width:26,height:26,borderRadius:8,border:`2px solid ${done?'#10b981':'rgba(255,255,255,.2)'}`,background:done?'rgba(16,185,129,.2)':'rgba(255,255,255,.05)',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,marginTop:2,cursor:'pointer', transition:'all 0.2s'}} onClick={()=>toggleRprog(m.id)}>
+                            {done&&<Icon name="check" size={14} className="text-emerald-400"/>}
                           </div>
                           <div style={{flex:1}}>
-                            <div style={{display:'flex',gap:5,marginBottom:2,flexWrap:'wrap'}}>
-                              <span className="tag" style={{background:m.type==='video'?'rgba(99,102,241,.15)':'rgba(245,158,11,.15)',color:m.type==='video'?'#818cf8':'#fbbf24',border:`1px solid ${m.type==='video'?'rgba(99,102,241,.25)':'rgba(245,158,11,.25)'}`}}>{m.type==='video'?'▶ Video':'🔬 Case'}</span>
-                              <span className="tag" style={{background:'rgba(255,255,255,.03)',color:'#475569',border:'1px solid rgba(255,255,255,.06)'}}>{m.phase}</span>
+                            <div style={{display:'flex',gap:6,marginBottom:4,flexWrap:'wrap'}}>
+                              <span className="tag" style={{background:m.type==='video'?'rgba(99,102,241,.15)':'rgba(245,158,11,.15)',color:m.type==='video'?'#a5b4fc':'#fcd34d',border:`1px solid ${m.type==='video'?'rgba(99,102,241,.3)':'rgba(245,158,11,.3)'}`}}>{m.type==='video'?'▶ Video':'🔬 Case'}</span>
+                              <span className="tag" style={{background:'rgba(255,255,255,.05)',color:'#cbd5e1',border:'1px solid rgba(255,255,255,.1)'}}>{m.phase}</span>
                             </div>
-                            <p style={{fontSize:16,fontWeight:600,color:done?'#475569':'#e2e8f0',textDecoration:done?'line-through':'none',lineHeight:1.35}}>{m.title}</p>
-                            {m.url&&<a href={m.url} target="_blank" rel="noopener" style={{fontSize:13,color:'#6366f1',marginTop:2,display:'inline-flex',alignItems:'center',gap:3,textDecoration:'none'}}><Icon name="external-link" size={9}/> Buka</a>}
+                            <p style={{fontSize:16,fontWeight:700,color:done?'#64748b':'#f8fafc',textDecoration:done?'line-through':'none',lineHeight:1.4}}>{m.title}</p>
+                            {m.url&&<a href={m.url} target="_blank" rel="noopener" style={{fontSize:13,color:'#818cf8',marginTop:4,display:'inline-flex',alignItems:'center',gap:4,textDecoration:'none', fontWeight: 600}}><Icon name="external-link" size={12}/> Buka di YouTube</a>}
                           </div>
                         </div>
                       );
                     })}
                   </C>
-                  <button onClick={()=>setTab('roadmap')} style={{padding:'9px',background:'transparent',border:'1px dashed rgba(99,102,241,0.3)',borderRadius:10,color:'#818cf8',fontWeight:600,cursor:'pointer',fontSize:14,transition:'all 0.2s'}} onMouseOver={e=>e.currentTarget.style.background='rgba(99,102,241,0.05)'} onMouseOut={e=>e.currentTarget.style.background='transparent'}>
-                    Buka Roadmap Penuh 🚀
+                  <button onClick={()=>setTab('roadmap')} style={{padding:'12px',background:'rgba(255,255,255,0.03)',border:'1px dashed rgba(99,102,241,0.4)',borderRadius:12,color:'#a5b4fc',fontWeight:700,cursor:'pointer',fontSize:15,transition:'all 0.3s'}} onMouseOver={e=>e.currentTarget.style.background='rgba(99,102,241,0.1)'} onMouseOut={e=>e.currentTarget.style.background='rgba(255,255,255,0.03)'}>
+                    Buka Roadmap Keseluruhan 🚀
                   </button>
                 </div>
               </div>
-              <div className="glass" style={{padding:22,display:'flex',alignItems:'center',gap:13,flexWrap:'wrap'}}>
-                <div style={{padding:13,background:'rgba(245,158,11,.1)',borderRadius:13}}><Icon name="book-open" size={22} className="text-amber-400"/></div>
-                <div style={{flex:1,minWidth:150}}><h3 style={{fontSize:20,fontWeight:700,color:'#fff',marginBottom:1}}>Daily Reading</h3><p style={{fontSize:13,color:'#64748b'}}>Target: <span style={{color:'#fbbf24',fontWeight:700}}>+15 halaman</span>/hari</p></div>
-                <button onClick={()=>setBookLog(true)} style={{padding:'9px 16px',background:'linear-gradient(135deg,#d97706,#f59e0b)',border:'none',borderRadius:10,color:'#fff',fontWeight:700,cursor:'pointer',display:'flex',alignItems:'center',gap:6,fontSize:13,fontFamily:'Space Grotesk,sans-serif'}}>
-                  <Icon name="plus" size={13}/> Log Reading
+              <div className="glass" style={{padding:24,display:'flex',alignItems:'center',gap:16,flexWrap:'wrap'}}>
+                <div style={{padding:14,background:'rgba(245,158,11,.15)',borderRadius:14, border:'1px solid rgba(245,158,11,.3)'}}><Icon name="book-open" size={26} className="text-amber-400"/></div>
+                <div style={{flex:1,minWidth:150}}><h3 style={{fontSize:22,fontWeight:800,color:'#fff',marginBottom:2}}>Daily Reading</h3><p style={{fontSize:14,color:'#94a3b8'}}>Target: <span style={{color:'#fcd34d',fontWeight:700}}>+15 halaman</span> per hari</p></div>
+                <button onClick={()=>setBookLog(true)} style={{padding:'12px 20px',background:'linear-gradient(135deg,rgba(245,158,11,0.8),rgba(217,119,6,0.8))',border:'1px solid rgba(255,255,255,0.2)',borderRadius:14,color:'#fff',fontWeight:700,cursor:'pointer',display:'flex',alignItems:'center',gap:8,fontSize:14,fontFamily:'Space Grotesk,sans-serif', backdropFilter:'blur(4px)', transition:'all 0.2s'}} onMouseOver={e=>e.currentTarget.style.transform='translateY(-2px)'} onMouseOut={e=>e.currentTarget.style.transform='translateY(0)'}>
+                  <Icon name="plus" size={16}/> Log Reading
                 </button>
               </div>
             </div>
@@ -625,38 +712,25 @@ const App=()=>{
 
           {/* ═══ FITNESS ═══ */}
           {tab==='fitness'&&(
-            <FitnessTab
-              safeWO={safeWO}
-              setWorkoutData={setWorkoutData}
-              dayName={dayName}
-              dateKey={dateKey}
-              safeExDone={safeExDone}
-              setExDone={setExDone}
-              ws={ws}
-              fp={fp}
-              primaryExes={primaryExes}
-              secondaryExes={secondaryExes}
-              isExDone={isExDone}
-              toggleEx={toggleEx}
-            />
+            <FitnessTab safeWO={safeWO} setWorkoutData={setWorkoutData} dayName={dayName} dateKey={dateKey} safeExDone={safeExDone} setExDone={setExDone} ws={ws} fp={fp} primaryExes={primaryExes} secondaryExes={secondaryExes} isExDone={isExDone} toggleEx={toggleEx} />
           )}
 
           {/* ═══ ROADMAP ═══ */}
           {tab==='roadmap'&&(
             <div className="anim">
-              <R style={{gap:10,marginBottom:16,justifyContent:'space-between',flexWrap:'wrap'}}>
-                <R style={{gap:10}}>
-                  <div style={{padding:9,background:'rgba(99,102,241,.1)',borderRadius:11}}><Icon name="map" size={18} className="text-indigo-400"/></div>
+              <R style={{gap:12,marginBottom:20,justifyContent:'space-between',flexWrap:'wrap'}}>
+                <R style={{gap:12}}>
+                  <div style={{padding:12,background:'rgba(99,102,241,.15)',borderRadius:14, border:'1px solid rgba(99,102,241,.3)'}}><Icon name="map" size={22} className="text-indigo-400"/></div>
                   <div>
-                    <h2 style={{fontSize:22,fontWeight:800,color:'#fff'}}>Fullstack Curriculum</h2>
-                    <p style={{fontSize:14,color:'#475569'}}>Bebas checklist, bisa tambah & edit sendiri</p>
+                    <h2 style={{fontSize:26,fontWeight:800,color:'#fff'}}>Fullstack Curriculum</h2>
+                    <p style={{fontSize:15,color:'#94a3b8'}}>Modul pembelajaran bebas disesuaikan (90 Hari)</p>
                   </div>
                 </R>
-                <button onClick={()=>{setSettingsTab('roadmap');setSettingsOpen(true);}} className="btn" style={{width:'auto',padding:'9px 16px',fontSize:13}}>
-                  <Icon name="settings-2" size={14}/> Manage Roadmap
+                <button onClick={()=>{setSettingsTab('roadmap');setSettingsOpen(true);}} className="btn" style={{width:'auto',padding:'12px 20px',fontSize:14}}>
+                  <Icon name="settings-2" size={16}/> Manage Roadmap
                 </button>
               </R>
-              <div style={{display:'grid',gridTemplateColumns:mob?'1fr':'repeat(2,1fr)',gap:13}}>
+              <div style={{display:'grid',gridTemplateColumns:mob?'1fr':'repeat(2,1fr)',gap:16}}>
                 {safeRM.map((p,idx)=>{
                   const videos=p.videos||[],casestudies=p.casestudies||[];
                   const allItems=[...videos.map(v=>v.id),...casestudies.map(cs=>cs.id)];
@@ -664,21 +738,21 @@ const App=()=>{
                   const pp=Math.round((done/(allItems.length||1))*100);
                   const c1=p.color1||p.c?.[0]||'#6366f1', c2=p.color2||p.c?.[1]||'#818cf8';
                   return(
-                    <div key={p.id} className="pcard" onClick={()=>setRoadPhaseId(p.id)}>
-                      <R style={{justifyContent:'space-between',marginBottom:10}}>
-                        <R style={{gap:9}}>
-                          <div style={{width:46,height:46,borderRadius:12,background:`linear-gradient(135deg,${c1},${c2})`,display:'flex',alignItems:'center',justifyContent:'center',fontWeight:800,color:'#fff',fontSize:20,boxShadow:`0 4px 14px ${c1}40`}}>{idx+1}</div>
+                    <div key={p.id} className="pcard glass-btn" onClick={()=>setRoadPhaseId(p.id)}>
+                      <R style={{justifyContent:'space-between',marginBottom:14}}>
+                        <R style={{gap:12}}>
+                          <div style={{width:52,height:52,borderRadius:14,background:`linear-gradient(135deg,${c1},${c2})`,display:'flex',alignItems:'center',justifyContent:'center',fontWeight:900,color:'#fff',fontSize:24,boxShadow:`0 4px 20px ${c1}60`}}>{idx+1}</div>
                           <div>
-                            <h3 style={{fontSize:17,fontWeight:700,color:'#fff'}}>{p.title}</h3>
-                            <span style={{fontSize:12,color:'#475569',fontWeight:600,textTransform:'uppercase',letterSpacing:'.05em'}}>Week {p.week} · {videos.length}v · {casestudies.length}cs</span>
+                            <h3 style={{fontSize:18,fontWeight:800,color:'#fff'}}>{p.title}</h3>
+                            <span style={{fontSize:13,color:'#94a3b8',fontWeight:700,textTransform:'uppercase',letterSpacing:'.05em'}}>Week {p.week} · {videos.length}v · {casestudies.length}cs</span>
                           </div>
                         </R>
-                        <span style={{fontSize:26,fontWeight:800,color:'rgba(255,255,255,.1)'}}>{pp}%</span>
+                        <span style={{fontSize:28,fontWeight:900,color:'rgba(255,255,255,.15)'}}>{pp}%</span>
                       </R>
                       <PBar current={done} total={allItems.length} color={`linear-gradient(90deg,${c1},${c2})`}/>
-                      <R style={{justifyContent:'space-between',marginTop:6}}>
-                        <div style={{fontSize:13,color:'#334155'}}>{done}/{allItems.length} selesai</div>
-                        <div style={{fontSize:13,color:'#475569'}}>{(p.desc||'').slice(0,32)}…</div>
+                      <R style={{justifyContent:'space-between',marginTop:10}}>
+                        <div style={{fontSize:14,color:'#cbd5e1', fontWeight: 600}}>{done}/{allItems.length} selesai</div>
+                        <div style={{fontSize:13,color:'#94a3b8'}}>{(p.desc||'').slice(0,40)}…</div>
                       </R>
                     </div>
                   );
@@ -690,20 +764,20 @@ const App=()=>{
           {/* ═══ LIBRARY ═══ */}
           {tab==='library'&&(
             <div className="anim">
-              <R style={{justifyContent:'space-between',marginBottom:16}}>
-                <h2 style={{fontSize:22,fontWeight:800,color:'#fff'}}>Your Library</h2>
-                <button onClick={()=>setBookEdit({id:null,title:'',author:'',totalPages:0,currentPage:0,coverUrl:''})} className="btn" style={{width:'auto',padding:'8px 14px',fontSize:13}}><Icon name="plus" size={13}/> Add Book</button>
+              <R style={{justifyContent:'space-between',marginBottom:20}}>
+                <h2 style={{fontSize:26,fontWeight:800,color:'#fff'}}>Your Library</h2>
+                <button onClick={()=>setBookEdit({id:null,title:'',author:'',totalPages:0,currentPage:0,coverUrl:''})} className="btn" style={{width:'auto',padding:'12px 20px',fontSize:14}}><Icon name="plus" size={16}/> Add Book</button>
               </R>
-              <div style={{display:'grid',gridTemplateColumns:mob?'1fr':'repeat(3,1fr)',gap:13}}>
+              <div style={{display:'grid',gridTemplateColumns:mob?'1fr':'repeat(3,1fr)',gap:16}}>
                 {safeLib.map(b=>(
-                  <div key={b.id} className="glass glass-btn" style={{padding:14}} onClick={()=>setBookEdit(b)}>
-                    <R style={{gap:10,marginBottom:10}}>
-                      <div style={{width:48,height:66,background:'#1e293b',borderRadius:8,overflow:'hidden',flexShrink:0,boxShadow:'0 6px 16px rgba(0,0,0,.4)'}}><img src={b.coverUrl} style={{width:'100%',height:'100%',objectFit:'cover'}} alt={b.title} onError={e=>{e.target.style.display='none'}}/></div>
-                      <div style={{flex:1,minWidth:0}}><h3 style={{fontSize:16,fontWeight:700,color:'#fff',marginBottom:2,lineHeight:1.3}}>{b.title}</h3><p style={{fontSize:13,color:'#475569'}}>{b.author}</p></div>
+                  <div key={b.id} className="glass glass-btn" style={{padding:20}} onClick={()=>setBookEdit(b)}>
+                    <R style={{gap:14,marginBottom:14}}>
+                      <div style={{width:60,height:85,background:'rgba(255,255,255,0.1)',borderRadius:8,overflow:'hidden',flexShrink:0,boxShadow:'0 10px 20px rgba(0,0,0,.5)', border: '1px solid rgba(255,255,255,0.1)'}}><img src={b.coverUrl} style={{width:'100%',height:'100%',objectFit:'cover'}} alt={b.title} onError={e=>{e.target.style.display='none'}}/></div>
+                      <div style={{flex:1,minWidth:0}}><h3 style={{fontSize:18,fontWeight:800,color:'#fff',marginBottom:4,lineHeight:1.3}}>{b.title}</h3><p style={{fontSize:14,color:'#94a3b8'}}>{b.author}</p></div>
                     </R>
-                    <div style={{fontSize:12,fontWeight:700,color:'#6366f1',marginBottom:4,textTransform:'uppercase',letterSpacing:'.06em'}}>{Math.round((b.currentPage/(b.totalPages||1))*100)}%</div>
+                    <div style={{fontSize:13,fontWeight:800,color:'#a5b4fc',marginBottom:6,textTransform:'uppercase',letterSpacing:'.06em'}}>{Math.round((b.currentPage/(b.totalPages||1))*100)}%</div>
                     <PBar current={b.currentPage} total={b.totalPages}/>
-                    <div style={{fontSize:12,color:'#334155',marginTop:4}}>Hal {b.currentPage}/{b.totalPages}</div>
+                    <div style={{fontSize:13,color:'#cbd5e1',marginTop:8, fontWeight: 600}}>Hal {b.currentPage}/{b.totalPages}</div>
                   </div>
                 ))}
               </div>
@@ -713,21 +787,21 @@ const App=()=>{
           {/* ═══ DASHBOARD ═══ */}
           {tab==='dashboard'&&(
             <div className="anim">
-              <h2 style={{fontSize:22,fontWeight:800,color:'#fff',marginBottom:14}}>Overview</h2>
-              <div style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:12,marginBottom:14}}>
-                {[{icon:'activity',col:'#ef4444',label:'FITNESS',val:`${fp.done}/${fp.total}`},{icon:'calendar',col:'#6366f1',label:'HARI',val:`${dayNDisplay}/60`},{icon:'scale',col:'#10b981',label:'BERAT',val:`${weight.current}kg`,sub:`→ ${weight.target}kg`},{icon:'code-2',col:'#818cf8',label:'CODING',val:`${totalDone}/${allVideoIds.length}`,sub:`${Math.round((totalDone/(allVideoIds.length||1))*100)}%`}].map(s=>(
-                  <div key={s.label} style={{background:'rgba(15,23,42,.6)',border:'1px solid rgba(255,255,255,.06)',borderRadius:16,padding:20,display:'flex',flexDirection:'column',alignItems:'center',textAlign:'center'}}>
-                    <div style={{padding:10,background:`${s.col}18`,borderRadius:'50%',marginBottom:8}}><Icon name={s.icon} size={24} style={{color:s.col}}/></div>
-                    <div style={{fontSize:12,fontWeight:700,color:'#475569',letterSpacing:'.08em',marginBottom:3}}>{s.label}</div>
-                    <div style={{fontSize:30,fontWeight:800,color:'#fff'}}>{s.val}</div>
-                    {s.sub&&<div style={{fontSize:12,color:'#334155',marginTop:2}}>{s.sub}</div>}
+              <h2 style={{fontSize:26,fontWeight:800,color:'#fff',marginBottom:20}}>Overview</h2>
+              <div style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:16,marginBottom:16}}>
+                {[{icon:'activity',col:'#ef4444',label:'FITNESS',val:`${fp.done}/${fp.total}`},{icon:'calendar',col:'#6366f1',label:'HARI',val:`${dayNDisplay}/${TOTAL_DAYS}`},{icon:'scale',col:'#10b981',label:'BERAT',val:`${weight.current}kg`,sub:`→ ${weight.target}kg`},{icon:'code-2',col:'#818cf8',label:'CODING',val:`${totalDone}/${allVideoIds.length}`,sub:`${Math.round((totalDone/(allVideoIds.length||1))*100)}%`}].map(s=>(
+                  <div key={s.label} className="glass" style={{padding:24,display:'flex',flexDirection:'column',alignItems:'center',textAlign:'center'}}>
+                    <div style={{padding:12,background:`${s.col}20`,borderRadius:'50%',marginBottom:12, border: `1px solid ${s.col}40`}}><Icon name={s.icon} size={28} style={{color:s.col}}/></div>
+                    <div style={{fontSize:13,fontWeight:800,color:'#94a3b8',letterSpacing:'.1em',marginBottom:4}}>{s.label}</div>
+                    <div style={{fontSize:36,fontWeight:900,color:'#fff'}}>{s.val}</div>
+                    {s.sub&&<div style={{fontSize:14,color:'#cbd5e1',marginTop:4, fontWeight:600}}>{s.sub}</div>}
                   </div>
                 ))}
               </div>
-              <div className="glass" style={{padding:16}}>
-                <R style={{justifyContent:'space-between',marginBottom:8}}>
-                  <div><h3 style={{fontSize:16,fontWeight:700,color:'#fff',marginBottom:1}}>Body Weight Journey</h3><p style={{fontSize:13,color:'#475569'}}>{weight.start}kg → {weight.target}kg</p></div>
-                  <div style={{fontSize:14,color:'#10b981',fontWeight:700}}>-{(weight.start-weight.current).toFixed(1)}kg</div>
+              <div className="glass" style={{padding:24}}>
+                <R style={{justifyContent:'space-between',marginBottom:12}}>
+                  <div><h3 style={{fontSize:18,fontWeight:800,color:'#fff',marginBottom:2}}>Body Weight Journey</h3><p style={{fontSize:14,color:'#94a3b8'}}>{weight.start}kg → {weight.target}kg</p></div>
+                  <div style={{fontSize:16,color:'#34d399',fontWeight:800}}>-{(weight.start-weight.current).toFixed(1)}kg</div>
                 </R>
                 <PBar current={weight.start-weight.current} total={weight.start-weight.target} color="linear-gradient(90deg,#10b981,#059669)"/>
               </div>
@@ -740,27 +814,16 @@ const App=()=>{
         <nav className="mobnav">
           {tabs.map(t=>(
             <button key={t.id} className={`mobbtn ${tab===t.id?'on':''}`} onClick={()=>setTab(t.id)}>
-              <Icon name={t.icon} size={18} className={tab===t.id?'text-indigo-400':''}/><span>{t.label}</span>
+              <Icon name={t.icon} size={20} className={tab===t.id?'text-indigo-400':''}/><span>{t.label}</span>
             </button>
           ))}
         </nav>
       )}
 
-      {/* ══════════════════════════════════════════
-          MEGA SETTINGS MODAL — Roadmap & Workout
-      ══════════════════════════════════════════ */}
-      <SettingsModal
-        isOpen={settingsOpen}
-        onClose={()=>setSettingsOpen(false)}
-        activeTab={settingsTab}
-        setActiveTab={setSettingsTab}
-        roadmapData={safeRM}
-        setRoadmapData={setRoadmapData}
-        workoutData={safeWO}
-        setWorkoutData={setWorkoutData}
-      />
+      {/* Settings Modal */}
+      <SettingsModal isOpen={settingsOpen} onClose={()=>setSettingsOpen(false)} activeTab={settingsTab} setActiveTab={setSettingsTab} roadmapData={safeRM} setRoadmapData={setRoadmapData} workoutData={safeWO} setWorkoutData={setWorkoutData}/>
 
-      {/* ── Roadmap Phase Detail ── */}
+      {/* Roadmap Phase Detail */}
       <Modal isOpen={!!activePhase} onClose={()=>setRoadPhaseId(null)} title={activePhase?.title||''}>
         {activePhase&&(()=>{
           const c1=activePhase.color1||activePhase.c?.[0]||'#6366f1';
@@ -768,49 +831,49 @@ const App=()=>{
           const phVideos=activePhase.videos||[];
           const phCases=activePhase.casestudies||[];
           return(
-            <C style={{gap:13}}>
-              <a href={activePhase.pl} target="_blank" rel="noopener noreferrer" style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'13px 16px',background:`linear-gradient(135deg,${c1},${c2})`,borderRadius:12,textDecoration:'none',color:'#fff',boxShadow:`0 8px 24px ${c1}40`}}>
-                <div><div style={{fontSize:18,fontWeight:800,marginBottom:1}}>▶ Buka Playlist YouTube</div><div style={{fontSize:12,opacity:.75}}>{phVideos.length} video · {phCases.length} case study</div></div>
-                <Icon name="play" size={16}/>
+            <C style={{gap:16}}>
+              <a href={activePhase.pl} target="_blank" rel="noopener noreferrer" style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'16px 20px',background:`linear-gradient(135deg,${c1}cc,${c2}cc)`, backdropFilter:'blur(10px)', border: '1px solid rgba(255,255,255,0.2)', borderRadius:16,textDecoration:'none',color:'#fff',boxShadow:`0 10px 30px ${c1}40`, transition:'all 0.3s'}} onMouseOver={e=>e.currentTarget.style.transform='translateY(-2px)'} onMouseOut={e=>e.currentTarget.style.transform='translateY(0)'}>
+                <div><div style={{fontSize:20,fontWeight:900,marginBottom:2}}>▶ Buka Playlist YouTube</div><div style={{fontSize:14,opacity:.9, fontWeight: 600}}>{phVideos.length} video · {phCases.length} case study</div></div>
+                <Icon name="play" size={24}/>
               </a>
-              <p style={{fontSize:14,color:'#64748b'}}>{activePhase.desc}</p>
+              <p style={{fontSize:15,color:'#cbd5e1', lineHeight: 1.5}}>{activePhase.desc}</p>
               <div>
-                <div style={{fontSize:12,fontWeight:700,color:'#475569',letterSpacing:'.1em',textTransform:'uppercase',marginBottom:6}}>📹 VIDEO ({phVideos.filter(v=>safeRprog[v.id]).length}/{phVideos.length})</div>
-                <C style={{gap:4,maxHeight:280,overflowY:'auto'}}>
+                <div style={{fontSize:13,fontWeight:800,color:'#94a3b8',letterSpacing:'.1em',textTransform:'uppercase',marginBottom:8}}>📹 VIDEO ({phVideos.filter(v=>safeRprog[v.id]).length}/{phVideos.length})</div>
+                <C style={{gap:6,maxHeight:300,overflowY:'auto', paddingRight:4}}>
                   {phVideos.map((v,i)=>{const done=safeRprog[v.id];return(
                     <div key={v.id} className={`vcard ${done?'done':''}`}>
-                      <div onClick={e=>{e.stopPropagation();toggleRprog(v.id);}} style={{width:16,height:16,borderRadius:4,border:`2px solid ${done?'#10b981':'rgba(255,255,255,.14)'}`,background:done?'#10b981':'transparent',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,cursor:'pointer'}}>
-                        {done&&<Icon name="check" size={9} className="text-white"/>}
+                      <div onClick={e=>{e.stopPropagation();toggleRprog(v.id);}} style={{width:20,height:20,borderRadius:6,border:`2px solid ${done?'#10b981':'rgba(255,255,255,.2)'}`,background:done?'rgba(16,185,129,.2)':'rgba(255,255,255,.05)',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,cursor:'pointer'}}>
+                        {done&&<Icon name="check" size={12} className="text-emerald-400"/>}
                       </div>
                       <div style={{flex:1}} onClick={e=>{e.stopPropagation();toggleRprog(v.id);}}>
-                        <p style={{fontSize:14,fontWeight:600,color:done?'#475569':'#e2e8f0',textDecoration:done?'line-through':'none'}}>{i+1}. {v.title}</p>
+                        <p style={{fontSize:15,fontWeight:700,color:done?'#64748b':'#f8fafc',textDecoration:done?'line-through':'none'}}>{i+1}. {v.title}</p>
                       </div>
-                      <a href={v.url} target="_blank" rel="noopener" className="icon-btn"><Icon name="play" size={13}/></a>
-                      <button onClick={e=>{e.stopPropagation();setEditRMItem({phaseId:activePhase.id,type:'video',item:v});}} className="icon-btn"><Icon name="pencil" size={13}/></button>
+                      <a href={v.url} target="_blank" rel="noopener" className="icon-btn"><Icon name="play" size={14}/></a>
+                      <button onClick={e=>{e.stopPropagation();setEditRMItem({phaseId:activePhase.id,type:'video',item:v});}} className="icon-btn"><Icon name="pencil" size={14}/></button>
                     </div>
                   );})}
-                  <button onClick={()=>setEditRMItem({phaseId:activePhase.id,type:'video',item:{}})} style={{padding:'8px',background:'rgba(255,255,255,0.03)',border:'1px dashed rgba(255,255,255,0.1)',borderRadius:9,color:'#94a3b8',fontSize:13,display:'flex',alignItems:'center',justifyContent:'center',gap:6,cursor:'pointer',marginTop:3}}>
-                    <Icon name="plus" size={13}/> Tambah Video
+                  <button onClick={()=>setEditRMItem({phaseId:activePhase.id,type:'video',item:{}})} style={{padding:'10px',background:'rgba(255,255,255,0.03)',border:'1px dashed rgba(255,255,255,0.2)',borderRadius:12,color:'#a5b4fc',fontSize:14,fontWeight:700,display:'flex',alignItems:'center',justifyContent:'center',gap:6,cursor:'pointer',marginTop:4}}>
+                    <Icon name="plus" size={14}/> Tambah Video
                   </button>
                 </C>
               </div>
               <div>
-                <div style={{fontSize:12,fontWeight:700,color:'#f59e0b',letterSpacing:'.1em',textTransform:'uppercase',marginBottom:6}}>🔬 CASE STUDIES ({phCases.filter(cs=>safeRprog[cs.id]).length}/{phCases.length})</div>
-                <C style={{gap:5}}>
+                <div style={{fontSize:13,fontWeight:800,color:'#fcd34d',letterSpacing:'.1em',textTransform:'uppercase',marginBottom:8}}>🔬 CASE STUDIES ({phCases.filter(cs=>safeRprog[cs.id]).length}/{phCases.length})</div>
+                <C style={{gap:6}}>
                   {phCases.map(cs=>{const done=safeRprog[cs.id];return(
-                    <div key={cs.id} style={{display:'flex',gap:9,alignItems:'flex-start',padding:'10px 12px',background:done?'rgba(245,158,11,.04)':'rgba(15,23,42,.5)',border:`1px solid ${done?'rgba(245,158,11,.2)':'rgba(255,255,255,.05)'}`,borderRadius:9}}>
-                      <div onClick={()=>toggleRprog(cs.id)} style={{width:16,height:16,borderRadius:4,border:`2px solid ${done?'#f59e0b':'rgba(255,255,255,.14)'}`,background:done?'#f59e0b':'transparent',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,marginTop:1,cursor:'pointer'}}>
-                        {done&&<Icon name="check" size={9} className="text-white"/>}
+                    <div key={cs.id} style={{display:'flex',gap:12,alignItems:'flex-start',padding:'14px',background:done?'rgba(245,158,11,.05)':'rgba(0,0,0,.2)',border:`1px solid ${done?'rgba(245,158,11,.3)':'rgba(255,255,255,.08)'}`,borderRadius:12}}>
+                      <div onClick={()=>toggleRprog(cs.id)} style={{width:20,height:20,borderRadius:6,border:`2px solid ${done?'#f59e0b':'rgba(255,255,255,.2)'}`,background:done?'rgba(245,158,11,.2)':'rgba(255,255,255,.05)',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,marginTop:2,cursor:'pointer'}}>
+                        {done&&<Icon name="check" size={12} className="text-amber-400"/>}
                       </div>
                       <div style={{flex:1,cursor:'pointer'}} onClick={()=>toggleRprog(cs.id)}>
-                        <p style={{fontSize:14,fontWeight:700,color:done?'#64748b':'#fbbf24',textDecoration:done?'line-through':'none',marginBottom:1}}>{cs.title}</p>
-                        <p style={{fontSize:13,color:'#475569'}}>{cs.desc}</p>
+                        <p style={{fontSize:15,fontWeight:800,color:done?'#64748b':'#fcd34d',textDecoration:done?'line-through':'none',marginBottom:2}}>{cs.title}</p>
+                        <p style={{fontSize:14,color:'#94a3b8'}}>{cs.desc}</p>
                       </div>
-                      <button onClick={e=>{e.stopPropagation();setEditRMItem({phaseId:activePhase.id,type:'case',item:cs});}} className="icon-btn"><Icon name="pencil" size={13}/></button>
+                      <button onClick={e=>{e.stopPropagation();setEditRMItem({phaseId:activePhase.id,type:'case',item:cs});}} className="icon-btn"><Icon name="pencil" size={14}/></button>
                     </div>
                   );})}
-                  <button onClick={()=>setEditRMItem({phaseId:activePhase.id,type:'case',item:{}})} style={{padding:'8px',background:'rgba(255,255,255,0.03)',border:'1px dashed rgba(255,255,255,0.1)',borderRadius:9,color:'#94a3b8',fontSize:13,display:'flex',alignItems:'center',justifyContent:'center',gap:6,cursor:'pointer',marginTop:3}}>
-                    <Icon name="plus" size={13}/> Tambah Case Study
+                  <button onClick={()=>setEditRMItem({phaseId:activePhase.id,type:'case',item:{}})} style={{padding:'10px',background:'rgba(255,255,255,0.03)',border:'1px dashed rgba(255,255,255,0.2)',borderRadius:12,color:'#a5b4fc',fontSize:14,fontWeight:700,display:'flex',alignItems:'center',justifyContent:'center',gap:6,cursor:'pointer',marginTop:4}}>
+                    <Icon name="plus" size={14}/> Tambah Case Study
                   </button>
                 </C>
               </div>
@@ -819,92 +882,94 @@ const App=()=>{
         })()}
       </Modal>
 
-      {/* Edit material inline */}
+      {/* Edit RM Inline */}
       <Modal isOpen={!!editRMItem} onClose={()=>setEditRMItem(null)} title={editRMItem?.item?.id?`Edit ${editRMItem.type==='video'?'Video':'Case Study'}`:`Tambah ${editRMItem?.type==='video'?'Video':'Case Study'}`}>
         {editRMItem&&(
-          <form onSubmit={handleSaveRMItem} style={{display:'flex',flexDirection:'column',gap:13}}>
-            <div><label style={{fontSize:11,fontWeight:700,color:'#475569',letterSpacing:'.08em',display:'block',marginBottom:5,textTransform:'uppercase'}}>Judul</label><input name="title" type="text" defaultValue={editRMItem.item?.title||''} className="inp" required placeholder="Judul materi..."/></div>
-            {editRMItem.type==='video'&&<div><label style={{fontSize:11,fontWeight:700,color:'#475569',letterSpacing:'.08em',display:'block',marginBottom:5,textTransform:'uppercase'}}>Link YouTube</label><input name="url" type="url" defaultValue={editRMItem.item?.url||''} className="inp" required placeholder="https://youtube.com/..."/></div>}
-            {editRMItem.type==='case'&&<div><label style={{fontSize:11,fontWeight:700,color:'#475569',letterSpacing:'.08em',display:'block',marginBottom:5,textTransform:'uppercase'}}>Deskripsi</label><input name="desc" type="text" defaultValue={editRMItem.item?.desc||''} className="inp" required placeholder="Instruksi case study..."/></div>}
-            <R style={{gap:8,marginTop:4}}>
-              {editRMItem.item?.id&&<button type="button" onClick={handleDeleteRMItem} className="btn btn-danger btn-sm" style={{flex:1}}><Icon name="trash-2" size={14}/> Hapus</button>}
-              <button type="submit" className="btn btn-sm" style={{flex:2}}>Simpan</button>
+          <form onSubmit={handleSaveRMItem} style={{display:'flex',flexDirection:'column',gap:16}}>
+            <div><label style={{fontSize:12,fontWeight:800,color:'#94a3b8',letterSpacing:'.08em',display:'block',marginBottom:6,textTransform:'uppercase'}}>Judul</label><input name="title" type="text" defaultValue={editRMItem.item?.title||''} className="inp" required placeholder="Judul materi..."/></div>
+            {editRMItem.type==='video'&&<div><label style={{fontSize:12,fontWeight:800,color:'#94a3b8',letterSpacing:'.08em',display:'block',marginBottom:6,textTransform:'uppercase'}}>Link YouTube</label><input name="url" type="url" defaultValue={editRMItem.item?.url||''} className="inp" required placeholder="https://youtube.com/..."/></div>}
+            {editRMItem.type==='case'&&<div><label style={{fontSize:12,fontWeight:800,color:'#94a3b8',letterSpacing:'.08em',display:'block',marginBottom:6,textTransform:'uppercase'}}>Deskripsi</label><input name="desc" type="text" defaultValue={editRMItem.item?.desc||''} className="inp" required placeholder="Instruksi case study..."/></div>}
+            <R style={{gap:12,marginTop:8}}>
+              {editRMItem.item?.id&&<button type="button" onClick={handleDeleteRMItem} className="btn btn-danger btn-sm" style={{flex:1, padding: '12px'}}><Icon name="trash-2" size={16}/> Hapus</button>}
+              <button type="submit" className="btn btn-sm" style={{flex:2, padding: '12px'}}>Simpan</button>
             </R>
           </form>
         )}
       </Modal>
 
-      {/* Modals lain */}
+      {/* Book Log Modal */}
       <Modal isOpen={bookLog} onClose={()=>setBookLog(false)} title="Log Reading Session">
-        <C style={{gap:7}}>
+        <C style={{gap:10}}>
           {safeLib.map(b=>(
-            <button key={b.id} onClick={()=>{setLibrary(p=>{const s=Array.isArray(p)?p:[];return s.map(bk=>bk.id===b.id?{...bk,currentPage:Math.min(bk.totalPages,bk.currentPage+15)}:bk);});setBookLog(false);}} style={{display:'flex',alignItems:'center',gap:10,padding:11,background:'rgba(15,23,42,.6)',border:'1px solid rgba(255,255,255,.07)',borderRadius:11,cursor:'pointer',textAlign:'left',width:'100%',fontFamily:'Space Grotesk,sans-serif'}}>
-              <div style={{width:36,height:48,background:'#1e293b',borderRadius:6,overflow:'hidden',flexShrink:0}}><img src={b.coverUrl} style={{width:'100%',height:'100%',objectFit:'cover'}} alt={b.title}/></div>
-              <div style={{flex:1}}><div style={{fontSize:16,fontWeight:700,color:'#fff',marginBottom:2}}>{b.title}</div><div style={{fontSize:12,color:'#475569'}}>{b.currentPage}/{b.totalPages} hal</div></div>
-              <Icon name="plus" size={14} className="text-amber-400"/>
+            <button key={b.id} onClick={()=>{setLibrary(p=>{const s=Array.isArray(p)?p:[];return s.map(bk=>bk.id===b.id?{...bk,currentPage:Math.min(bk.totalPages,bk.currentPage+15)}:bk);});setBookLog(false);}} className="glass-btn" style={{display:'flex',alignItems:'center',gap:14,padding:14,background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,.08)',borderRadius:14,textAlign:'left',width:'100%',fontFamily:'Space Grotesk,sans-serif'}}>
+              <div style={{width:42,height:56,background:'#1e293b',borderRadius:6,overflow:'hidden',flexShrink:0}}><img src={b.coverUrl} style={{width:'100%',height:'100%',objectFit:'cover'}} alt={b.title}/></div>
+              <div style={{flex:1}}><div style={{fontSize:16,fontWeight:800,color:'#fff',marginBottom:2}}>{b.title}</div><div style={{fontSize:13,color:'#94a3b8'}}>{b.currentPage}/{b.totalPages} hal</div></div>
+              <div style={{padding: '8px', background: 'rgba(245,158,11,0.1)', borderRadius: '10px', border: '1px solid rgba(245,158,11,0.3)'}}><Icon name="plus" size={16} className="text-amber-400"/></div>
             </button>
           ))}
         </C>
       </Modal>
 
+      {/* Book Edit Modal */}
       <Modal isOpen={!!bookEdit} onClose={()=>setBookEdit(null)} title={bookEdit?.id?'Edit Buku':'Tambah Buku'}>
         {bookEdit&&(
-          <form onSubmit={e=>{e.preventDefault();const fd=new FormData(e.target);const nb={id:bookEdit.id||Date.now(),title:fd.get('title'),author:fd.get('author'),totalPages:parseInt(fd.get('tp')),currentPage:parseInt(fd.get('cp')),coverUrl:fd.get('cover')};setLibrary(p=>{const s=Array.isArray(p)?p:[];return bookEdit.id?s.map(b=>b.id===nb.id?nb:b):[...s,nb];});setBookEdit(null);}} style={{display:'flex',flexDirection:'column',gap:12}}>
+          <form onSubmit={e=>{e.preventDefault();const fd=new FormData(e.target);const nb={id:bookEdit.id||Date.now(),title:fd.get('title'),author:fd.get('author'),totalPages:parseInt(fd.get('tp')),currentPage:parseInt(fd.get('cp')),coverUrl:fd.get('cover')};setLibrary(p=>{const s=Array.isArray(p)?p:[];return bookEdit.id?s.map(b=>b.id===nb.id?nb:b):[...s,nb];});setBookEdit(null);}} style={{display:'flex',flexDirection:'column',gap:14}}>
             {[['title','Judul','text',bookEdit.title,true],['author','Penulis','text',bookEdit.author,true],['cover','Cover URL','url',bookEdit.coverUrl,false]].map(([n,l,t,d,r])=>(
-              <div key={n}><label style={{fontSize:11,fontWeight:700,color:'#475569',letterSpacing:'.08em',display:'block',marginBottom:5,textTransform:'uppercase'}}>{l}</label><input name={n} type={t} defaultValue={d} className="inp" required={r}/></div>
+              <div key={n}><label style={{fontSize:12,fontWeight:800,color:'#94a3b8',letterSpacing:'.08em',display:'block',marginBottom:6,textTransform:'uppercase'}}>{l}</label><input name={n} type={t} defaultValue={d} className="inp" required={r}/></div>
             ))}
-            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8}}>
+            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
               {[['tp','Total Halaman',bookEdit.totalPages],['cp','Halaman Sekarang',bookEdit.currentPage]].map(([n,l,d])=>(
-                <div key={n}><label style={{fontSize:11,fontWeight:700,color:'#475569',letterSpacing:'.08em',display:'block',marginBottom:5,textTransform:'uppercase'}}>{l}</label><input name={n} type="number" min="0" defaultValue={d} className="inp" required/></div>
+                <div key={n}><label style={{fontSize:12,fontWeight:800,color:'#94a3b8',letterSpacing:'.08em',display:'block',marginBottom:6,textTransform:'uppercase'}}>{l}</label><input name={n} type="number" min="0" defaultValue={d} className="inp" required/></div>
               ))}
             </div>
-            <R style={{gap:8,marginTop:4}}>
-              {bookEdit.id&&<button type="button" onClick={()=>{setLibrary(p=>{const s=Array.isArray(p)?p:[];return s.filter(b=>b.id!==bookEdit.id);});setBookEdit(null);}} className="btn btn-danger btn-sm" style={{flex:1}}>Hapus</button>}
-              <button type="submit" className="btn btn-sm" style={{flex:2}}>Simpan</button>
+            <R style={{gap:12,marginTop:8}}>
+              {bookEdit.id&&<button type="button" onClick={()=>{setLibrary(p=>{const s=Array.isArray(p)?p:[];return s.filter(b=>b.id!==bookEdit.id);});setBookEdit(null);}} className="btn btn-danger btn-sm" style={{flex:1, padding:'12px'}}>Hapus</button>}
+              <button type="submit" className="btn btn-sm" style={{flex:2, padding:'12px'}}>Simpan</button>
             </R>
           </form>
         )}
       </Modal>
 
+      {/* Weight Modal */}
       <Modal isOpen={nutModal} onClose={()=>setNutModal(false)} title="Update Berat Badan">
-        <div style={{background:'rgba(16,185,129,.05)',border:'1px solid rgba(16,185,129,.15)',borderRadius:12,padding:16}}>
-          <div style={{fontSize:12,fontWeight:700,color:'#34d399',marginBottom:2,textTransform:'uppercase',letterSpacing:'.08em'}}>Berat Badan</div>
-          <R style={{alignItems:'baseline',gap:7,marginBottom:10}}><span style={{fontSize:38,fontWeight:800,color:'#fff'}}>{weight.current}</span><span style={{fontSize:15,color:'#475569'}}>kg · target {weight.target}kg</span></R>
+        <div style={{background:'rgba(16,185,129,.1)',border:'1px solid rgba(16,185,129,.25)',borderRadius:16,padding:20}}>
+          <div style={{fontSize:13,fontWeight:800,color:'#34d399',marginBottom:4,textTransform:'uppercase',letterSpacing:'.08em'}}>Berat Badan Anda</div>
+          <R style={{alignItems:'baseline',gap:8,marginBottom:14}}><span style={{fontSize:42,fontWeight:900,color:'#fff'}}>{weight.current}</span><span style={{fontSize:16,color:'#cbd5e1', fontWeight: 600}}>kg · target {weight.target}kg</span></R>
           <PBar current={weight.start-weight.current} total={weight.start-weight.target} color="linear-gradient(90deg,#10b981,#059669)"/>
-          <form onSubmit={e=>{e.preventDefault();setWeight(p=>({...p,current:parseFloat(e.target.w.value)}));setNutModal(false);}} style={{display:'flex',gap:8,marginTop:10}}>
-            <input name="w" type="number" step="0.1" placeholder={weight.current} className="inp" style={{flex:1}} required/>
-            <button style={{padding:'10px 14px',background:'linear-gradient(135deg,#10b981,#059669)',border:'none',borderRadius:9,color:'#fff',fontWeight:700,cursor:'pointer',fontSize:15,fontFamily:'Space Grotesk,sans-serif'}}>Update</button>
+          <form onSubmit={e=>{e.preventDefault();setWeight(p=>({...p,current:parseFloat(e.target.w.value)}));setNutModal(false);}} style={{display:'flex',gap:10,marginTop:16}}>
+            <input name="w" type="number" step="0.1" placeholder={weight.current} className="inp" style={{flex:1, background: 'rgba(0,0,0,0.4)'}} required/>
+            <button style={{padding:'12px 20px',background:'linear-gradient(135deg,rgba(16,185,129,0.9),rgba(5,150,105,0.9))',border:'1px solid rgba(255,255,255,0.2)',borderRadius:12,color:'#fff',fontWeight:800,cursor:'pointer',fontSize:16,fontFamily:'Space Grotesk,sans-serif'}}>Update</button>
           </form>
         </div>
       </Modal>
 
-      <Modal isOpen={calModal} onClose={()=>setCalModal(false)} title="Timeline — 60 Days">
-        <div style={{marginBottom:12,padding:'10px 14px',background:'rgba(99,102,241,.08)',borderRadius:10,border:'1px solid rgba(99,102,241,.2)',fontSize:13,color:'#818cf8',display:'flex',gap:10,flexWrap:'wrap'}}>
+      {/* Calendar Modal */}
+      <Modal isOpen={calModal} onClose={()=>setCalModal(false)} title="Timeline — 90 Days Challenge">
+        <div style={{marginBottom:16,padding:'14px 18px',background:'rgba(99,102,241,.1)',borderRadius:14,border:'1px solid rgba(99,102,241,.3)',fontSize:14,color:'#a5b4fc',display:'flex',gap:12,flexWrap:'wrap', fontWeight: 600}}>
           <span>📅 Mulai: <b style={{color:'#fff'}}>{start.toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})}</b></span>
-          <span style={{color:'#334155'}}>·</span>
+          <span style={{color:'#475569'}}>·</span>
           <span>🏁 Selesai: <b style={{color:'#fff'}}>{end.toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})}</b></span>
-          <span style={{color:'#334155'}}>·</span>
-          <span>Hari ini: <b style={{color:'#fbbf24'}}>Day {dayNDisplay}</b></span>
+          <span style={{color:'#475569'}}>·</span>
+          <span>Saat ini: <b style={{color:'#fcd34d'}}>Day {dayNDisplay}</b></span>
         </div>
-        <div style={{display:'grid',gridTemplateColumns:'repeat(10,1fr)',gap:4}}>
-          {Array.from({length:60}).map((_,i)=>{
+        <div style={{display:'grid',gridTemplateColumns:'repeat(10,1fr)',gap:6}}>
+          {Array.from({length: TOTAL_DAYS}).map((_,i)=>{
             const dayNum=i+1;
             const past=dayNum<dayNDisplay;
             const cur=dayNum===dayNDisplay;
             const future=dayNum>dayNDisplay;
-            // Tanggal tiap hari: start + i hari
             const d=new Date(start);d.setDate(start.getDate()+i);
             const label=`${d.getDate()}/${d.getMonth()+1}`;
             return(
-              <div key={i} title={`Day ${dayNum} — ${d.toLocaleDateString('id-ID',{day:'numeric',month:'short'})}`} style={{aspectRatio:'1',borderRadius:5,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',fontSize:10,fontWeight:700,background:cur?'#6366f1':past?'rgba(99,102,241,.18)':'rgba(255,255,255,.02)',color:cur?'#fff':past?'#818cf8':'#1e293b',border:cur?'2px solid #818cf8':'1px solid rgba(255,255,255,.04)',boxShadow:cur?'0 0 10px rgba(99,102,241,.5)':'none',cursor:'default',transition:'all .2s'}}>
+              <div key={i} title={`Day ${dayNum} — ${d.toLocaleDateString('id-ID',{day:'numeric',month:'short'})}`} style={{aspectRatio:'1',borderRadius:8,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',fontSize:12,fontWeight:800,background:cur?'rgba(99,102,241,0.9)':past?'rgba(99,102,241,.2)':'rgba(255,255,255,.05)',color:cur?'#fff':past?'#c7d2fe':'#64748b',border:cur?'1px solid #fff':'1px solid rgba(255,255,255,.1)',boxShadow:cur?'0 0 15px rgba(99,102,241,.6)':'none',cursor:'default',transition:'all .2s'}}>
                 <span>{dayNum}</span>
               </div>
             );
           })}
         </div>
-        <div style={{display:'flex',gap:12,marginTop:12,fontSize:12}}>
-          {[{col:'#6366f1',label:'Hari ini'},{col:'rgba(99,102,241,.18)',label:'Sudah lewat'},{col:'rgba(255,255,255,.02)',label:'Belum'}].map(l=>(
-            <div key={l.label} style={{display:'flex',alignItems:'center',gap:5}}><div style={{width:10,height:10,borderRadius:3,background:l.col,border:'1px solid rgba(255,255,255,.1)'}}/><span style={{color:'#475569'}}>{l.label}</span></div>
+        <div style={{display:'flex',gap:16,marginTop:16,fontSize:13, fontWeight: 600}}>
+          {[{col:'#818cf8',label:'Hari ini'},{col:'rgba(99,102,241,.2)',label:'Sudah lewat'},{col:'rgba(255,255,255,.05)',label:'Belum'}].map(l=>(
+            <div key={l.label} style={{display:'flex',alignItems:'center',gap:6}}><div style={{width:12,height:12,borderRadius:4,background:l.col,border:'1px solid rgba(255,255,255,.2)'}}/><span style={{color:'#cbd5e1'}}>{l.label}</span></div>
           ))}
         </div>
       </Modal>
@@ -914,7 +979,7 @@ const App=()=>{
 
 
 // ═══════════════════════════════════════════════════════════════
-// FITNESS TAB — Today view + Weekly Planner + Scapular locked
+// FITNESS TAB
 // ═══════════════════════════════════════════════════════════════
 const FitnessTab=({safeWO,setWorkoutData,dayName,dateKey,safeExDone,setExDone,ws,fp,primaryExes,secondaryExes,isExDone,toggleEx})=>{
   const[view,setView]=useState('today');
@@ -931,7 +996,6 @@ const FitnessTab=({safeWO,setWorkoutData,dayName,dateKey,safeExDone,setExDone,ws
   const viewPrimary=viewExes.filter(e=>e.category==='primary');
   const isToday=viewDay===dayName;
 
-  // For today view progress: primary + scapular
   const todayPrimaryDone=(ws?.exercises||[]).filter(e=>e.category==='primary'&&isExDone(e)).length;
   const todayScapDone=SCAPULAR_EXERCISES.filter(e=>isExDone(e)).length;
   const todayDone=todayPrimaryDone+todayScapDone;
@@ -985,277 +1049,230 @@ const FitnessTab=({safeWO,setWorkoutData,dayName,dateKey,safeExDone,setExDone,ws
   };
 
   const weekSummary=DAYS.map(d=>{
-    const wd=safeWO[d]||{type:'-',col:'#334155',exercises:[]};
+    const wd=safeWO[d]||{type:'-',col:'#64748b',exercises:[]};
     const pri=(wd.exercises||[]).filter(e=>e.category==='primary').length;
     return{day:d,type:wd.type,col:wd.col,focus:wd.focus,pri,scap:SCAPULAR_EXERCISES.length,total:pri+SCAPULAR_EXERCISES.length};
   });
 
   const CategoryDivider=({label,col,borderCol,locked=false})=>(
-    <div style={{display:'flex',alignItems:'center',gap:8,margin:'16px 0 10px'}}>
+    <div style={{display:'flex',alignItems:'center',gap:10,margin:'20px 0 12px'}}>
       <div style={{height:1,flex:1,background:borderCol}}/>
-      <span style={{fontSize:11,fontWeight:700,letterSpacing:'.12em',color:col,background:`${col}18`,border:`1px solid ${col}40`,borderRadius:6,padding:'4px 12px',display:'flex',alignItems:'center',gap:5}}>
-        {label}{locked&&<span style={{fontSize:9,background:'rgba(255,255,255,.08)',borderRadius:4,padding:'1px 5px',color:'#475569',fontWeight:700,letterSpacing:'.08em'}}>TERKUNCI</span>}
+      <span style={{fontSize:12,fontWeight:800,letterSpacing:'.12em',color:col,background:`${col}15`,border:`1px solid ${col}40`,borderRadius:8,padding:'6px 14px',display:'flex',alignItems:'center',gap:6, backdropFilter:'blur(4px)'}}>
+        {label}{locked&&<span style={{fontSize:10,background:'rgba(255,255,255,.1)',borderRadius:4,padding:'2px 6px',color:'#cbd5e1',fontWeight:800,letterSpacing:'.08em'}}>FIXED</span>}
       </span>
       <div style={{height:1,flex:1,background:borderCol}}/>
     </div>
   );
 
-  // Primary exercise card — editable
   const PrimaryCard=({ex,i,day,editable=false})=>{
     const done=isDoneFor(day,ex);
     const dayPrimary=(safeWO[day]?.exercises||[]).filter(e=>e.category==='primary');
     const trueIdx=dayPrimary.indexOf(ex);
     return(
-      <div style={{display:'flex',alignItems:'center',gap:10,padding:'11px 14px',borderRadius:12,background:done?'rgba(16,185,129,.05)':'rgba(3,7,18,.5)',border:`1px solid ${done?'rgba(16,185,129,.25)':'rgba(99,102,241,.2)'}`,borderLeft:`3px solid ${done?'#10b981':'#6366f1'}`,transition:'all .2s'}}>
-        <div onClick={()=>toggleFor(day,ex)} style={{width:36,height:36,borderRadius:9,border:`2px solid ${done?'#10b981':'rgba(99,102,241,.4)'}`,background:done?'rgba(16,185,129,.15)':'rgba(99,102,241,.08)',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,cursor:'pointer',transition:'all .2s'}}>
-          {done?<Icon name="check" size={13}/>:<span style={{fontSize:13,fontWeight:800,color:'#6366f1'}}>{i+1}</span>}
+      <div style={{display:'flex',alignItems:'center',gap:12,padding:'14px 16px',borderRadius:16,background:done?'rgba(16,185,129,.1)':'rgba(0,0,0,.3)',border:`1px solid ${done?'rgba(16,185,129,.3)':'rgba(99,102,241,.2)'}`,borderLeft:`4px solid ${done?'#10b981':'#818cf8'}`,transition:'all .3s', backdropFilter:'blur(4px)'}}>
+        <div onClick={()=>toggleFor(day,ex)} style={{width:40,height:40,borderRadius:10,border:`2px solid ${done?'#10b981':'rgba(99,102,241,.5)'}`,background:done?'rgba(16,185,129,.2)':'rgba(99,102,241,.1)',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,cursor:'pointer',transition:'all .2s'}}>
+          {done?<Icon name="check" size={16} className="text-emerald-400"/>:<span style={{fontSize:15,fontWeight:900,color:'#818cf8'}}>{i+1}</span>}
         </div>
         <div style={{flex:1,minWidth:0}}>
-          <div style={{fontSize:15,fontWeight:700,color:done?'#475569':'#e2e8f0',textDecoration:done?'line-through':'none',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{ex.name}</div>
-          <div style={{fontSize:12,color:'#475569'}}>{ex.detail} · <span style={{color:'#818cf8'}}>{ex.target}</span></div>
+          <div style={{fontSize:16,fontWeight:800,color:done?'#64748b':'#f8fafc',textDecoration:done?'line-through':'none',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{ex.name}</div>
+          <div style={{fontSize:13,color:'#94a3b8', marginTop: 2, fontWeight: 600}}>{ex.detail} · <span style={{color:'#a5b4fc'}}>{ex.target}</span></div>
         </div>
         {editable&&(
-          <div style={{display:'flex',gap:3,flexShrink:0}}>
-            {trueIdx>0&&<button onClick={()=>moveEx(day,trueIdx,trueIdx-1)} className="icon-btn"><Icon name="chevron-up" size={10}/></button>}
-            {trueIdx<dayPrimary.length-1&&<button onClick={()=>moveEx(day,trueIdx,trueIdx+1)} className="icon-btn"><Icon name="chevron-down" size={10}/></button>}
-            <button onClick={()=>setEditEx({isNew:false,dayKey:day,index:trueIdx,...ex,category:'primary'})} className="icon-btn"><Icon name="pencil" size={10}/></button>
-            <button onClick={()=>deleteEx(day,trueIdx)} className="icon-btn red"><Icon name="trash-2" size={10}/></button>
+          <div style={{display:'flex',gap:4,flexShrink:0}}>
+            {trueIdx>0&&<button onClick={()=>moveEx(day,trueIdx,trueIdx-1)} className="icon-btn"><Icon name="chevron-up" size={12}/></button>}
+            {trueIdx<dayPrimary.length-1&&<button onClick={()=>moveEx(day,trueIdx,trueIdx+1)} className="icon-btn"><Icon name="chevron-down" size={12}/></button>}
+            <button onClick={()=>setEditEx({isNew:false,dayKey:day,index:trueIdx,...ex,category:'primary'})} className="icon-btn"><Icon name="pencil" size={12}/></button>
+            <button onClick={()=>deleteEx(day,trueIdx)} className="icon-btn red"><Icon name="trash-2" size={12}/></button>
           </div>
         )}
       </div>
     );
   };
 
-  // Scapular exercise card — locked, no edit buttons, but still checkable
   const ScapularCard=({ex,i,day})=>{
     const done=isDoneFor(day,ex);
     return(
-      <div style={{display:'flex',alignItems:'center',gap:10,padding:'11px 14px',borderRadius:12,background:done?'rgba(16,185,129,.05)':'rgba(3,7,18,.5)',border:`1px solid ${done?'rgba(16,185,129,.25)':'rgba(16,185,129,.15)'}`,borderLeft:'3px solid #10b981',transition:'all .2s',opacity:1}}>
-        <div onClick={()=>toggleFor(day,ex)} style={{width:36,height:36,borderRadius:9,border:`2px solid ${done?'#10b981':'rgba(16,185,129,.3)'}`,background:done?'rgba(16,185,129,.15)':'rgba(16,185,129,.05)',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,cursor:'pointer',transition:'all .2s'}}>
-          {done?<Icon name="check" size={13}/>:<span style={{fontSize:13,fontWeight:800,color:'#10b981'}}>{i+1}</span>}
+      <div style={{display:'flex',alignItems:'center',gap:12,padding:'14px 16px',borderRadius:16,background:done?'rgba(16,185,129,.1)':'rgba(0,0,0,.2)',border:`1px solid ${done?'rgba(16,185,129,.3)':'rgba(16,185,129,.2)'}`,borderLeft:'4px solid #10b981',transition:'all .3s', backdropFilter:'blur(4px)'}}>
+        <div onClick={()=>toggleFor(day,ex)} style={{width:40,height:40,borderRadius:10,border:`2px solid ${done?'#10b981':'rgba(16,185,129,.4)'}`,background:done?'rgba(16,185,129,.2)':'rgba(16,185,129,.1)',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,cursor:'pointer',transition:'all .2s'}}>
+          {done?<Icon name="check" size={16} className="text-emerald-400"/>:<span style={{fontSize:15,fontWeight:900,color:'#10b981'}}>{i+1}</span>}
         </div>
         <div style={{flex:1,minWidth:0}}>
-          <div style={{fontSize:15,fontWeight:700,color:done?'#475569':'#e2e8f0',textDecoration:done?'line-through':'none',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{ex.name}</div>
-          <div style={{fontSize:12,color:'#475569'}}>{ex.detail} · <span style={{color:'#10b981'}}>{ex.target}</span></div>
+          <div style={{fontSize:16,fontWeight:800,color:done?'#64748b':'#f8fafc',textDecoration:done?'line-through':'none',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{ex.name}</div>
+          <div style={{fontSize:13,color:'#94a3b8', marginTop:2, fontWeight: 600}}>{ex.detail} · <span style={{color:'#6ee7b7'}}>{ex.target}</span></div>
         </div>
-        <span style={{fontSize:10,color:'#1e3a2f',background:'rgba(16,185,129,.06)',border:'1px solid rgba(16,185,129,.12)',borderRadius:4,padding:'2px 6px',fontWeight:700,letterSpacing:'.06em',flexShrink:0}}>FIXED</span>
+        <span style={{fontSize:11,color:'#34d399',background:'rgba(16,185,129,.1)',border:'1px solid rgba(16,185,129,.2)',borderRadius:6,padding:'4px 8px',fontWeight:800,letterSpacing:'.06em',flexShrink:0}}>CORE</span>
       </div>
     );
   };
 
   return(
     <div className="anim">
-      {/* Header + view toggle */}
-      <R style={{justifyContent:'space-between',marginBottom:16,flexWrap:'wrap',gap:10}}>
+      <R style={{justifyContent:'space-between',marginBottom:20,flexWrap:'wrap',gap:12}}>
         <div>
-          <h2 style={{fontSize:22,fontWeight:800,color:'#fff',marginBottom:3}}>Fitness Tracker</h2>
-          <p style={{fontSize:13,color:'#475569'}}>⚡ Latihan Inti bisa diedit · 🩻 Scapular Winging terkunci setiap hari</p>
+          <h2 style={{fontSize:26,fontWeight:900,color:'#fff',marginBottom:4}}>Fitness Tracker</h2>
+          <p style={{fontSize:14,color:'#94a3b8', fontWeight: 600}}>⚡ Latihan Inti (Bebas) · 🩻 Scapular Winging (Locked Daily)</p>
         </div>
-        <div style={{display:'flex',gap:0,background:'rgba(255,255,255,.04)',borderRadius:11,border:'1px solid rgba(255,255,255,.07)',overflow:'hidden'}}>
+        <div style={{display:'flex',gap:0,background:'rgba(255,255,255,.05)',borderRadius:14,border:'1px solid rgba(255,255,255,.1)',overflow:'hidden', backdropFilter:'blur(4px)'}}>
           {[{id:'today',label:'Hari Ini'},{id:'weekly',label:'Mingguan'}].map(v=>(
-            <button key={v.id} onClick={()=>setView(v.id)} style={{padding:'8px 18px',border:'none',background:view===v.id?'rgba(99,102,241,.2)':'transparent',color:view===v.id?'#818cf8':'#475569',fontWeight:700,fontSize:13,cursor:'pointer',fontFamily:'Space Grotesk,sans-serif',transition:'all .2s',borderRight:v.id==='today'?'1px solid rgba(255,255,255,.07)':'none'}}>
+            <button key={v.id} onClick={()=>setView(v.id)} style={{padding:'10px 20px',border:'none',background:view===v.id?'rgba(99,102,241,.25)':'transparent',color:view===v.id?'#e0e7ff':'#94a3b8',fontWeight:800,fontSize:14,cursor:'pointer',fontFamily:'Space Grotesk,sans-serif',transition:'all .2s',borderRight:v.id==='today'?'1px solid rgba(255,255,255,.1)':'none'}}>
               {v.label}
             </button>
           ))}
         </div>
       </R>
 
-      {/* ════ TODAY VIEW ════ */}
+      {/* TODAY VIEW */}
       {view==='today'&&(
-        <C style={{gap:0,maxWidth:680,margin:'0 auto'}}>
-          {/* Session header */}
-          <div className="glass" style={{padding:20,marginBottom:14,display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:12}}>
+        <C style={{gap:0,maxWidth:720,margin:'0 auto'}}>
+          <div className="glass" style={{padding:24,marginBottom:20,display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:16}}>
             <div style={{flex:1}}>
-              <R style={{gap:9,marginBottom:8}}>
-                <div style={{width:40,height:40,borderRadius:10,background:`${ws?.col}22`,border:`1px solid ${ws?.col}40`,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
-                  <Icon name="dumbbell" size={17} style={{color:ws?.col}}/>
+              <R style={{gap:14,marginBottom:12}}>
+                <div style={{width:48,height:48,borderRadius:12,background:`${ws?.col}20`,border:`1px solid ${ws?.col}40`,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
+                  <Icon name="dumbbell" size={22} style={{color:ws?.col}}/>
                 </div>
                 <div>
-                  <div style={{fontSize:18,fontWeight:800,color:'#fff'}}>{dayName} — {ws?.type||'Rest'}</div>
-                  <div style={{fontSize:13,color:'#64748b'}}>{ws?.focus||'—'}</div>
+                  <div style={{fontSize:20,fontWeight:900,color:'#fff'}}>{dayName} — {ws?.type||'Rest'}</div>
+                  <div style={{fontSize:14,color:'#cbd5e1', fontWeight: 600}}>{ws?.focus||'—'}</div>
                 </div>
               </R>
-              <PBar current={todayDone} total={todayTotal} color={`linear-gradient(90deg,${ws?.col},${ws?.col}99)`}/>
-              <div style={{fontSize:12,color:'#475569',marginTop:5,display:'flex',gap:12,flexWrap:'wrap'}}>
-                <span>{todayDone}/{todayTotal} selesai</span>
-                <span style={{color:'#818cf8'}}>⚡ Inti: {todayPrimaryDone}/{(ws?.exercises||[]).filter(e=>e.category==='primary').length}</span>
-                <span style={{color:'#10b981'}}>🩻 Scapular: {todayScapDone}/{SCAPULAR_EXERCISES.length}</span>
+              <PBar current={todayDone} total={todayTotal} color={`linear-gradient(90deg,${ws?.col},${ws?.col}aa)`}/>
+              <div style={{fontSize:13,color:'#94a3b8',marginTop:8,display:'flex',gap:16,flexWrap:'wrap', fontWeight: 700}}>
+                <span>{todayDone}/{todayTotal} total</span>
+                <span style={{color:'#a5b4fc'}}>⚡ Inti: {todayPrimaryDone}/{(ws?.exercises||[]).filter(e=>e.category==='primary').length}</span>
+                <span style={{color:'#6ee7b7'}}>🩻 Scapular: {todayScapDone}/{SCAPULAR_EXERCISES.length}</span>
               </div>
             </div>
-            <div style={{textAlign:'center',background:'rgba(3,7,18,.5)',border:'1px solid rgba(255,255,255,.07)',borderRadius:12,padding:'10px 18px',flexShrink:0}}>
-              <div style={{fontSize:36,fontWeight:800,color:'#fff',lineHeight:1}}>{todayDone}<span style={{fontSize:16,color:'#334155'}}>/{todayTotal}</span></div>
-              <div style={{fontSize:11,color:'#475569',marginTop:1,letterSpacing:'.08em'}}>SELESAI</div>
+            <div style={{textAlign:'center',background:'rgba(0,0,0,.3)',border:'1px solid rgba(255,255,255,.1)',borderRadius:16,padding:'14px 24px',flexShrink:0}}>
+              <div style={{fontSize:42,fontWeight:900,color:'#fff',lineHeight:1}}>{todayDone}<span style={{fontSize:18,color:'#64748b'}}>/{todayTotal}</span></div>
+              <div style={{fontSize:12,color:'#94a3b8',marginTop:4,letterSpacing:'.1em', fontWeight: 800}}>SELESAI</div>
             </div>
           </div>
 
-          {/* Add primary button */}
-          <R style={{gap:8,marginBottom:4,flexWrap:'wrap'}}>
-            <button onClick={()=>setEditEx({isNew:true,dayKey:dayName,name:'',detail:'',target:'',category:'primary'})} style={{padding:'7px 14px',background:'rgba(99,102,241,.12)',border:'1px solid rgba(99,102,241,.25)',borderRadius:9,color:'#818cf8',fontWeight:700,fontSize:12,cursor:'pointer',display:'flex',alignItems:'center',gap:5,fontFamily:'Space Grotesk,sans-serif'}}>
-              <Icon name="plus" size={12}/>⚡ Tambah Latihan Inti
+          <R style={{gap:10,marginBottom:8,flexWrap:'wrap'}}>
+            <button onClick={()=>setEditEx({isNew:true,dayKey:dayName,name:'',detail:'',target:'',category:'primary'})} style={{padding:'10px 16px',background:'rgba(99,102,241,.15)',border:'1px solid rgba(99,102,241,.3)',borderRadius:12,color:'#a5b4fc',fontWeight:800,fontSize:13,cursor:'pointer',display:'flex',alignItems:'center',gap:6,fontFamily:'Space Grotesk,sans-serif', backdropFilter:'blur(4px)'}}>
+              <Icon name="plus" size={14}/>⚡ Tambah Latihan Inti
             </button>
           </R>
 
-          {/* Primary exercises */}
           {(()=>{const pri=(ws?.exercises||[]).filter(e=>e.category==='primary');return pri.length>0&&(
             <>
-              <CategoryDivider label="⚡ LATIHAN INTI" col="#818cf8" borderCol="rgba(99,102,241,.2)" locked={false}/>
-              <C style={{gap:7}}>
+              <CategoryDivider label="⚡ LATIHAN INTI" col="#818cf8" borderCol="rgba(99,102,241,.3)" locked={false}/>
+              <C style={{gap:10}}>
                 {pri.map((ex,i)=><PrimaryCard key={ex.name+i} ex={ex} i={i} day={dayName} editable={true}/>)}
               </C>
             </>
           );})()}
 
-          {/* Scapular — always shown, always locked */}
-          <CategoryDivider label="🩻 SCAPULAR WINGING" col="#10b981" borderCol="rgba(16,185,129,.2)" locked={true}/>
-          <div style={{padding:'8px 12px',background:'rgba(16,185,129,.04)',border:'1px solid rgba(16,185,129,.1)',borderRadius:10,marginBottom:10,fontSize:12,color:'#334155'}}>
-            Latihan koreksi scapular winging — berlaku setiap hari, tidak dapat diubah
+          <CategoryDivider label="🩻 SCAPULAR WINGING" col="#10b981" borderCol="rgba(16,185,129,.3)" locked={true}/>
+          <div style={{padding:'12px 16px',background:'rgba(16,185,129,.05)',border:'1px solid rgba(16,185,129,.15)',borderRadius:12,marginBottom:12,fontSize:13,color:'#94a3b8', fontWeight: 600}}>
+            Sesi terapi wajib setiap hari. Tidak dapat dihapus.
           </div>
-          <C style={{gap:7}}>
+          <C style={{gap:10}}>
             {SCAPULAR_EXERCISES.map((ex,i)=><ScapularCard key={ex.name} ex={ex} i={i} day={dayName}/>)}
           </C>
         </C>
       )}
 
-      {/* ════ WEEKLY VIEW ════ */}
+      {/* WEEKLY VIEW */}
       {view==='weekly'&&(
-        <C style={{gap:14}}>
-          {/* Day tabs */}
-          <div style={{display:'flex',gap:4,overflowX:'auto',paddingBottom:4}}>
+        <C style={{gap:16}}>
+          <div style={{display:'flex',gap:8,overflowX:'auto',paddingBottom:8}}>
             {weekSummary.map(ws2=>{
               const isActive=selectedDay===ws2.day;
               const isTd=ws2.day===dayName;
               return(
-                <button key={ws2.day} onClick={()=>setSelectedDay(ws2.day)} style={{flexShrink:0,padding:'8px 12px',borderRadius:11,border:`1px solid ${isActive?ws2.col+'60':'rgba(255,255,255,.07)'}`,background:isActive?ws2.col+'18':'rgba(255,255,255,.03)',cursor:'pointer',textAlign:'center',transition:'all .2s',fontFamily:'Space Grotesk,sans-serif',minWidth:88}}>
-                  <div style={{fontSize:13,fontWeight:700,color:isActive?ws2.col:'#475569',display:'flex',alignItems:'center',justifyContent:'center',gap:4}}>
-                    {ws2.day}{isTd&&<span style={{width:5,height:5,borderRadius:'50%',background:'#10b981',display:'inline-block'}}/>}
+                <button key={ws2.day} onClick={()=>setSelectedDay(ws2.day)} className="glass-btn" style={{flexShrink:0,padding:'12px 16px',borderRadius:14,border:`1px solid ${isActive?ws2.col+'60':'rgba(255,255,255,.08)'}`,background:isActive?ws2.col+'20':'rgba(255,255,255,.05)',textAlign:'center',fontFamily:'Space Grotesk,sans-serif',minWidth:100, backdropFilter:'blur(4px)'}}>
+                  <div style={{fontSize:14,fontWeight:800,color:isActive?ws2.col:'#cbd5e1',display:'flex',alignItems:'center',justifyContent:'center',gap:6}}>
+                    {ws2.day}{isTd&&<span style={{width:6,height:6,borderRadius:'50%',background:'#34d399',display:'inline-block', boxShadow:'0 0 6px #34d399'}}/>}
                   </div>
-                  <div style={{fontSize:10,color:'#334155',marginTop:2,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:80}}>{ws2.type||'—'}</div>
-                  <div style={{fontSize:9,marginTop:2,display:'flex',gap:5,justifyContent:'center'}}>
-                    <span style={{color:'#6366f1'}}>⚡{ws2.pri}</span>
-                    <span style={{color:'#10b981'}}>🩻{ws2.scap}</span>
+                  <div style={{fontSize:11,color:'#94a3b8',marginTop:4,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:80, fontWeight:600}}>{ws2.type||'—'}</div>
+                  <div style={{fontSize:10,marginTop:4,display:'flex',gap:6,justifyContent:'center', fontWeight:800}}>
+                    <span style={{color:'#a5b4fc'}}>⚡{ws2.pri}</span>
+                    <span style={{color:'#6ee7b7'}}>🩻{ws2.scap}</span>
                   </div>
                 </button>
               );
             })}
           </div>
 
-          {/* Selected day detail */}
           {(()=>{
             const d=selectedDay;
             const wd=safeWO[d]||{type:'',focus:'',col:'#6366f1',exercises:[]};
             const pri=(wd.exercises||[]).filter(e=>e.category==='primary');
             const isTodayDay=d===dayName;
             return(
-              <C style={{gap:10}}>
-                {/* Day meta */}
-                <div style={{background:'rgba(15,23,42,.6)',border:`1px solid ${wd.col}30`,borderRadius:14,padding:16,borderLeft:`4px solid ${wd.col}`}}>
-                  <R style={{justifyContent:'space-between',marginBottom:10,flexWrap:'wrap',gap:8}}>
+              <C style={{gap:14}}>
+                <div className="glass" style={{border:`1px solid ${wd.col}40`,padding:20,borderLeft:`6px solid ${wd.col}`}}>
+                  <R style={{justifyContent:'space-between',marginBottom:12,flexWrap:'wrap',gap:10}}>
                     <div>
-                      <R style={{gap:8,marginBottom:3}}>
-                        <span style={{fontSize:17,fontWeight:800,color:'#fff'}}>{d}</span>
-                        {isTodayDay&&<span style={{fontSize:11,padding:'2px 8px',background:'rgba(16,185,129,.12)',border:'1px solid rgba(16,185,129,.25)',borderRadius:5,color:'#34d399',fontWeight:700}}>HARI INI</span>}
-                        <span style={{fontSize:12,padding:'2px 8px',background:wd.col+'18',border:`1px solid ${wd.col}40`,borderRadius:5,color:wd.col,fontWeight:700}}>{wd.type||'—'}</span>
+                      <R style={{gap:10,marginBottom:4}}>
+                        <span style={{fontSize:20,fontWeight:900,color:'#fff'}}>{d}</span>
+                        {isTodayDay&&<span style={{fontSize:12,padding:'3px 10px',background:'rgba(16,185,129,.15)',border:'1px solid rgba(16,185,129,.3)',borderRadius:8,color:'#6ee7b7',fontWeight:800}}>HARI INI</span>}
+                        <span style={{fontSize:13,padding:'3px 10px',background:wd.col+'20',border:`1px solid ${wd.col}50`,borderRadius:8,color:wd.col,fontWeight:800}}>{wd.type||'—'}</span>
                       </R>
-                      <div style={{fontSize:13,color:'#475569'}}>{wd.focus||'Belum ada fokus'}</div>
+                      <div style={{fontSize:14,color:'#94a3b8', fontWeight: 600}}>{wd.focus||'Belum ada fokus'}</div>
                     </div>
-                    <button onClick={()=>setEditDayMeta(editDayMeta===d?false:d)} style={{padding:'6px 12px',background:'rgba(255,255,255,.05)',border:'1px solid rgba(255,255,255,.1)',borderRadius:8,color:'#94a3b8',fontSize:12,fontWeight:700,cursor:'pointer',display:'flex',alignItems:'center',gap:5,fontFamily:'Space Grotesk,sans-serif'}}>
-                      <Icon name="pencil" size={11}/>Edit Info
+                    <button onClick={()=>setEditDayMeta(editDayMeta===d?false:d)} style={{padding:'8px 14px',background:'rgba(255,255,255,.08)',border:'1px solid rgba(255,255,255,.15)',borderRadius:10,color:'#cbd5e1',fontSize:13,fontWeight:800,cursor:'pointer',display:'flex',alignItems:'center',gap:6,fontFamily:'Space Grotesk,sans-serif', transition:'all 0.2s'}} onMouseOver={e=>e.currentTarget.style.background='rgba(255,255,255,.15)'} onMouseOut={e=>e.currentTarget.style.background='rgba(255,255,255,.08)'}>
+                      <Icon name="pencil" size={14}/>Edit Info
                     </button>
                   </R>
                   {editDayMeta===d&&(
-                    <div style={{borderTop:'1px solid rgba(255,255,255,.06)',paddingTop:12,display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}}>
+                    <div style={{borderTop:'1px solid rgba(255,255,255,.1)',paddingTop:16,display:'grid',gridTemplateColumns:'1fr 1fr',gap:14}}>
                       <div>
-                        <label style={{fontSize:10,fontWeight:700,color:'#475569',letterSpacing:'.08em',display:'block',marginBottom:4,textTransform:'uppercase'}}>Tipe Sesi</label>
-                        <input value={wd.type||''} onChange={e=>saveDayMeta(d,'type',e.target.value)} className="inp" style={{fontSize:13,padding:'8px 12px'}} placeholder="Push Day..."/>
+                        <label style={{fontSize:11,fontWeight:800,color:'#94a3b8',letterSpacing:'.08em',display:'block',marginBottom:6,textTransform:'uppercase'}}>Tipe Sesi</label>
+                        <input value={wd.type||''} onChange={e=>saveDayMeta(d,'type',e.target.value)} className="inp" style={{fontSize:14,padding:'10px 14px', background:'rgba(0,0,0,0.3)'}} placeholder="Push Day..."/>
                       </div>
                       <div>
-                        <label style={{fontSize:10,fontWeight:700,color:'#475569',letterSpacing:'.08em',display:'block',marginBottom:4,textTransform:'uppercase'}}>Fokus Otot</label>
-                        <input value={wd.focus||''} onChange={e=>saveDayMeta(d,'focus',e.target.value)} className="inp" style={{fontSize:13,padding:'8px 12px'}} placeholder="Dada, Bahu..."/>
+                        <label style={{fontSize:11,fontWeight:800,color:'#94a3b8',letterSpacing:'.08em',display:'block',marginBottom:6,textTransform:'uppercase'}}>Fokus Otot</label>
+                        <input value={wd.focus||''} onChange={e=>saveDayMeta(d,'focus',e.target.value)} className="inp" style={{fontSize:14,padding:'10px 14px', background:'rgba(0,0,0,0.3)'}} placeholder="Dada, Bahu..."/>
                       </div>
                       <div style={{gridColumn:'1/-1'}}>
-                        <label style={{fontSize:10,fontWeight:700,color:'#475569',letterSpacing:'.08em',display:'block',marginBottom:5,textTransform:'uppercase'}}>Warna</label>
-                        <div style={{display:'flex',gap:5,flexWrap:'wrap'}}>
+                        <label style={{fontSize:11,fontWeight:800,color:'#94a3b8',letterSpacing:'.08em',display:'block',marginBottom:8,textTransform:'uppercase'}}>Warna Identitas</label>
+                        <div style={{display:'flex',gap:8,flexWrap:'wrap'}}>
                           {COLOR_PRESETS.map(c=>(
-                            <div key={c} onClick={()=>saveDayMeta(d,'col',c)} style={{width:22,height:22,borderRadius:5,background:c,cursor:'pointer',border:`2px solid ${wd.col===c?'#fff':'transparent'}`,transition:'all .2s',transform:wd.col===c?'scale(1.2)':'scale(1)'}}/>
+                            <div key={c} onClick={()=>saveDayMeta(d,'col',c)} style={{width:28,height:28,borderRadius:8,background:c,cursor:'pointer',border:`2px solid ${wd.col===c?'#fff':'transparent'}`,transition:'all .2s',transform:wd.col===c?'scale(1.2)':'scale(1)', boxShadow: wd.col===c ? `0 0 10px ${c}` : 'none'}}/>
                           ))}
                         </div>
                       </div>
                     </div>
                   )}
-                  <R style={{gap:12,marginTop:10,flexWrap:'wrap'}}>
-                    <span style={{fontSize:12,color:'#475569'}}>Total: <b style={{color:'#fff'}}>{pri.length+SCAPULAR_EXERCISES.length}</b></span>
-                    <span style={{fontSize:12,color:'#6366f1'}}>⚡ Inti: <b>{pri.length}</b></span>
-                    <span style={{fontSize:12,color:'#10b981'}}>🩻 Scapular: <b>{SCAPULAR_EXERCISES.length}</b></span>
+                  <R style={{gap:16,marginTop:14,flexWrap:'wrap', fontWeight: 600}}>
+                    <span style={{fontSize:13,color:'#94a3b8'}}>Total: <b style={{color:'#fff'}}>{pri.length+SCAPULAR_EXERCISES.length}</b></span>
+                    <span style={{fontSize:13,color:'#a5b4fc'}}>⚡ Inti: <b>{pri.length}</b></span>
+                    <span style={{fontSize:13,color:'#6ee7b7'}}>🩻 Scapular: <b>{SCAPULAR_EXERCISES.length}</b></span>
                   </R>
                 </div>
 
-                {/* Add primary */}
-                <R style={{gap:8}}>
-                  <button onClick={()=>setEditEx({isNew:true,dayKey:d,name:'',detail:'',target:'',category:'primary'})} style={{padding:'7px 13px',background:'rgba(99,102,241,.1)',border:'1px solid rgba(99,102,241,.2)',borderRadius:9,color:'#818cf8',fontWeight:700,fontSize:12,cursor:'pointer',display:'flex',alignItems:'center',gap:5,fontFamily:'Space Grotesk,sans-serif'}}>
-                    <Icon name="plus" size={11}/>⚡ Tambah Latihan Inti
+                <R style={{gap:10}}>
+                  <button onClick={()=>setEditEx({isNew:true,dayKey:d,name:'',detail:'',target:'',category:'primary'})} style={{padding:'9px 16px',background:'rgba(99,102,241,.15)',border:'1px solid rgba(99,102,241,.3)',borderRadius:12,color:'#a5b4fc',fontWeight:800,fontSize:13,cursor:'pointer',display:'flex',alignItems:'center',gap:6,fontFamily:'Space Grotesk,sans-serif', backdropFilter:'blur(4px)'}}>
+                    <Icon name="plus" size={14}/>⚡ Tambah Latihan Inti
                   </button>
                 </R>
 
-                {/* Primary list */}
                 {pri.length>0&&(
                   <>
-                    <CategoryDivider label="⚡ LATIHAN INTI" col="#818cf8" borderCol="rgba(99,102,241,.2)" locked={false}/>
-                    <C style={{gap:6}}>
+                    <CategoryDivider label="⚡ LATIHAN INTI" col="#818cf8" borderCol="rgba(99,102,241,.3)" locked={false}/>
+                    <C style={{gap:10}}>
                       {pri.map((ex,i)=><PrimaryCard key={ex.name+i} ex={ex} i={i} day={d} editable={true}/>)}
                     </C>
                   </>
                 )}
-                {pri.length===0&&<div style={{fontSize:13,color:'#334155',padding:'8px 0'}}>Belum ada latihan inti untuk {d}.</div>}
+                {pri.length===0&&<div style={{fontSize:14,color:'#94a3b8',padding:'10px 0', fontWeight: 600}}>Belum ada latihan inti untuk hari {d}.</div>}
 
-                {/* Scapular — always locked */}
-                <CategoryDivider label="🩻 SCAPULAR WINGING" col="#10b981" borderCol="rgba(16,185,129,.2)" locked={true}/>
-                <div style={{padding:'8px 12px',background:'rgba(16,185,129,.04)',border:'1px solid rgba(16,185,129,.1)',borderRadius:10,marginBottom:6,fontSize:12,color:'#334155'}}>
-                  Latihan koreksi harian — tidak dapat diubah
-                </div>
-                <C style={{gap:6}}>
+                <CategoryDivider label="🩻 SCAPULAR WINGING" col="#10b981" borderCol="rgba(16,185,129,.3)" locked={true}/>
+                <C style={{gap:10}}>
                   {SCAPULAR_EXERCISES.map((ex,i)=><ScapularCard key={ex.name} ex={ex} i={i} day={d}/>)}
                 </C>
               </C>
             );
           })()}
-
-          {/* Weekly overview mini grid */}
-          <div style={{marginTop:8}}>
-            <div style={{fontSize:11,fontWeight:700,color:'#334155',letterSpacing:'.1em',textTransform:'uppercase',marginBottom:8}}>Ringkasan Mingguan</div>
-            <div style={{display:'grid',gridTemplateColumns:'repeat(7,1fr)',gap:5}}>
-              {weekSummary.map(ws2=>{
-                const isTd=ws2.day===dayName;
-                const doneTd=isTd?todayDone:0;
-                return(
-                  <div key={ws2.day} onClick={()=>setSelectedDay(ws2.day)} style={{padding:'8px 4px',borderRadius:10,background:selectedDay===ws2.day?ws2.col+'18':'rgba(255,255,255,.02)',border:`1px solid ${selectedDay===ws2.day?ws2.col+'40':'rgba(255,255,255,.05)'}`,cursor:'pointer',textAlign:'center',transition:'all .2s'}}>
-                    <div style={{fontSize:10,fontWeight:700,color:isTd?'#10b981':'#475569',marginBottom:3}}>{ws2.day.slice(0,3)}{isTd&&'●'}</div>
-                    <div style={{width:'100%',height:3,borderRadius:2,background:'rgba(255,255,255,.05)',marginBottom:3,overflow:'hidden'}}>
-                      <div style={{height:'100%',width:`${ws2.total?Math.round((doneTd/ws2.total)*100):0}%`,background:ws2.col,borderRadius:2}}/>
-                    </div>
-                    <div style={{fontSize:9,color:'#6366f1'}}>⚡{ws2.pri}</div>
-                    <div style={{fontSize:9,color:'#10b981'}}>🩻{ws2.scap}</div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
         </C>
       )}
 
-      {/* Exercise Form Modal */}
       {editEx&&(
-        <div className="overlay" style={{zIndex:200}} onClick={e=>e.target===e.currentTarget&&setEditEx(null)}>
-          <div style={{background:'#0a0f1e',border:'1px solid rgba(255,255,255,.09)',borderRadius:20,width:'100%',maxWidth:500,padding:28,boxShadow:'0 40px 80px rgba(0,0,0,.7)'}}>
-            <R style={{justifyContent:'space-between',marginBottom:18}}>
-              <div>
-                <div style={{fontSize:17,fontWeight:700,color:'#fff',fontFamily:'Outfit,sans-serif'}}>{editEx.isNew?'Tambah':'Edit'} Latihan Inti</div>
-                <div style={{fontSize:12,color:'#475569',marginTop:2}}>Hari: <b style={{color:'#818cf8'}}>{editEx.dayKey}</b></div>
-              </div>
-              <button onClick={()=>setEditEx(null)} style={{padding:6,borderRadius:8,background:'rgba(255,255,255,.05)',border:'none',cursor:'pointer',color:'#94a3b8',display:'flex'}}><Icon name="x" size={15}/></button>
-            </R>
-            <InlineExForm initial={editEx} onSave={saveEx} onCancel={()=>setEditEx(null)}/>
-          </div>
-        </div>
+        <Modal isOpen={!!editEx} onClose={()=>setEditEx(null)} title={`${editEx.isNew?'Tambah':'Edit'} Latihan Inti — ${editEx.dayKey}`}>
+          <InlineExForm initial={editEx} onSave={saveEx} onCancel={()=>setEditEx(null)}/>
+        </Modal>
       )}
     </div>
   );
@@ -1267,50 +1284,47 @@ const InlineExForm=({initial,onSave,onCancel})=>{
   const[target,setTarget]=useState(initial.target||'');
   const submit=(e)=>{e.preventDefault();onSave({...initial,name,detail,target,category:'primary'});};
   return(
-    <form onSubmit={submit} style={{display:'flex',flexDirection:'column',gap:12}}>
+    <form onSubmit={submit} style={{display:'flex',flexDirection:'column',gap:16}}>
       <div>
-        <label style={{fontSize:11,fontWeight:700,color:'#475569',letterSpacing:'.08em',display:'block',marginBottom:5,textTransform:'uppercase'}}>Nama Gerakan</label>
+        <label style={{fontSize:12,fontWeight:800,color:'#94a3b8',letterSpacing:'.08em',display:'block',marginBottom:6,textTransform:'uppercase'}}>Nama Gerakan</label>
         <input value={name} onChange={e=>setName(e.target.value)} className="inp" required placeholder="Misal: Bench Press, Dead Bug..."/>
       </div>
-      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}}>
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
         <div>
-          <label style={{fontSize:11,fontWeight:700,color:'#475569',letterSpacing:'.08em',display:'block',marginBottom:5,textTransform:'uppercase'}}>Set & Rep</label>
+          <label style={{fontSize:12,fontWeight:800,color:'#94a3b8',letterSpacing:'.08em',display:'block',marginBottom:6,textTransform:'uppercase'}}>Set & Rep</label>
           <input value={detail} onChange={e=>setDetail(e.target.value)} className="inp" required placeholder="3 x 10-12"/>
         </div>
         <div>
-          <label style={{fontSize:11,fontWeight:700,color:'#475569',letterSpacing:'.08em',display:'block',marginBottom:5,textTransform:'uppercase'}}>Target Otot</label>
+          <label style={{fontSize:12,fontWeight:800,color:'#94a3b8',letterSpacing:'.08em',display:'block',marginBottom:6,textTransform:'uppercase'}}>Target Otot</label>
           <input value={target} onChange={e=>setTarget(e.target.value)} className="inp" required placeholder="Dada, Core..."/>
         </div>
       </div>
-      <div style={{padding:'10px 14px',background:'rgba(99,102,241,.06)',border:'1px solid rgba(99,102,241,.15)',borderRadius:9}}>
-        <span style={{fontSize:12,color:'#818cf8',fontWeight:700}}>⚡ Kategori: Latihan Inti</span>
-        <p style={{fontSize:11,color:'#475569',marginTop:3}}>Latihan ini bisa diedit & dihapus. Scapular Winging sudah fixed otomatis.</p>
+      <div style={{padding:'14px',background:'rgba(99,102,241,.1)',border:'1px solid rgba(99,102,241,.25)',borderRadius:12}}>
+        <span style={{fontSize:13,color:'#a5b4fc',fontWeight:800}}>⚡ Kategori: Latihan Inti</span>
+        <p style={{fontSize:12,color:'#cbd5e1',marginTop:4, fontWeight: 600}}>Latihan fleksibel. Scapular Winging otomatis fixed harian.</p>
       </div>
-      <div style={{display:'flex',gap:8,marginTop:4}}>
-        <button type="button" onClick={onCancel} style={{flex:1,padding:'10px',borderRadius:10,background:'rgba(255,255,255,.05)',border:'1px solid rgba(255,255,255,.1)',color:'#94a3b8',fontWeight:700,cursor:'pointer',fontSize:14,fontFamily:'Space Grotesk,sans-serif'}}>Batal</button>
-        <button type="submit" className="btn btn-sm" style={{flex:2}}>Simpan Gerakan</button>
+      <div style={{display:'flex',gap:12,marginTop:8}}>
+        <button type="button" onClick={onCancel} style={{flex:1,padding:'12px',borderRadius:12,background:'rgba(255,255,255,.08)',border:'1px solid rgba(255,255,255,.15)',color:'#cbd5e1',fontWeight:800,cursor:'pointer',fontSize:15,fontFamily:'Space Grotesk,sans-serif'}}>Batal</button>
+        <button type="submit" className="btn btn-sm" style={{flex:2, padding: '12px', fontSize: 15}}>Simpan Gerakan</button>
       </div>
     </form>
   );
 };
 
-
 // ═══════════════════════════════════════════════════════════════
-// SETTINGS MODAL — Roadmap Manager + Workout Schedule Manager
+// SETTINGS MODAL
 // ═══════════════════════════════════════════════════════════════
 const SettingsModal=({isOpen,onClose,activeTab,setActiveTab,roadmapData,setRoadmapData,workoutData,setWorkoutData})=>{
   return(
-    <Modal isOpen={isOpen} onClose={onClose} title="" large>
+    <Modal isOpen={isOpen} onClose={onClose} title="Sistem Manajerial" large>
       <div style={{display:'flex',flexDirection:'column',gap:0,minHeight:'60vh'}}>
-        {/* Tab switcher */}
-        <div style={{display:'flex',gap:6,marginBottom:20,padding:'4px',background:'rgba(255,255,255,.03)',borderRadius:12,border:'1px solid rgba(255,255,255,.06)'}}>
-          {[{id:'roadmap',icon:'map',label:'Roadmap Manager'},{id:'workout',icon:'dumbbell',label:'Workout Schedule'}].map(t=>(
-            <button key={t.id} className={`stab ${activeTab===t.id?'on':''}`} style={{flex:1,display:'flex',alignItems:'center',justifyContent:'center',gap:7}} onClick={()=>setActiveTab(t.id)}>
-              <Icon name={t.icon} size={15}/>{t.label}
+        <div style={{display:'flex',gap:8,marginBottom:24,padding:'6px',background:'rgba(0,0,0,.3)',borderRadius:16,border:'1px solid rgba(255,255,255,.1)', backdropFilter:'blur(10px)'}}>
+          {[{id:'roadmap',icon:'map',label:'Roadmap Editor'},{id:'workout',icon:'dumbbell',label:'Workout Schedule'}].map(t=>(
+            <button key={t.id} className={`stab ${activeTab===t.id?'on':''}`} style={{flex:1,display:'flex',alignItems:'center',justifyContent:'center',gap:8, padding: '12px', borderRadius: '12px'}} onClick={()=>setActiveTab(t.id)}>
+              <Icon name={t.icon} size={18}/>{t.label}
             </button>
           ))}
         </div>
-
         {activeTab==='roadmap'&&<RoadmapManager roadmapData={roadmapData} setRoadmapData={setRoadmapData}/>}
         {activeTab==='workout'&&<WorkoutManager workoutData={workoutData} setWorkoutData={setWorkoutData}/>}
       </div>
@@ -1323,7 +1337,7 @@ const SettingsModal=({isOpen,onClose,activeTab,setActiveTab,roadmapData,setRoadm
 // ─────────────────────────────────────────
 const RoadmapManager=({roadmapData,setRoadmapData})=>{
   const[selectedPhase,setSelectedPhase]=useState(null);
-  const[editPhase,setEditPhase]=useState(null); // null | 'new' | phaseObj
+  const[editPhase,setEditPhase]=useState(null);
   const[editItem,setEditItem]=useState(null);
 
   const safeRM=Array.isArray(roadmapData)?roadmapData:DEFAULT_ROADMAP;
@@ -1338,13 +1352,11 @@ const RoadmapManager=({roadmapData,setRoadmapData})=>{
     }
     setEditPhase(null);
   };
-
   const deletePhase=(id)=>{
-    if(!confirm("Hapus phase ini beserta semua materinya?"))return;
+    if(!confirm("Hapus modul ini permanen?"))return;
     setRoadmapData(prev=>{const s=Array.isArray(prev)?prev:DEFAULT_ROADMAP;return s.filter(p=>p.id!==id);});
     if(selectedPhase===id)setSelectedPhase(null);
   };
-
   const saveItem=(data)=>{
     setRoadmapData(prev=>{
       const s=Array.isArray(prev)?prev:DEFAULT_ROADMAP;
@@ -1361,7 +1373,6 @@ const RoadmapManager=({roadmapData,setRoadmapData})=>{
     });
     setEditItem(null);
   };
-
   const deleteItem=(id,type)=>{
     setRoadmapData(prev=>{
       const s=Array.isArray(prev)?prev:DEFAULT_ROADMAP;
@@ -1377,115 +1388,99 @@ const RoadmapManager=({roadmapData,setRoadmapData})=>{
   const C=({children,style={}})=><div style={{display:'flex',flexDirection:'column',...style}}>{children}</div>;
 
   return(
-    <div style={{display:'grid',gridTemplateColumns:selectedPhase?'260px 1fr':'1fr',gap:16,minHeight:400}}>
-      {/* Left: Phase list */}
-      <C style={{gap:8}}>
-        <R style={{justifyContent:'space-between',marginBottom:4}}>
-          <span style={{fontSize:13,fontWeight:700,color:'#64748b',letterSpacing:'.08em',textTransform:'uppercase'}}>Phase / Modul</span>
-          <button onClick={()=>setEditPhase({isNew:true,title:'',week:'',desc:'',color1:'#6366f1',color2:'#818cf8',pl:''})} style={{padding:'5px 10px',background:'rgba(99,102,241,.12)',border:'1px solid rgba(99,102,241,.25)',borderRadius:8,color:'#818cf8',fontWeight:700,fontSize:12,cursor:'pointer',display:'flex',alignItems:'center',gap:5,fontFamily:'Space Grotesk,sans-serif'}}>
-            <Icon name="plus" size={12}/>Tambah
+    <div style={{display:'grid',gridTemplateColumns:selectedPhase?'280px 1fr':'1fr',gap:20,minHeight:400}}>
+      <C style={{gap:10}}>
+        <R style={{justifyContent:'space-between',marginBottom:6}}>
+          <span style={{fontSize:14,fontWeight:800,color:'#94a3b8',letterSpacing:'.08em',textTransform:'uppercase'}}>Modul</span>
+          <button onClick={()=>setEditPhase({isNew:true,title:'',week:'',desc:'',color1:'#6366f1',color2:'#818cf8',pl:''})} style={{padding:'6px 12px',background:'rgba(99,102,241,.15)',border:'1px solid rgba(99,102,241,.3)',borderRadius:10,color:'#a5b4fc',fontWeight:800,fontSize:13,cursor:'pointer',display:'flex',alignItems:'center',gap:6,fontFamily:'Space Grotesk,sans-serif'}}>
+            <Icon name="plus" size={14}/>Tambah
           </button>
         </R>
         {safeRM.map((p,idx)=>{
           const c1=p.color1||p.c?.[0]||'#6366f1';
           return(
-            <div key={p.id} onClick={()=>setSelectedPhase(p.id)} style={{padding:'11px 13px',borderRadius:11,border:`1px solid ${selectedPhase===p.id?'rgba(99,102,241,.4)':'rgba(255,255,255,.06)'}`,background:selectedPhase===p.id?'rgba(99,102,241,.1)':'rgba(15,23,42,.5)',cursor:'pointer',transition:'all .2s',display:'flex',alignItems:'center',gap:10}}>
-              <div style={{width:32,height:32,borderRadius:8,background:`linear-gradient(135deg,${c1},${p.color2||p.c?.[1]||'#818cf8'})`,display:'flex',alignItems:'center',justifyContent:'center',fontWeight:800,color:'#fff',fontSize:13,flexShrink:0}}>{idx+1}</div>
+            <div key={p.id} onClick={()=>setSelectedPhase(p.id)} className="glass-btn" style={{padding:'14px',borderRadius:14,border:`1px solid ${selectedPhase===p.id?'rgba(99,102,241,.5)':'rgba(255,255,255,.08)'}`,background:selectedPhase===p.id?'rgba(99,102,241,.15)':'rgba(0,0,0,.3)',display:'flex',alignItems:'center',gap:12, backdropFilter:'blur(4px)'}}>
+              <div style={{width:38,height:38,borderRadius:10,background:`linear-gradient(135deg,${c1},${p.color2||p.c?.[1]||'#818cf8'})`,display:'flex',alignItems:'center',justifyContent:'center',fontWeight:900,color:'#fff',fontSize:15,flexShrink:0}}>{idx+1}</div>
               <div style={{flex:1,minWidth:0}}>
-                <div style={{fontSize:14,fontWeight:700,color:'#e2e8f0',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{p.title}</div>
-                <div style={{fontSize:11,color:'#475569'}}>Wk {p.week} · {(p.videos||[]).length}v {(p.casestudies||[]).length}cs</div>
+                <div style={{fontSize:15,fontWeight:800,color:'#f8fafc',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{p.title}</div>
+                <div style={{fontSize:12,color:'#94a3b8', fontWeight: 600}}>Wk {p.week} · {(p.videos||[]).length}v {(p.casestudies||[]).length}cs</div>
               </div>
-              <div style={{display:'flex',gap:4}}>
-                <button onClick={e=>{e.stopPropagation();setEditPhase({...p});}} className="icon-btn"><Icon name="pencil" size={12}/></button>
-                <button onClick={e=>{e.stopPropagation();deletePhase(p.id);}} className="icon-btn red"><Icon name="trash-2" size={12}/></button>
+              <div style={{display:'flex',gap:6}}>
+                <button onClick={e=>{e.stopPropagation();setEditPhase({...p});}} className="icon-btn"><Icon name="pencil" size={14}/></button>
               </div>
             </div>
           );
         })}
-        {safeRM.length===0&&<div style={{textAlign:'center',padding:'20px',color:'#334155',fontSize:13}}>Belum ada phase. Tambah dulu!</div>}
       </C>
 
-      {/* Right: material detail */}
       {selectedPhase&&phase&&(
-        <C style={{gap:10}}>
-          <R style={{justifyContent:'space-between',marginBottom:2}}>
+        <div className="glass" style={{padding: 24}}>
+          <C style={{gap:14}}>
+            <R style={{justifyContent:'space-between',marginBottom:4}}>
+              <div>
+                <div style={{fontSize:22,fontWeight:900,color:'#fff'}}>{phase.title}</div>
+                <div style={{fontSize:14,color:'#94a3b8', fontWeight: 600}}>Week {phase.week}</div>
+              </div>
+              <R style={{gap: 8}}>
+                 <button onClick={()=>setEditPhase({...phase})} className="icon-btn" style={{padding: '8px 12px'}}><Icon name="pencil" size={16}/> Edit</button>
+                 <button onClick={()=>deletePhase(phase.id)} className="icon-btn red" style={{padding: '8px 12px'}}><Icon name="trash-2" size={16}/></button>
+                 <button onClick={()=>setSelectedPhase(null)} className="icon-btn"><Icon name="x" size={16}/></button>
+              </R>
+            </R>
+
             <div>
-              <div style={{fontSize:17,fontWeight:700,color:'#fff'}}>{phase.title}</div>
-              <div style={{fontSize:12,color:'#475569'}}>Week {phase.week}</div>
+              <R style={{justifyContent:'space-between',marginBottom:8}}>
+                <span className="section-label">📹 VIDEO ({(phase.videos||[]).length})</span>
+                <button onClick={()=>setEditItem({type:'video',id:'',title:'',url:''})} style={{padding:'6px 12px',background:'rgba(99,102,241,.15)',border:'1px solid rgba(99,102,241,.3)',borderRadius:8,color:'#a5b4fc',fontSize:12,fontWeight:800,cursor:'pointer',display:'flex',alignItems:'center',gap:6,fontFamily:'Space Grotesk,sans-serif'}}><Icon name="plus" size={12}/>Tambah</button>
+              </R>
+              <C style={{gap:6,maxHeight:250,overflowY:'auto', paddingRight: 4}}>
+                {(phase.videos||[]).map((v,i)=>(
+                  <div key={v.id} style={{padding:'12px 14px',borderRadius:12,background:'rgba(0,0,0,.4)',border:'1px solid rgba(255,255,255,.08)',display:'flex',alignItems:'center',gap:12}}>
+                    <span style={{fontSize:14,color:'#94a3b8',fontWeight:800,width:20,textAlign:'right',flexShrink:0}}>{i+1}</span>
+                    <div style={{flex:1,minWidth:0}}>
+                      <div style={{fontSize:14,fontWeight:700,color:'#f8fafc',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{v.title}</div>
+                      {v.url&&<div style={{fontSize:12,color:'#64748b',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{v.url}</div>}
+                    </div>
+                    <button onClick={()=>setEditItem({type:'video',...v})} className="icon-btn"><Icon name="pencil" size={12}/></button>
+                    <button onClick={()=>{if(confirm("Hapus video?"))deleteItem(v.id,'video');}} className="icon-btn red"><Icon name="trash-2" size={12}/></button>
+                  </div>
+                ))}
+              </C>
             </div>
-            <button onClick={()=>setSelectedPhase(null)} className="icon-btn"><Icon name="x" size={14}/></button>
-          </R>
 
-          {/* Videos */}
-          <div>
-            <R style={{justifyContent:'space-between',marginBottom:6}}>
-              <span className="section-label">📹 VIDEO ({(phase.videos||[]).length})</span>
-              <button onClick={()=>setEditItem({type:'video',id:'',title:'',url:''})} style={{padding:'4px 9px',background:'rgba(99,102,241,.1)',border:'1px solid rgba(99,102,241,.2)',borderRadius:6,color:'#818cf8',fontSize:11,fontWeight:700,cursor:'pointer',display:'flex',alignItems:'center',gap:4,fontFamily:'Space Grotesk,sans-serif'}}><Icon name="plus" size={10}/>Tambah</button>
-            </R>
-            <C style={{gap:4,maxHeight:200,overflowY:'auto'}}>
-              {(phase.videos||[]).map((v,i)=>(
-                <div key={v.id} style={{padding:'9px 11px',borderRadius:9,background:'rgba(3,7,18,.6)',border:'1px solid rgba(255,255,255,.06)',display:'flex',alignItems:'center',gap:9}}>
-                  <span style={{fontSize:12,color:'#475569',fontWeight:700,width:18,textAlign:'right',flexShrink:0}}>{i+1}</span>
-                  <div style={{flex:1,minWidth:0}}>
-                    <div style={{fontSize:13,fontWeight:600,color:'#e2e8f0',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{v.title}</div>
-                    {v.url&&<div style={{fontSize:11,color:'#475569',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{v.url}</div>}
+            <div>
+              <R style={{justifyContent:'space-between',marginBottom:8, marginTop: 8}}>
+                <span className="section-label">🔬 CASE STUDIES ({(phase.casestudies||[]).length})</span>
+                <button onClick={()=>setEditItem({type:'case',id:'',title:'',desc:''})} style={{padding:'6px 12px',background:'rgba(245,158,11,.15)',border:'1px solid rgba(245,158,11,.3)',borderRadius:8,color:'#fcd34d',fontSize:12,fontWeight:800,cursor:'pointer',display:'flex',alignItems:'center',gap:6,fontFamily:'Space Grotesk,sans-serif'}}><Icon name="plus" size={12}/>Tambah</button>
+              </R>
+              <C style={{gap:6,maxHeight:200,overflowY:'auto', paddingRight: 4}}>
+                {(phase.casestudies||[]).map((cs,i)=>(
+                  <div key={cs.id} style={{padding:'12px 14px',borderRadius:12,background:'rgba(0,0,0,.4)',border:'1px solid rgba(255,255,255,.08)',display:'flex',alignItems:'center',gap:12}}>
+                    <span style={{fontSize:14,color:'#94a3b8',fontWeight:800,width:20,textAlign:'right',flexShrink:0}}>{i+1}</span>
+                    <div style={{flex:1,minWidth:0}}>
+                      <div style={{fontSize:14,fontWeight:700,color:'#fcd34d',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{cs.title}</div>
+                      <div style={{fontSize:12,color:'#64748b',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{cs.desc}</div>
+                    </div>
+                    <button onClick={()=>setEditItem({type:'case',...cs})} className="icon-btn"><Icon name="pencil" size={12}/></button>
+                    <button onClick={()=>{if(confirm("Hapus case study?"))deleteItem(cs.id,'case');}} className="icon-btn red"><Icon name="trash-2" size={12}/></button>
                   </div>
-                  <button onClick={()=>setEditItem({type:'video',...v})} className="icon-btn"><Icon name="pencil" size={11}/></button>
-                  <button onClick={()=>{if(confirm("Hapus video ini?"))deleteItem(v.id,'video');}} className="icon-btn red"><Icon name="trash-2" size={11}/></button>
-                </div>
-              ))}
-              {(phase.videos||[]).length===0&&<div style={{fontSize:12,color:'#334155',padding:'8px 0'}}>Belum ada video.</div>}
-            </C>
-          </div>
-
-          {/* Case Studies */}
-          <div>
-            <R style={{justifyContent:'space-between',marginBottom:6}}>
-              <span className="section-label">🔬 CASE STUDIES ({(phase.casestudies||[]).length})</span>
-              <button onClick={()=>setEditItem({type:'case',id:'',title:'',desc:''})} style={{padding:'4px 9px',background:'rgba(245,158,11,.1)',border:'1px solid rgba(245,158,11,.2)',borderRadius:6,color:'#fbbf24',fontSize:11,fontWeight:700,cursor:'pointer',display:'flex',alignItems:'center',gap:4,fontFamily:'Space Grotesk,sans-serif'}}><Icon name="plus" size={10}/>Tambah</button>
-            </R>
-            <C style={{gap:4,maxHeight:160,overflowY:'auto'}}>
-              {(phase.casestudies||[]).map((cs,i)=>(
-                <div key={cs.id} style={{padding:'9px 11px',borderRadius:9,background:'rgba(3,7,18,.6)',border:'1px solid rgba(255,255,255,.06)',display:'flex',alignItems:'center',gap:9}}>
-                  <span style={{fontSize:12,color:'#475569',fontWeight:700,width:18,textAlign:'right',flexShrink:0}}>{i+1}</span>
-                  <div style={{flex:1,minWidth:0}}>
-                    <div style={{fontSize:13,fontWeight:600,color:'#fbbf24',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{cs.title}</div>
-                    <div style={{fontSize:11,color:'#475569',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{cs.desc}</div>
-                  </div>
-                  <button onClick={()=>setEditItem({type:'case',...cs})} className="icon-btn"><Icon name="pencil" size={11}/></button>
-                  <button onClick={()=>{if(confirm("Hapus case study?"))deleteItem(cs.id,'case');}} className="icon-btn red"><Icon name="trash-2" size={11}/></button>
-                </div>
-              ))}
-              {(phase.casestudies||[]).length===0&&<div style={{fontSize:12,color:'#334155',padding:'8px 0'}}>Belum ada case study.</div>}
-            </C>
-          </div>
-        </C>
+                ))}
+              </C>
+            </div>
+          </C>
+        </div>
       )}
 
-      {/* Phase Editor */}
       {editPhase&&(
-        <div className="overlay" style={{zIndex:200}} onClick={e=>e.target===e.currentTarget&&setEditPhase(null)}>
-          <div style={{background:'#0a0f1e',border:'1px solid rgba(255,255,255,.09)',borderRadius:20,width:'100%',maxWidth:520,padding:28,boxShadow:'0 40px 80px rgba(0,0,0,.7)'}}>
-            <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:18}}>
-              <h3 style={{fontSize:18,fontWeight:700,color:'#fff',fontFamily:'Outfit,sans-serif'}}>{editPhase.isNew?'Tambah Phase Baru':'Edit Phase'}</h3>
-              <button onClick={()=>setEditPhase(null)} style={{padding:6,borderRadius:8,background:'rgba(255,255,255,.05)',border:'none',cursor:'pointer',color:'#94a3b8',display:'flex'}}><Icon name="x" size={16}/></button>
-            </div>
-            <PhaseForm initial={editPhase} onSave={savePhase} onCancel={()=>setEditPhase(null)}/>
-          </div>
-        </div>
+        <Modal isOpen={!!editPhase} onClose={()=>setEditPhase(null)} title={editPhase.isNew?'Tambah Modul Baru':'Edit Modul'}>
+          <PhaseForm initial={editPhase} onSave={savePhase} onCancel={()=>setEditPhase(null)}/>
+        </Modal>
       )}
 
-      {/* Item Editor */}
       {editItem&&(
-        <div className="overlay" style={{zIndex:200}} onClick={e=>e.target===e.currentTarget&&setEditItem(null)}>
-          <div style={{background:'#0a0f1e',border:'1px solid rgba(255,255,255,.09)',borderRadius:20,width:'100%',maxWidth:480,padding:28,boxShadow:'0 40px 80px rgba(0,0,0,.7)'}}>
-            <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:18}}>
-              <h3 style={{fontSize:18,fontWeight:700,color:'#fff',fontFamily:'Outfit,sans-serif'}}>{editItem.id?'Edit':'Tambah'} {editItem.type==='video'?'Video':'Case Study'}</h3>
-              <button onClick={()=>setEditItem(null)} style={{padding:6,borderRadius:8,background:'rgba(255,255,255,.05)',border:'none',cursor:'pointer',color:'#94a3b8',display:'flex'}}><Icon name="x" size={16}/></button>
-            </div>
-            <ItemForm initial={editItem} onSave={saveItem} onCancel={()=>setEditItem(null)}/>
-          </div>
-        </div>
+        <Modal isOpen={!!editItem} onClose={()=>setEditItem(null)} title={`${editItem.id?'Edit':'Tambah'} ${editItem.type==='video'?'Video':'Case Study'}`}>
+          <ItemForm initial={editItem} onSave={saveItem} onCancel={()=>setEditItem(null)}/>
+        </Modal>
       )}
     </div>
   );
@@ -1499,31 +1494,28 @@ const PhaseForm=({initial,onSave,onCancel})=>{
   const[color2,setColor2]=useState(initial.color2||'#818cf8');
   const[pl,setPl]=useState(initial.pl||'');
 
-  const submit=(e)=>{
-    e.preventDefault();
-    onSave({...initial,title,week,desc,color1,color2,pl});
-  };
+  const submit=(e)=>{e.preventDefault();onSave({...initial,title,week,desc,color1,color2,pl});};
 
   return(
-    <form onSubmit={submit} style={{display:'flex',flexDirection:'column',gap:12}}>
-      <div><label style={{fontSize:11,fontWeight:700,color:'#475569',letterSpacing:'.08em',display:'block',marginBottom:5,textTransform:'uppercase'}}>Nama Phase</label><input value={title} onChange={e=>setTitle(e.target.value)} className="inp" required placeholder="Misal: React.js Ecosystem"/></div>
-      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}}>
-        <div><label style={{fontSize:11,fontWeight:700,color:'#475569',letterSpacing:'.08em',display:'block',marginBottom:5,textTransform:'uppercase'}}>Week</label><input value={week} onChange={e=>setWeek(e.target.value)} className="inp" placeholder="Misal: 1–2"/></div>
-        <div><label style={{fontSize:11,fontWeight:700,color:'#475569',letterSpacing:'.08em',display:'block',marginBottom:5,textTransform:'uppercase'}}>Playlist URL</label><input value={pl} onChange={e=>setPl(e.target.value)} className="inp" placeholder="https://youtube.com/..."/></div>
+    <form onSubmit={submit} style={{display:'flex',flexDirection:'column',gap:16}}>
+      <div><label style={{fontSize:12,fontWeight:800,color:'#94a3b8',letterSpacing:'.08em',display:'block',marginBottom:6,textTransform:'uppercase'}}>Nama Modul</label><input value={title} onChange={e=>setTitle(e.target.value)} className="inp" required placeholder="Misal: React.js Ecosystem" style={{background: 'rgba(0,0,0,0.4)'}}/></div>
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
+        <div><label style={{fontSize:12,fontWeight:800,color:'#94a3b8',letterSpacing:'.08em',display:'block',marginBottom:6,textTransform:'uppercase'}}>Week</label><input value={week} onChange={e=>setWeek(e.target.value)} className="inp" placeholder="Misal: 1–2" style={{background: 'rgba(0,0,0,0.4)'}}/></div>
+        <div><label style={{fontSize:12,fontWeight:800,color:'#94a3b8',letterSpacing:'.08em',display:'block',marginBottom:6,textTransform:'uppercase'}}>Playlist URL</label><input value={pl} onChange={e=>setPl(e.target.value)} className="inp" placeholder="https://youtube.com/..." style={{background: 'rgba(0,0,0,0.4)'}}/></div>
       </div>
-      <div><label style={{fontSize:11,fontWeight:700,color:'#475569',letterSpacing:'.08em',display:'block',marginBottom:5,textTransform:'uppercase'}}>Deskripsi</label><textarea value={desc} onChange={e=>setDesc(e.target.value)} className="inp" placeholder="Deskripsi singkat..."/></div>
+      <div><label style={{fontSize:12,fontWeight:800,color:'#94a3b8',letterSpacing:'.08em',display:'block',marginBottom:6,textTransform:'uppercase'}}>Deskripsi</label><textarea value={desc} onChange={e=>setDesc(e.target.value)} className="inp" placeholder="Deskripsi singkat..." style={{background: 'rgba(0,0,0,0.4)'}}/></div>
       <div>
-        <label style={{fontSize:11,fontWeight:700,color:'#475569',letterSpacing:'.08em',display:'block',marginBottom:8,textTransform:'uppercase'}}>Warna Tema</label>
-        <div style={{display:'flex',gap:6,flexWrap:'wrap',marginBottom:8}}>
+        <label style={{fontSize:12,fontWeight:800,color:'#94a3b8',letterSpacing:'.08em',display:'block',marginBottom:10,textTransform:'uppercase'}}>Tema Warna</label>
+        <div style={{display:'flex',gap:8,flexWrap:'wrap',marginBottom:12}}>
           {COLOR_PAIRS.map(([c1,c2])=>(
-            <div key={c1} onClick={()=>{setColor1(c1);setColor2(c2);}} className={`col-swatch ${color1===c1?'selected':''}`} style={{background:`linear-gradient(135deg,${c1},${c2})`}}/>
+            <div key={c1} onClick={()=>{setColor1(c1);setColor2(c2);}} className={`col-swatch ${color1===c1?'selected':''}`} style={{background:`linear-gradient(135deg,${c1},${c2})`, width: 36, height: 36}}/>
           ))}
         </div>
-        <div style={{height:40,borderRadius:10,background:`linear-gradient(135deg,${color1},${color2})`,display:'flex',alignItems:'center',justifyContent:'center',fontSize:13,fontWeight:700,color:'#fff',letterSpacing:'.08em'}}>PREVIEW WARNA</div>
+        <div style={{height:48,borderRadius:12,background:`linear-gradient(135deg,${color1},${color2})`,display:'flex',alignItems:'center',justifyContent:'center',fontSize:15,fontWeight:900,color:'#fff',letterSpacing:'.1em', boxShadow: `0 8px 20px ${color1}50`}}>PREVIEW</div>
       </div>
-      <div style={{display:'flex',gap:8,marginTop:4}}>
-        <button type="button" onClick={onCancel} style={{flex:1,padding:'10px',borderRadius:10,background:'rgba(255,255,255,.05)',border:'1px solid rgba(255,255,255,.1)',color:'#94a3b8',fontWeight:700,cursor:'pointer',fontSize:14,fontFamily:'Space Grotesk,sans-serif'}}>Batal</button>
-        <button type="submit" className="btn btn-sm" style={{flex:2}}>Simpan Phase</button>
+      <div style={{display:'flex',gap:12,marginTop:8}}>
+        <button type="button" onClick={onCancel} style={{flex:1,padding:'12px',borderRadius:12,background:'rgba(255,255,255,.08)',border:'1px solid rgba(255,255,255,.15)',color:'#cbd5e1',fontWeight:800,cursor:'pointer',fontSize:15,fontFamily:'Space Grotesk,sans-serif'}}>Batal</button>
+        <button type="submit" className="btn btn-sm" style={{flex:2, padding: '12px', fontSize: 15}}>Simpan Modul</button>
       </div>
     </form>
   );
@@ -1535,34 +1527,31 @@ const ItemForm=({initial,onSave,onCancel})=>{
   const[desc,setDesc]=useState(initial.desc||'');
   const submit=(e)=>{e.preventDefault();onSave({...initial,title,url,desc});};
   return(
-    <form onSubmit={submit} style={{display:'flex',flexDirection:'column',gap:12}}>
-      <div><label style={{fontSize:11,fontWeight:700,color:'#475569',letterSpacing:'.08em',display:'block',marginBottom:5,textTransform:'uppercase'}}>Judul</label><input value={title} onChange={e=>setTitle(e.target.value)} className="inp" required placeholder="Judul materi..."/></div>
-      {initial.type==='video'&&<div><label style={{fontSize:11,fontWeight:700,color:'#475569',letterSpacing:'.08em',display:'block',marginBottom:5,textTransform:'uppercase'}}>Link YouTube</label><input value={url} onChange={e=>setUrl(e.target.value)} className="inp" required placeholder="https://youtube.com/..."/></div>}
-      {initial.type==='case'&&<div><label style={{fontSize:11,fontWeight:700,color:'#475569',letterSpacing:'.08em',display:'block',marginBottom:5,textTransform:'uppercase'}}>Deskripsi</label><textarea value={desc} onChange={e=>setDesc(e.target.value)} className="inp" required placeholder="Instruksi / tugas case study..."/></div>}
-      <div style={{display:'flex',gap:8,marginTop:4}}>
-        <button type="button" onClick={onCancel} style={{flex:1,padding:'10px',borderRadius:10,background:'rgba(255,255,255,.05)',border:'1px solid rgba(255,255,255,.1)',color:'#94a3b8',fontWeight:700,cursor:'pointer',fontSize:14,fontFamily:'Space Grotesk,sans-serif'}}>Batal</button>
-        <button type="submit" className="btn btn-sm" style={{flex:2}}>Simpan</button>
+    <form onSubmit={submit} style={{display:'flex',flexDirection:'column',gap:16}}>
+      <div><label style={{fontSize:12,fontWeight:800,color:'#94a3b8',letterSpacing:'.08em',display:'block',marginBottom:6,textTransform:'uppercase'}}>Judul</label><input value={title} onChange={e=>setTitle(e.target.value)} className="inp" required placeholder="Judul materi..." style={{background: 'rgba(0,0,0,0.4)'}}/></div>
+      {initial.type==='video'&&<div><label style={{fontSize:12,fontWeight:800,color:'#94a3b8',letterSpacing:'.08em',display:'block',marginBottom:6,textTransform:'uppercase'}}>Link YouTube</label><input value={url} onChange={e=>setUrl(e.target.value)} className="inp" required placeholder="https://youtube.com/..." style={{background: 'rgba(0,0,0,0.4)'}}/></div>}
+      {initial.type==='case'&&<div><label style={{fontSize:12,fontWeight:800,color:'#94a3b8',letterSpacing:'.08em',display:'block',marginBottom:6,textTransform:'uppercase'}}>Deskripsi</label><textarea value={desc} onChange={e=>setDesc(e.target.value)} className="inp" required placeholder="Instruksi / tugas case study..." style={{background: 'rgba(0,0,0,0.4)'}}/></div>}
+      <div style={{display:'flex',gap:12,marginTop:8}}>
+        <button type="button" onClick={onCancel} style={{flex:1,padding:'12px',borderRadius:12,background:'rgba(255,255,255,.08)',border:'1px solid rgba(255,255,255,.15)',color:'#cbd5e1',fontWeight:800,cursor:'pointer',fontSize:15,fontFamily:'Space Grotesk,sans-serif'}}>Batal</button>
+        <button type="submit" className="btn btn-sm" style={{flex:2, padding: '12px', fontSize: 15}}>Simpan</button>
       </div>
     </form>
   );
 };
 
 // ─────────────────────────────────────────
-// WORKOUT MANAGER — per hari + kategori inti/sampingan
+// WORKOUT MANAGER
 // ─────────────────────────────────────────
 const WorkoutManager=({workoutData,setWorkoutData})=>{
   const[activeDay,setActiveDay]=useState('Senin');
-  const[editExercise,setEditExercise]=useState(null); // null | {isNew, dayKey, ex}
+  const[editExercise,setEditExercise]=useState(null);
   const safeWO=(workoutData&&typeof workoutData==='object'&&!Array.isArray(workoutData))?workoutData:DEFAULT_WORKOUT;
   const dayData=safeWO[activeDay]||{type:'',focus:'',col:'#6366f1',exercises:[]};
 
   const R=({children,style={}})=><div style={{display:'flex',alignItems:'center',...style}}>{children}</div>;
   const C=({children,style={}})=><div style={{display:'flex',flexDirection:'column',...style}}>{children}</div>;
 
-  const saveDayMeta=(field,val)=>{
-    setWorkoutData(p=>{const s=typeof p==='object'&&!Array.isArray(p)?p:DEFAULT_WORKOUT;return{...s,[activeDay]:{...dayData,[field]:val}};});
-  };
-
+  const saveDayMeta=(field,val)=>{setWorkoutData(p=>{const s=typeof p==='object'&&!Array.isArray(p)?p:DEFAULT_WORKOUT;return{...s,[activeDay]:{...dayData,[field]:val}};});};
   const saveExercise=(ex)=>{
     setWorkoutData(p=>{
       const s=typeof p==='object'&&!Array.isArray(p)?p:DEFAULT_WORKOUT;
@@ -1577,133 +1566,97 @@ const WorkoutManager=({workoutData,setWorkoutData})=>{
     });
     setEditExercise(null);
   };
-
   const deleteExercise=(idx)=>{
     if(!confirm("Hapus gerakan ini?"))return;
-    setWorkoutData(p=>{
-      const s=typeof p==='object'&&!Array.isArray(p)?p:DEFAULT_WORKOUT;
-      const day=s[activeDay]||{exercises:[]};
-      const list=[...(day.exercises||[])];list.splice(idx,1);
-      return{...s,[activeDay]:{...day,exercises:list}};
-    });
+    setWorkoutData(p=>{const s=typeof p==='object'&&!Array.isArray(p)?p:DEFAULT_WORKOUT;const day=s[activeDay]||{exercises:[]};const list=[...(day.exercises||[])];list.splice(idx,1);return{...s,[activeDay]:{...day,exercises:list}};});
   };
-
   const moveExercise=(from,to)=>{
-    setWorkoutData(p=>{
-      const s=typeof p==='object'&&!Array.isArray(p)?p:DEFAULT_WORKOUT;
-      const day=s[activeDay]||{exercises:[]};
-      const list=[...(day.exercises||[])];
-      const[item]=list.splice(from,1);list.splice(to,0,item);
-      return{...s,[activeDay]:{...day,exercises:list}};
-    });
+    setWorkoutData(p=>{const s=typeof p==='object'&&!Array.isArray(p)?p:DEFAULT_WORKOUT;const day=s[activeDay]||{exercises:[]};const list=[...(day.exercises||[])];const[item]=list.splice(from,1);list.splice(to,0,item);return{...s,[activeDay]:{...day,exercises:list}};});
   };
 
   const exercises=dayData.exercises||[];
   const primaryExes=exercises.filter(e=>e.category==='primary');
-  // secondaryExes removed — Scapular Winging is now a fixed global constant
 
   return(
-    <C style={{gap:14}}>
-      {/* Day selector */}
-      <div style={{display:'flex',gap:6,flexWrap:'wrap'}}>
+    <C style={{gap:16}}>
+      <div style={{display:'flex',gap:8,flexWrap:'wrap'}}>
         {DAYS.map(d=>(
-          <button key={d} className={`day-btn ${activeDay===d?'active':''}`} onClick={()=>setActiveDay(d)}>{d}</button>
+          <button key={d} className={`day-btn ${activeDay===d?'active':''}`} onClick={()=>setActiveDay(d)} style={{padding: '10px 16px', fontSize: 14}}>{d}</button>
         ))}
       </div>
 
-      {/* Day meta */}
-      <div style={{background:'rgba(15,23,42,.5)',border:'1px solid rgba(255,255,255,.07)',borderRadius:14,padding:16}}>
-        <div style={{fontSize:12,fontWeight:700,color:'#475569',marginBottom:12,letterSpacing:'.08em',textTransform:'uppercase'}}>⚙ Pengaturan Hari: {activeDay}</div>
-        <div style={{display:'grid',gridTemplateColumns:window.innerWidth<600?'1fr':'1fr 1fr 1fr',gap:10}}>
+      <div className="glass" style={{padding: 24}}>
+        <div style={{fontSize:13,fontWeight:900,color:'#94a3b8',marginBottom:16,letterSpacing:'.1em',textTransform:'uppercase'}}>⚙ Info Hari: <span style={{color: '#fff'}}>{activeDay}</span></div>
+        <div style={{display:'grid',gridTemplateColumns:window.innerWidth<600?'1fr':'1fr 1fr 1fr',gap:16}}>
           <div>
-            <label style={{fontSize:11,fontWeight:700,color:'#475569',letterSpacing:'.08em',display:'block',marginBottom:5,textTransform:'uppercase'}}>Tipe Sesi</label>
-            <input value={dayData.type||''} onChange={e=>saveDayMeta('type',e.target.value)} className="inp" style={{fontSize:14}} placeholder="Misal: Push Day (Gym)"/>
+            <label style={{fontSize:12,fontWeight:800,color:'#94a3b8',letterSpacing:'.08em',display:'block',marginBottom:6,textTransform:'uppercase'}}>Tipe Sesi</label>
+            <input value={dayData.type||''} onChange={e=>saveDayMeta('type',e.target.value)} className="inp" style={{fontSize:15, background: 'rgba(0,0,0,0.4)'}} placeholder="Misal: Push Day (Gym)"/>
           </div>
           <div>
-            <label style={{fontSize:11,fontWeight:700,color:'#475569',letterSpacing:'.08em',display:'block',marginBottom:5,textTransform:'uppercase'}}>Fokus</label>
-            <input value={dayData.focus||''} onChange={e=>saveDayMeta('focus',e.target.value)} className="inp" style={{fontSize:14}} placeholder="Misal: Dada, Bahu"/>
+            <label style={{fontSize:12,fontWeight:800,color:'#94a3b8',letterSpacing:'.08em',display:'block',marginBottom:6,textTransform:'uppercase'}}>Fokus</label>
+            <input value={dayData.focus||''} onChange={e=>saveDayMeta('focus',e.target.value)} className="inp" style={{fontSize:15, background: 'rgba(0,0,0,0.4)'}} placeholder="Misal: Dada, Bahu"/>
           </div>
           <div>
-            <label style={{fontSize:11,fontWeight:700,color:'#475569',letterSpacing:'.08em',display:'block',marginBottom:5,textTransform:'uppercase'}}>Warna Hari</label>
-            <div style={{display:'flex',gap:5,flexWrap:'wrap',marginTop:2}}>
+            <label style={{fontSize:12,fontWeight:800,color:'#94a3b8',letterSpacing:'.08em',display:'block',marginBottom:6,textTransform:'uppercase'}}>Warna Identitas</label>
+            <div style={{display:'flex',gap:8,flexWrap:'wrap',marginTop:4}}>
               {COLOR_PRESETS.map(c=>(
-                <div key={c} onClick={()=>saveDayMeta('col',c)} className={`col-swatch ${dayData.col===c?'selected':''}`} style={{width:24,height:24,background:c,borderRadius:5}}/>
+                <div key={c} onClick={()=>saveDayMeta('col',c)} className={`col-swatch ${dayData.col===c?'selected':''}`} style={{width:28,height:28,background:c,borderRadius:8}}/>
               ))}
             </div>
           </div>
         </div>
       </div>
 
-      {/* Exercise list */}
-      <div style={{display:'grid',gridTemplateColumns:window.innerWidth<700?'1fr':'1fr 1fr',gap:14}}>
-        {/* Primary */}
-        <C style={{gap:7}}>
-          <R style={{justifyContent:'space-between',marginBottom:2}}>
-            <span style={{fontSize:13,fontWeight:700,color:'#818cf8',letterSpacing:'.08em',textTransform:'uppercase'}}>⚡ Latihan Inti ({primaryExes.length})</span>
-            <button onClick={()=>setEditExercise({isNew:true,dayKey:activeDay,name:'',detail:'',target:'',category:'primary'})} style={{padding:'4px 9px',background:'rgba(99,102,241,.12)',border:'1px solid rgba(99,102,241,.25)',borderRadius:7,color:'#818cf8',fontSize:11,fontWeight:700,cursor:'pointer',display:'flex',alignItems:'center',gap:4,fontFamily:'Space Grotesk,sans-serif'}}>
-              <Icon name="plus" size={10}/>Tambah
+      <div style={{display:'grid',gridTemplateColumns:window.innerWidth<700?'1fr':'1.2fr 1fr',gap:20}}>
+        <C style={{gap:10}}>
+          <R style={{justifyContent:'space-between',marginBottom:4}}>
+            <span style={{fontSize:15,fontWeight:900,color:'#a5b4fc',letterSpacing:'.08em',textTransform:'uppercase'}}>⚡ Latihan Inti ({primaryExes.length})</span>
+            <button onClick={()=>setEditExercise({isNew:true,dayKey:activeDay,name:'',detail:'',target:'',category:'primary'})} style={{padding:'8px 14px',background:'rgba(99,102,241,.15)',border:'1px solid rgba(99,102,241,.3)',borderRadius:10,color:'#a5b4fc',fontSize:13,fontWeight:800,cursor:'pointer',display:'flex',alignItems:'center',gap:6,fontFamily:'Space Grotesk,sans-serif'}}>
+              <Icon name="plus" size={14}/>Tambah
             </button>
           </R>
           {exercises.map((ex,i)=>{
             if(ex.category!=='primary')return null;
             return(
-              <div key={i} style={{padding:'10px 12px',borderRadius:10,background:'rgba(3,7,18,.7)',border:'1px solid rgba(99,102,241,.2)',borderLeft:'3px solid #6366f1',display:'flex',alignItems:'center',gap:9}}>
+              <div key={i} style={{padding:'14px 16px',borderRadius:14,background:'rgba(0,0,0,.4)',border:'1px solid rgba(99,102,241,.3)',borderLeft:'4px solid #6366f1',display:'flex',alignItems:'center',gap:12}}>
                 <div style={{flex:1}}>
-                  <div style={{fontSize:14,fontWeight:700,color:'#e2e8f0'}}>{ex.name}</div>
-                  <div style={{fontSize:12,color:'#475569'}}>{ex.detail} · {ex.target}</div>
+                  <div style={{fontSize:16,fontWeight:800,color:'#f8fafc'}}>{ex.name}</div>
+                  <div style={{fontSize:13,color:'#94a3b8', fontWeight: 600}}>{ex.detail} · {ex.target}</div>
                 </div>
-                <div style={{display:'flex',gap:3}}>
-                  {i>0&&<button onClick={()=>moveExercise(i,i-1)} className="icon-btn" title="Geser atas"><Icon name="chevron-up" size={11}/></button>}
-                  {i<exercises.length-1&&<button onClick={()=>moveExercise(i,i+1)} className="icon-btn" title="Geser bawah"><Icon name="chevron-down" size={11}/></button>}
-                  <button onClick={()=>setEditExercise({isNew:false,index:i,...ex})} className="icon-btn"><Icon name="pencil" size={11}/></button>
-                  <button onClick={()=>deleteExercise(i)} className="icon-btn red"><Icon name="trash-2" size={11}/></button>
+                <div style={{display:'flex',gap:4}}>
+                  {i>0&&<button onClick={()=>moveExercise(i,i-1)} className="icon-btn"><Icon name="chevron-up" size={14}/></button>}
+                  {i<exercises.length-1&&<button onClick={()=>moveExercise(i,i+1)} className="icon-btn"><Icon name="chevron-down" size={14}/></button>}
+                  <button onClick={()=>setEditExercise({isNew:false,index:i,...ex})} className="icon-btn"><Icon name="pencil" size={14}/></button>
+                  <button onClick={()=>deleteExercise(i)} className="icon-btn red"><Icon name="trash-2" size={14}/></button>
                 </div>
               </div>
             );
           })}
-          {primaryExes.length===0&&<div style={{fontSize:12,color:'#334155',padding:'6px 0'}}>Belum ada latihan inti.</div>}
         </C>
 
-        {/* Scapular — locked info panel */}
-        <C style={{gap:6}}>
-          <div style={{display:'flex',alignItems:'center',gap:6,marginBottom:2}}>
-            <span style={{fontSize:13,fontWeight:700,color:'#10b981',letterSpacing:'.08em',textTransform:'uppercase'}}>🩻 Scapular Winging ({SCAPULAR_EXERCISES.length})</span>
-            <span style={{fontSize:10,padding:'2px 7px',background:'rgba(16,185,129,.08)',border:'1px solid rgba(16,185,129,.15)',borderRadius:5,color:'#334155',fontWeight:700}}>TERKUNCI</span>
+        <C style={{gap:8}}>
+          <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:4}}>
+            <span style={{fontSize:14,fontWeight:900,color:'#34d399',letterSpacing:'.08em',textTransform:'uppercase'}}>🩻 Scapular ({SCAPULAR_EXERCISES.length})</span>
+            <span style={{fontSize:10,padding:'3px 8px',background:'rgba(16,185,129,.15)',border:'1px solid rgba(16,185,129,.3)',borderRadius:6,color:'#6ee7b7',fontWeight:800}}>TERKUNCI</span>
           </div>
-          <div style={{padding:'10px 12px',background:'rgba(16,185,129,.04)',border:'1px solid rgba(16,185,129,.1)',borderRadius:10,fontSize:12,color:'#334155'}}>
-            Latihan Scapular Winging berlaku otomatis setiap hari dan tidak dapat diubah dari sini. Ceklis bisa dilakukan di tab Fitness.
+          <div style={{padding:'14px',background:'rgba(16,185,129,.05)',border:'1px solid rgba(16,185,129,.2)',borderRadius:14,fontSize:13,color:'#94a3b8', fontWeight: 600}}>
+            Daftar ini ditambahkan otomatis ke semua hari.
           </div>
           {SCAPULAR_EXERCISES.map((ex,i)=>(
-            <div key={i} style={{padding:'9px 12px',borderRadius:9,background:'rgba(3,7,18,.5)',border:'1px solid rgba(16,185,129,.12)',borderLeft:'3px solid #10b981',display:'flex',alignItems:'center',gap:9,opacity:.7}}>
-              <span style={{width:22,height:22,borderRadius:6,background:'rgba(16,185,129,.08)',border:'1px solid rgba(16,185,129,.2)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:11,fontWeight:700,color:'#10b981',flexShrink:0}}>{i+1}</span>
+            <div key={i} style={{padding:'12px 14px',borderRadius:12,background:'rgba(0,0,0,.2)',border:'1px solid rgba(16,185,129,.2)',borderLeft:'3px solid #10b981',display:'flex',alignItems:'center',gap:12}}>
+              <span style={{width:24,height:24,borderRadius:6,background:'rgba(16,185,129,.15)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:12,fontWeight:800,color:'#34d399',flexShrink:0}}>{i+1}</span>
               <div style={{flex:1}}>
-                <div style={{fontSize:13,fontWeight:700,color:'#94a3b8'}}>{ex.name}</div>
-                <div style={{fontSize:11,color:'#334155'}}>{ex.detail} · {ex.target}</div>
+                <div style={{fontSize:14,fontWeight:800,color:'#cbd5e1'}}>{ex.name}</div>
               </div>
-              <span style={{fontSize:9,color:'#1e3a2f',background:'rgba(16,185,129,.06)',border:'1px solid rgba(16,185,129,.1)',borderRadius:3,padding:'2px 5px',fontWeight:700}}>FIXED</span>
             </div>
           ))}
         </C>
       </div>
 
-      {/* Summary bar */}
-      <div style={{padding:'10px 14px',borderRadius:10,background:'rgba(255,255,255,.03)',border:'1px solid rgba(255,255,255,.06)',display:'flex',gap:16,flexWrap:'wrap'}}>
-        <span style={{fontSize:12,color:'#475569'}}>Total: <b style={{color:'#fff'}}>{exercises.length}</b> gerakan</span>
-        <span style={{fontSize:12,color:'#818cf8'}}>⚡ Inti: <b>{primaryExes.length}</b></span>
-        <span style={{fontSize:12,color:'#10b981'}}>🩻 Scapular: <b>{SCAPULAR_EXERCISES.length}</b> (terkunci)</span>
-      </div>
-
-      {/* Exercise editor */}
       {editExercise&&(
-        <div className="overlay" style={{zIndex:200}} onClick={e=>e.target===e.currentTarget&&setEditExercise(null)}>
-          <div style={{background:'#0a0f1e',border:'1px solid rgba(255,255,255,.09)',borderRadius:20,width:'100%',maxWidth:480,padding:28,boxShadow:'0 40px 80px rgba(0,0,0,.7)'}}>
-            <R style={{justifyContent:'space-between',marginBottom:18}}>
-              <h3 style={{fontSize:17,fontWeight:700,color:'#fff',fontFamily:'Outfit,sans-serif'}}>{editExercise.isNew?'Tambah':'Edit'} Gerakan</h3>
-              <button onClick={()=>setEditExercise(null)} style={{padding:6,borderRadius:8,background:'rgba(255,255,255,.05)',border:'none',cursor:'pointer',color:'#94a3b8',display:'flex'}}><Icon name="x" size={15}/></button>
-            </R>
-            <ExerciseForm initial={editExercise} onSave={saveExercise} onCancel={()=>setEditExercise(null)}/>
-          </div>
-        </div>
+        <Modal isOpen={!!editExercise} onClose={()=>setEditExercise(null)} title={`${editExercise.isNew?'Tambah':'Edit'} Gerakan`}>
+          <ExerciseForm initial={editExercise} onSave={saveExercise} onCancel={()=>setEditExercise(null)}/>
+        </Modal>
       )}
     </C>
   );
@@ -1713,29 +1666,17 @@ const ExerciseForm=({initial,onSave,onCancel})=>{
   const[name,setName]=useState(initial.name||'');
   const[detail,setDetail]=useState(initial.detail||'');
   const[target,setTarget]=useState(initial.target||'');
-  const[category,setCategory]=useState(initial.category||'primary');
-  const submit=(e)=>{e.preventDefault();onSave({...initial,name,detail,target,category});};
+  const submit=(e)=>{e.preventDefault();onSave({...initial,name,detail,target,category:'primary'});};
   return(
-    <form onSubmit={submit} style={{display:'flex',flexDirection:'column',gap:12}}>
-      <div><label style={{fontSize:11,fontWeight:700,color:'#475569',letterSpacing:'.08em',display:'block',marginBottom:5,textTransform:'uppercase'}}>Nama Gerakan</label><input value={name} onChange={e=>setName(e.target.value)} className="inp" required placeholder="Misal: Bench Press"/></div>
-      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}}>
-        <div><label style={{fontSize:11,fontWeight:700,color:'#475569',letterSpacing:'.08em',display:'block',marginBottom:5,textTransform:'uppercase'}}>Set & Rep</label><input value={detail} onChange={e=>setDetail(e.target.value)} className="inp" required placeholder="3 x 10-12"/></div>
-        <div><label style={{fontSize:11,fontWeight:700,color:'#475569',letterSpacing:'.08em',display:'block',marginBottom:5,textTransform:'uppercase'}}>Target Otot</label><input value={target} onChange={e=>setTarget(e.target.value)} className="inp" required placeholder="Dada Atas"/></div>
+    <form onSubmit={submit} style={{display:'flex',flexDirection:'column',gap:16}}>
+      <div><label style={{fontSize:12,fontWeight:800,color:'#94a3b8',letterSpacing:'.08em',display:'block',marginBottom:6,textTransform:'uppercase'}}>Nama Gerakan</label><input value={name} onChange={e=>setName(e.target.value)} className="inp" required placeholder="Misal: Bench Press" style={{background: 'rgba(0,0,0,0.4)'}}/></div>
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
+        <div><label style={{fontSize:12,fontWeight:800,color:'#94a3b8',letterSpacing:'.08em',display:'block',marginBottom:6,textTransform:'uppercase'}}>Set & Rep</label><input value={detail} onChange={e=>setDetail(e.target.value)} className="inp" required placeholder="3 x 10-12" style={{background: 'rgba(0,0,0,0.4)'}}/></div>
+        <div><label style={{fontSize:12,fontWeight:800,color:'#94a3b8',letterSpacing:'.08em',display:'block',marginBottom:6,textTransform:'uppercase'}}>Target Otot</label><input value={target} onChange={e=>setTarget(e.target.value)} className="inp" required placeholder="Dada Atas" style={{background: 'rgba(0,0,0,0.4)'}}/></div>
       </div>
-      <div>
-        <label style={{fontSize:11,fontWeight:700,color:'#475569',letterSpacing:'.08em',display:'block',marginBottom:8,textTransform:'uppercase'}}>Kategori</label>
-        <div style={{display:'flex',gap:10}}>
-          {[{val:'primary',label:'⚡ Latihan Inti',col:'#818cf8',bg:'rgba(99,102,241,.12)',border:'rgba(99,102,241,.35)'},{val:'secondary',label:'+ Latihan Sampingan',col:'#fbbf24',bg:'rgba(245,158,11,.12)',border:'rgba(245,158,11,.35)'}].map(opt=>(
-            <div key={opt.val} onClick={()=>setCategory(opt.val)} style={{flex:1,padding:'11px 10px',borderRadius:11,border:`2px solid ${category===opt.val?opt.border:'rgba(255,255,255,.08)'}`,background:category===opt.val?opt.bg:'rgba(255,255,255,.02)',cursor:'pointer',textAlign:'center',transition:'all .2s'}}>
-              <div style={{fontSize:14,fontWeight:700,color:category===opt.val?opt.col:'#64748b'}}>{opt.label}</div>
-              <div style={{fontSize:11,color:'#475569',marginTop:2}}>{opt.val==='primary'?'Fokus utama sesi':'Tambahan / pelengkap'}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div style={{display:'flex',gap:8,marginTop:4}}>
-        <button type="button" onClick={onCancel} style={{flex:1,padding:'10px',borderRadius:10,background:'rgba(255,255,255,.05)',border:'1px solid rgba(255,255,255,.1)',color:'#94a3b8',fontWeight:700,cursor:'pointer',fontSize:14,fontFamily:'Space Grotesk,sans-serif'}}>Batal</button>
-        <button type="submit" className="btn btn-sm" style={{flex:2}}>Simpan Gerakan</button>
+      <div style={{display:'flex',gap:12,marginTop:8}}>
+        <button type="button" onClick={onCancel} style={{flex:1,padding:'12px',borderRadius:12,background:'rgba(255,255,255,.08)',border:'1px solid rgba(255,255,255,.15)',color:'#cbd5e1',fontWeight:800,cursor:'pointer',fontSize:15,fontFamily:'Space Grotesk,sans-serif'}}>Batal</button>
+        <button type="submit" className="btn btn-sm" style={{flex:2, padding: '12px', fontSize: 15}}>Simpan Gerakan</button>
       </div>
     </form>
   );
