@@ -301,7 +301,7 @@ const DEFAULT_WORKOUT={
   'Minggu':{type:'Rest Day',focus:'Pemulihan & Persiapan',exercises:[{name:'Full Sleep',detail:'9 jam',target:'Pemulihan',category:'primary'},{name:'Meal Prep',detail:'1–2 jam',target:'Persiapan',category:'primary'},{name:'Stretching ringan',detail:'15–20 menit',target:'Fleksibilitas',category:'primary'}]},
 };
 const DAYS=['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'];
-const TOTAL=76; const START=new Date(2026,3,20); START.setHours(0,0,0,0);
+const TOTAL=80; const START=new Date(2026,3,24); START.setHours(0,0,0,0);
 const MOODS=[{key:'good',label:'Baik',color:'var(--green)'},{key:'neutral',label:'Biasa',color:'var(--amber)'},{key:'bad',label:'Berat',color:'var(--red)'}];
 
 // ─── Sync ─────────────────────────────────────────────────
@@ -344,7 +344,7 @@ const AuthGate=({onLogin})=>{
     <div className="auth-wrap"><div className="auth-box fade-up">
       <div className="auth-logo"><I n="monk" size={20}/></div>
       <h1 className="auth-h1">Monk Mode</h1>
-      <p className="auth-tagline">76 Day Discipline Protocol — 20 Apr 2026</p>
+      <p className="auth-tagline">80 Day Discipline Protocol — 24 Apr → 13 Jul 2026</p>
       <div className="auth-form">
         {err&&<div style={{background:'rgba(239,68,68,0.08)',border:'1px solid rgba(239,68,68,0.2)',borderRadius:8,padding:'9px 12px',fontSize:13,color:'var(--red)'}}>{err}</div>}
         <div><span className="label">Username</span><input value={u} onChange={e=>setU(e.target.value.replace(/[^a-zA-Z0-9_]/g,''))} className="inp mono" placeholder="nama_kamu" maxLength={30} autoCapitalize="none" autoComplete="off"/></div>
@@ -440,7 +440,7 @@ const App=()=>{
         <div className={`sidebar${slim?' slim':''}`}>
           <div className="sb-top">
             <div className="sb-logo"><I n="monk" size={16}/></div>
-            {!slim&&<div><div className="sb-title">Monk Mode</div><div className="sb-sub">76 Day Protocol</div></div>}
+            {!slim&&<div><div className="sb-title">Monk Mode</div><div className="sb-sub">80 Day Protocol</div></div>}
           </div>
           {!slim&&<div className="sb-user"><div className="sb-avatar">{uid.charAt(0).toUpperCase()}</div><div style={{flex:1,minWidth:0}}><div className="sb-uname">{uid}</div><div className="sb-uday">Day {dayN} / {TOTAL}</div></div><div className="sb-dot"/></div>}
           <div className="sb-nav">
@@ -479,9 +479,9 @@ const App=()=>{
       {mob&&(<nav className="mobnav">{NAV.map(n=><button key={n.id} className={`mobbtn${tab===n.id?' on':''}`} onClick={()=>setTab(n.id)}><I n={n.n} size={20}/>{n.l.split(' ')[0]}</button>)}</nav>)}
 
       {/* Timeline modal */}
-      <Modal open={calOpen} onClose={()=>setCalOpen(false)} title="Timeline — 76 Hari">
+      <Modal open={calOpen} onClose={()=>setCalOpen(false)} title="Timeline — 80 Hari">
         <div style={{marginBottom:14,display:'flex',gap:12,fontSize:12,color:'var(--text2)',fontFamily:'JetBrains Mono,monospace',flexWrap:'wrap'}}>
-          <span>Mulai: <b style={{color:'var(--text)'}}>20 Apr 2026</b></span>
+          <span>Mulai: <b style={{color:'var(--text)'}}>24 Apr 2026</b></span>
           <span>Selesai: <b style={{color:'var(--text)'}}>{end.toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})}</b></span>
           <span>Hari ini: <b style={{color:'var(--blue-hover)'}}>Day {dayN}</b></span>
         </div>
@@ -530,7 +530,7 @@ const DashPage=({dayN,pct,weight,fp,nfStreak,njStreak,todayM,safeRprog,toggleRpr
 
       <div className="card card-p">
         <div className="between" style={{marginBottom:10}}>
-          <span style={{fontSize:13,fontWeight:600,color:'var(--text2)'}}>76 Hari Monk Mode — Day {dayN}</span>
+          <span style={{fontSize:13,fontWeight:600,color:'var(--text2)'}}>80 Hari Monk Mode — Day {dayN}</span>
           <span style={{fontSize:15,fontWeight:800,color:'var(--blue-hover)'}}>{pct}%</span>
         </div>
         <PBar cur={dayN} tot={TOTAL}/>
@@ -837,8 +837,8 @@ const StreakPage=({streakNF,setStreakNF,streakNJ,setStreakNJ,today,nfStreak,njSt
           <div><div style={{fontSize:11,fontWeight:600,color:'var(--text2)',textTransform:'uppercase',letterSpacing:'0.08em',marginBottom:3}}>{label}</div><div style={{fontSize:32,fontWeight:800,color:accent,letterSpacing:'-0.03em',lineHeight:1}}>{streak} <span style={{fontSize:14,color:'var(--text2)',fontWeight:500}}>hari</span></div></div>
           <button className="btn btn-red" style={{fontSize:12}} onClick={()=>setConfirm(label==='NoFap'?'nf':'nj')}>Reset</button>
         </div>
-        <PBar cur={streak} tot={76} cls={accent===`var(--blue-hover)`?'':'g'}/>
-        <div style={{fontSize:11,color:'var(--text2)',fontFamily:'JetBrains Mono,monospace'}}>{streak}/76 hari — {Math.round((streak/76)*100)}%</div>
+        <PBar cur={streak} tot={80} cls={accent===`var(--blue-hover)`?'':'g'}/>
+        <div style={{fontSize:11,color:'var(--text2)',fontFamily:'JetBrains Mono,monospace'}}>{streak}/80 hari — {Math.round((streak/80)*100)}%</div>
         <div><div className="cal-grid" style={{marginBottom:2}}>{dayLabels.map(d=><div key={d} className="cal-day-label">{d}</div>)}</div>
           <div className="cal-grid">{cells.map((d,i)=>{
             if(d===null)return<div key={`e${i}`} className="cal-cell empty"/>;
@@ -1032,7 +1032,7 @@ const RoadmapPage=({safeRM,setRoadmap,safeRprog,toggleRprog,roadPhase,setRoadPha
       <div className="between" style={{marginBottom:14,flexWrap:'wrap',gap:12}}>
         <div>
           <div style={{fontSize:20,fontWeight:800,color:'var(--text)',letterSpacing:'-0.02em',marginBottom:2}}>Python for Data Analytics</div>
-          <div style={{fontSize:12,color:'var(--text2)',fontFamily:'JetBrains Mono,monospace'}}>76 Hari Roadmap — {totalDone}/{totalAll} materi selesai</div>
+          <div style={{fontSize:12,color:'var(--text2)',fontFamily:'JetBrains Mono,monospace'}}>80 Hari Roadmap — {totalDone}/{totalAll} materi selesai</div>
         </div>
         <button className="btn btn-ghost" onClick={()=>{setSettTab('roadmap');setSettOpen(true);}}><I n="settings"/>Kelola Konten</button>
       </div>
