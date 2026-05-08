@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Monk Mode</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230f172a'/><rect x='14' y='6' width='4' height='20' rx='2' fill='%233b82f6'/><rect x='6' y='14' width='20' height='4' rx='2' fill='%233b82f6' opacity='0.35'/></svg>">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230f172a'/%3E%3Crect x='14' y='6' width='4' height='20' rx='2' fill='%233b82f6'/%3E%3Crect x='6' y='14' width='20' height='4' rx='2' fill='%233b82f6' opacity='0.35'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -18,16 +18,16 @@
   </script>
   <style>
     :root {
-      --bg: #0a0f1e; --surface: #111827; --surface2: #1a2235; --surface3: #1f2d45;
-      --blue: #3b82f6; --blue-hover: #60a5fa; --blue-dim: rgba(59,130,246,0.12); --blue-border: rgba(59,130,246,0.22);
-      --text: #f1f5f9; --text2: #94a3b8; --text3: #475569; --border: rgba(255,255,255,0.07); --border2: rgba(255,255,255,0.12);
+      --bg: #060b14; --surface: #0f1623; --surface2: #162032; --surface3: #1e2b42;
+      --blue: #2563eb; --blue-hover: #3b82f6; --blue-dim: rgba(37,99,235,0.12); --blue-border: rgba(37,99,235,0.22);
+      --text: #f8fafc; --text2: #94a3b8; --text3: #475569; --border: rgba(255,255,255,0.06); --border2: rgba(255,255,255,0.1);
       --green: #22c55e; --green-dim: rgba(34,197,94,0.1); --red: #ef4444; --red-dim: rgba(239,68,68,0.1);
       --amber: #f59e0b; --purple: #8b5cf6; --cyan: #0ea5e9; --indigo: #6366f1;
-      --radius: 14px; --radius-sm: 9px;
+      --radius: 16px; --radius-sm: 10px;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { font-size: 15px; }
-    body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); overflow: hidden; height: 100vh; -webkit-font-smoothing: antialiased; }
+    body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--text); overflow: hidden; height: 100vh; -webkit-font-smoothing: antialiased; }
     ::-webkit-scrollbar { width: 5px; height: 5px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 99px; }
@@ -72,7 +72,7 @@
     .prog.h6 { height:6px; } .prog.h8 { height:8px; }
     .prog-bar { height:100%; background:var(--blue); border-radius:99px; transition:width 0.7s cubic-bezier(0.34,1.56,0.64,1); }
     .prog-bar.g { background:var(--green); } .prog-bar.r { background:var(--red); } .prog-bar.a { background:var(--amber); }
-    .btn { display:inline-flex; align-items:center; justify-content:center; gap:7px; padding:9px 18px; border-radius:var(--radius-sm); border:none; cursor:pointer; font-family:'Plus Jakarta Sans',sans-serif; font-size:13.5px; font-weight:600; transition:all 0.15s; letter-spacing:-0.01em; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:7px; padding:9px 18px; border-radius:var(--radius-sm); border:none; cursor:pointer; font-family:'Poppins',sans-serif; font-size:13.5px; font-weight:600; transition:all 0.15s; letter-spacing:-0.01em; }
     .btn svg { width:14px; height:14px; flex-shrink:0; }
     .btn-blue { background:var(--blue); color:#fff; } .btn-blue:hover:not(:disabled) { background:var(--blue-hover); }
     .btn-ghost { background:var(--surface2); border:1px solid var(--border); color:var(--text2); } .btn-ghost:hover { color:var(--text); border-color:var(--border2); }
@@ -84,7 +84,7 @@
     .icon-btn:hover { color:var(--text); border-color:var(--border2); }
     .icon-btn.red:hover { color:var(--red); border-color:rgba(239,68,68,0.3); background:var(--red-dim); }
     .icon-btn svg { width:13px; height:13px; }
-    .inp { width:100%; padding:10px 13px; background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm); color:var(--text); font-family:'Plus Jakarta Sans',sans-serif; font-size:13.5px; outline:none; transition:border-color 0.15s; }
+    .inp { width:100%; padding:10px 13px; background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm); color:var(--text); font-family:'Poppins',sans-serif; font-size:13.5px; outline:none; transition:border-color 0.15s; }
     .inp:focus { border-color:var(--blue); }
     .inp::placeholder { color:var(--text3); }
     textarea.inp { resize:vertical; line-height:1.65; }
@@ -117,7 +117,7 @@
     .diary-entry { padding:16px 18px; border-radius:var(--radius-sm); border:1px solid var(--border); background:var(--surface); transition:border-color 0.15s; }
     .diary-entry:hover { border-color:var(--border2); }
     .diary-date { font-size:11px; font-weight:600; color:var(--text2); font-family:'JetBrains Mono',monospace; margin-bottom:6px; }
-    .diary-text { font-size:14px; color:var(--text); line-height:1.7; font-family:'Instrument Serif',serif; white-space:pre-wrap; word-break:break-word; }
+    .diary-text { font-size:14px; color:var(--text); line-height:1.7; font-family:'Poppins',sans-serif; white-space:pre-wrap; word-break:break-word; }
     .ex-card { display:flex; align-items:center; gap:12px; padding:13px 15px; border-radius:var(--radius-sm); border:1px solid var(--border); border-left:3px solid var(--blue); background:var(--surface); transition:all 0.2s; cursor:pointer; }
     .ex-card:hover { border-color:var(--border2); border-left-color:var(--blue-hover); }
     .ex-card.done { border-left-color:var(--green); opacity:0.65; }
@@ -139,12 +139,12 @@
     .pcard { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px; cursor:pointer; transition:all 0.2s; }
     .pcard:hover { border-color:var(--border2); transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,0.25); }
     .mobnav { position:fixed; bottom:0; left:0; right:0; background:rgba(17,24,39,0.95); backdrop-filter:blur(12px); border-top:1px solid var(--border); display:flex; justify-content:space-around; align-items:center; padding:8px 4px 20px; z-index:50; }
-    .mobbtn { display:flex; flex-direction:column; align-items:center; gap:3px; padding:6px 10px; border-radius:8px; font-size:10px; font-weight:600; cursor:pointer; border:none; background:transparent; color:var(--text2); transition:all 0.15s; font-family:'Plus Jakarta Sans',sans-serif; }
+    .mobbtn { display:flex; flex-direction:column; align-items:center; gap:3px; padding:6px 10px; border-radius:8px; font-size:10px; font-weight:600; cursor:pointer; border:none; background:transparent; color:var(--text2); transition:all 0.15s; font-family:'Poppins',sans-serif; }
     .mobbtn.on { color:var(--blue-hover); }
     .mobbtn svg { width:18px; height:18px; }
-    .stab { padding:7px 14px; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; border:1px solid transparent; color:var(--text2); background:transparent; transition:all 0.15s; font-family:'Plus Jakarta Sans',sans-serif; }
+    .stab { padding:7px 14px; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; border:1px solid transparent; color:var(--text2); background:transparent; transition:all 0.15s; font-family:'Poppins',sans-serif; }
     .stab.on { background:var(--blue-dim); border-color:var(--blue-border); color:var(--blue-hover); }
-    .day-btn { padding:6px 12px; border-radius:7px; border:1px solid var(--border); background:var(--surface2); color:var(--text2); font-weight:600; font-size:12px; cursor:pointer; transition:all 0.15s; font-family:'Plus Jakarta Sans',sans-serif; }
+    .day-btn { padding:6px 12px; border-radius:7px; border:1px solid var(--border); background:var(--surface2); color:var(--text2); font-weight:600; font-size:12px; cursor:pointer; transition:all 0.15s; font-family:'Poppins',sans-serif; }
     .day-btn:hover { border-color:var(--border2); color:var(--text); }
     .day-btn.on { background:var(--blue-dim); border-color:var(--blue-border); color:var(--blue-hover); }
     /* Habit toggle card */
@@ -199,17 +199,31 @@ const IC={
   habits:<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><rect x="3" y="5" width="4" height="4" rx="1"/><line x1="10" y1="7" x2="20" y2="7"/><rect x="3" y="11" width="4" height="4" rx="1"/><line x1="10" y1="13" x2="20" y2="13"/><rect x="3" y="17" width="4" height="4" rx="1"/><line x1="10" y1="19" x2="20" y2="19"/></svg>,
   chart:<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>,
   reset:<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>,
+  globe:<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>,
+  laptop:<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="2" y1="20" x2="22" y2="20"></line></svg>
 };
 const I=({n,size=16,c=''})=>{const el=IC[n];if(!el)return null;return React.cloneElement(el,{width:size,height:size,className:c,style:{display:'inline-flex',flexShrink:0}});};
 
-// ─── Habits ───────────────────────────────────────────────
+// ─── Habits / Daily Activity ──────────────────────────────
 const HABITS=[
-  {id:'nofap',label:'NoFap',color:'#3b82f6',emoji:'🔒'},
-  {id:'nojunkfood',label:'No Junkfood',color:'#22c55e',emoji:'🥗'},
-  {id:'coding',label:'Belajar Coding',color:'#6366f1',emoji:'💻'},
-  {id:'workout',label:'Workout',color:'#f59e0b',emoji:'💪'},
-  {id:'reading',label:'Reading',color:'#0ea5e9',emoji:'📚'},
+  {id:'toefl',label:'Belajar TOEFL',color:'#3b82f6',emoji:<I n="globe" size={16}/>},
+  {id:'nojunkfood',label:'No Junkfood',color:'#22c55e',emoji:<I n="warn" size={16}/>},
+  {id:'coding',label:'Belajar Coding',color:'#6366f1',emoji:<I n="laptop" size={16}/>},
+  {id:'workout',label:'Workout',color:'#f59e0b',emoji:<I n="fitness" size={16}/>},
+  {id:'reading',label:'Reading',color:'#0ea5e9',emoji:<I n="book" size={16}/>},
 ];
+
+// ─── TOEFL Schedule Default ───────────────────────────────
+const DEFAULT_TOEFL = {
+  'Senin': { focus: 'Reading Comprehension', tasks: [{name: 'Vocab Review', detail: '30 Menit'}, {name: 'Reading Passage Practice', detail: '1 Teks + Analisis'}] },
+  'Selasa': { focus: 'Listening Comprehension', tasks: [{name: 'Short Dialogues', detail: 'Part A - 20 Soal'}, {name: 'Podcast / English Audio', detail: '15 Menit Listening Pasif'}] },
+  'Rabu': { focus: 'Structure & Written Expression', tasks: [{name: 'Grammar Review', detail: 'Subjek & Predikat'}, {name: 'Error Recognition', detail: '15 Soal'}] },
+  'Kamis': { focus: 'Reading & Listening', tasks: [{name: 'Long Conversations', detail: 'Part B & C'}, {name: 'Reading Passage', detail: '1 Teks Panjang'}] },
+  'Jumat': { focus: 'Review & Mini Test', tasks: [{name: 'Mini Practice Test', detail: 'Reading & Structure'}, {name: 'Review Kesalahan', detail: 'Catat vocab baru'}] },
+  'Sabtu': { focus: 'Rest Day', tasks: [] },
+  'Minggu': { focus: 'Rest Day', tasks: [] }
+};
+const TOEFL_DAYS = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
 
 // ─── Python Roadmap ───────────────────────────────────────
 const DEFAULT_ROADMAP=[
@@ -376,11 +390,15 @@ const App=()=>{
   const[rprog,setRprog,r4]=useSync('roadmap_v2',{},uid);
   const[library,setLibrary,r5]=useSync('library',[{id:1,title:'Atomic Habits',author:'James Clear',totalPages:320,currentPage:0,coverUrl:'https://m.media-amazon.com/images/I/81wgcld4wxL.jpg'}],uid);
   const[workout,setWorkout,r6]=useSync('workout_schedule',DEFAULT_WORKOUT,uid);
+  // Preserving original streak variables to avoid breaking DashPage
   const[streakNF,setStreakNF,r7]=useSync('streak_nofap',{},uid);
   const[streakNJ,setStreakNJ,r8]=useSync('streak_nojunkfood',{},uid);
   const[diary,setDiary,r9]=useSync('diary',[],uid);
   const[habitLog,setHabitLog,r10]=useSync('habit_log',{},uid);
-  const isReady=r1&&r2&&r3&&r4&&r5&&r6&&r7&&r8&&r9&&r10;
+  const[toeflSched,setToeflSched,r11]=useSync('toefl_schedule',DEFAULT_TOEFL,uid);
+  const[toeflProg,setToeflProg,r12]=useSync('toefl_progress',{},uid);
+
+  const isReady=r1&&r2&&r3&&r4&&r5&&r6&&r7&&r8&&r9&&r10&&r11&&r12;
 
   const today=new Date();
   const diffDays=Math.floor((today-START)/86400000);
@@ -401,6 +419,7 @@ const App=()=>{
   const safeNF=safeObj(streakNF);
   const safeNJ=safeObj(streakNJ);
   const safeHL=safeObj(habitLog);
+  const safeToeflProg=safeObj(toeflProg);
 
   const ws=safeWO[dayName]||{type:'Rest',focus:'-',exercises:[]};
   const exKey=ex=>`${dateKey}-${dayName}-${ex.name}`;
@@ -427,7 +446,7 @@ const App=()=>{
   const NAV=[
     {id:'dashboard',n:'home',l:'Overview'},
     {id:'habits',n:'habits',l:'Daily Activity'},
-    {id:'streak',n:'streak',l:'Clean Streak'},
+    {id:'toefl',n:'globe',l:'TOEFL Prep'},
     {id:'diary',n:'diary',l:'Diary'},
     {id:'fitness',n:'fitness',l:'Fitness'},
     {id:'roadmap',n:'map',l:'Roadmap'},
@@ -468,7 +487,7 @@ const App=()=>{
         <div className="page">
           {tab==='dashboard'&&<DashPage dayN={dayN} pct={pct} weight={weight} fp={fp} nfStreak={nfStreak} njStreak={njStreak} todayM={todayM} safeRprog={safeRprog} toggleRprog={toggleRprog} codeDone={codeDone} allVids={allVids} setTab={setTab} ws={ws} priEx={priEx} isExDone={isExDone} toggleEx={toggleEx} dayName={dayName} safeDiary={safeDiary} safeHL={safeHL} setHabitLog={setHabitLog} dateKey={dateKey}/>}
           {tab==='habits'&&<HabitsPage habitLog={safeHL} setHabitLog={setHabitLog} today={today} dateKey={dateKey} fmtDate={fmtDate}/>}
-          {tab==='streak'&&<StreakPage streakNF={safeNF} setStreakNF={setStreakNF} streakNJ={safeNJ} setStreakNJ={setStreakNJ} today={today} nfStreak={nfStreak} njStreak={njStreak}/>}
+          {tab==='toefl'&&<ToeflPage toeflSched={toeflSched} setToeflSched={setToeflSched} toeflProg={safeToeflProg} setToeflProg={setToeflProg} dayName={dayName} dateKey={dateKey}/>}
           {tab==='diary'&&<DiaryPage diary={safeDiary} setDiary={setDiary} dateKey={dateKey} fmtDate={fmtDate}/>}
           {tab==='fitness'&&<FitnessPage safeWO={safeWO} setWorkout={setWorkout} dayName={dayName} dateKey={dateKey} safeExDone={safeExDone} setExDone={setExDone} ws={ws} fp={fp} priEx={priEx} isExDone={isExDone} toggleEx={toggleEx}/>}
           {tab==='roadmap'&&<RoadmapPage safeRM={safeRM} setRoadmap={setRoadmap} safeRprog={safeRprog} toggleRprog={toggleRprog} roadPhase={roadPhase} setRoadPhase={setRoadPhase} setSettTab={setSettTab} setSettOpen={setSettOpen}/>}
@@ -508,12 +527,13 @@ const App=()=>{
       <SettingsModal open={settOpen} onClose={()=>setSettOpen(false)} tab={settTab} setTab={setSettTab}
         roadmap={safeRM} setRoadmap={setRoadmap} workout={safeWO} setWorkout={setWorkout}
         setRprog={setRprog} setExDone={setExDone} setHabitLog={setHabitLog}
-        setStreakNF={setStreakNF} setStreakNJ={setStreakNJ} setDiary={setDiary}/>
+        setToeflProg={setToeflProg} setDiary={setDiary}/>
     </div>
   );
 };
 
 // ─── Dashboard ────────────────────────────────────────────
+// Sesuai dengan instruksi: "JANGAN UBAH APAPUN DI OVERVIEW nya, teta seperti sebelumnya"
 const DashPage=({dayN,pct,weight,fp,nfStreak,njStreak,todayM,safeRprog,toggleRprog,codeDone,allVids,setTab,ws,priEx,isExDone,toggleEx,dayName,safeDiary,safeHL,setHabitLog,dateKey})=>{
   const lastEntry=safeDiary.length>0?safeDiary[safeDiary.length-1]:null;
   const todayHabits=safeObj(safeHL[dateKey]);
@@ -546,7 +566,7 @@ const DashPage=({dayN,pct,weight,fp,nfStreak,njStreak,todayM,safeRprog,toggleRpr
           {HABITS.map(h=>{const done=!!todayHabits[h.id];return(
             <div key={h.id} className={`habit-card${done?' done':''}`} onClick={()=>toggleH(h.id)} style={{borderColor:done?h.color+'40':'var(--border)',background:done?h.color+'10':'var(--surface2)'}}>
               <div className="habit-check" style={{borderColor:done?h.color:'var(--text3)',background:done?h.color:'transparent'}}>{done&&<I n="check" size={10}/>}</div>
-              <span style={{fontSize:13,fontWeight:600,color:done?h.color:'var(--text2)',flex:1}}>{h.emoji} {h.label}</span>
+              <span style={{display:'flex',alignItems:'center',gap:8,fontSize:13,fontWeight:600,color:done?h.color:'var(--text2)',flex:1}}>{h.emoji} {h.label}</span>
               {done&&<span style={{fontSize:10,color:h.color,fontFamily:'JetBrains Mono,monospace',fontWeight:700}}>✓</span>}
             </div>
           );})}
@@ -592,17 +612,17 @@ const DashPage=({dayN,pct,weight,fp,nfStreak,njStreak,todayM,safeRprog,toggleRpr
             <span style={{fontSize:11,fontWeight:600,color:'var(--text2)',textTransform:'uppercase',letterSpacing:'0.08em'}}>Entri Diary Terakhir</span>
             <span style={{fontSize:11,color:'var(--text2)',fontFamily:'JetBrains Mono,monospace'}}>{lastEntry.date}</span>
           </div>
-          <div style={{fontSize:14,color:'var(--text)',lineHeight:1.65,fontFamily:'Instrument Serif,serif',display:'-webkit-box',WebkitLineClamp:2,WebkitBoxOrient:'vertical',overflow:'hidden'}}>{lastEntry.text}</div>
+          <div style={{fontSize:14,color:'var(--text)',lineHeight:1.65,fontFamily:'Poppins,sans-serif',display:'-webkit-box',WebkitLineClamp:2,WebkitBoxOrient:'vertical',overflow:'hidden'}}>{lastEntry.text}</div>
         </div>
       )}
     </div>
   );
 };
 
-// ─── Habits Page ──────────────────────────────────────────
+// ─── Habits Page (Tanpa Emoticon) ─────────────────────────
 const HabitsPage=({habitLog,setHabitLog,today,dateKey,fmtDate})=>{
   const[view,setView]=useState('today');
-  const[selHabit,setSelHabit]=useState('nofap');
+  const[selHabit,setSelHabit]=useState('toefl');
   const[calMonth,setCalMonth]=useState({y:today.getFullYear(),m:today.getMonth()});
 
   const safeLog=safeObj(habitLog);
@@ -629,7 +649,7 @@ const HabitsPage=({habitLog,setHabitLog,today,dateKey,fmtDate})=>{
         </div>
         <div style={{display:'flex',gap:0,background:'var(--surface2)',borderRadius:9,border:'1px solid var(--border)',overflow:'hidden'}}>
           {[{id:'today',l:'Hari Ini'},{id:'calendar',l:'Kalender'},{id:'chart',l:'Grafik'}].map((v,vi)=>(
-            <button key={v.id} onClick={()=>setView(v.id)} style={{padding:'8px 14px',border:'none',borderRight:vi<2?'1px solid var(--border)':'none',background:view===v.id?'var(--blue-dim)':'transparent',color:view===v.id?'var(--blue-hover)':'var(--text2)',fontWeight:600,fontSize:13,cursor:'pointer',fontFamily:'Plus Jakarta Sans,sans-serif',transition:'all 0.15s'}}>{v.l}</button>
+            <button key={v.id} onClick={()=>setView(v.id)} style={{padding:'8px 14px',border:'none',borderRight:vi<2?'1px solid var(--border)':'none',background:view===v.id?'var(--blue-dim)':'transparent',color:view===v.id?'var(--blue-hover)':'var(--text2)',fontWeight:600,fontSize:13,cursor:'pointer',fontFamily:'Poppins,sans-serif',transition:'all 0.15s'}}>{v.l}</button>
           ))}
         </div>
       </div>
@@ -647,22 +667,22 @@ const HabitsPage=({habitLog,setHabitLog,today,dateKey,fmtDate})=>{
                 <div key={h.id} className={`habit-card${done?' done':''}`} onClick={()=>toggleH(h.id)} style={{borderColor:done?h.color+'50':'var(--border)',background:done?h.color+'12':'var(--surface2)'}}>
                   <div className="habit-check" style={{borderColor:done?h.color:'var(--text3)',background:done?h.color:'transparent',width:22,height:22}}>{done&&<I n="check" size={11}/>}</div>
                   <div style={{flex:1}}>
-                    <div style={{fontSize:14,fontWeight:700,color:done?h.color:'var(--text)'}}>{h.emoji} {h.label}</div>
-                    <div style={{fontSize:11,color:'var(--text2)',fontFamily:'JetBrains Mono,monospace',marginTop:1}}>Streak: {getStreak(h.id)} hari · {getRate(h.id)}% (30h)</div>
+                    <div style={{display:'flex',alignItems:'center',gap:8,fontSize:14,fontWeight:700,color:done?h.color:'var(--text)'}}><span style={{display:'inline-flex',color:done?h.color:'var(--text2)'}}>{h.emoji}</span> {h.label}</div>
+                    <div style={{fontSize:11,color:'var(--text2)',fontFamily:'JetBrains Mono,monospace',marginTop:4}}>Streak: {getStreak(h.id)} hari · {getRate(h.id)}% (30h)</div>
                   </div>
-                  {done&&<div style={{fontSize:18}}>✅</div>}
+                  {done&&<div style={{fontSize:12, fontWeight:700, color:h.color, fontFamily:'JetBrains Mono,monospace'}}>SELESAI</div>}
                 </div>
               );})}
             </div>
             <PBar cur={doneTodayCount} tot={5} cls="g"/>
-            {doneTodayCount===5&&<div style={{textAlign:'center',marginTop:12,fontSize:14,color:'var(--green)',fontWeight:700}}>🔥 Perfect Day! Semua selesai!</div>}
+            {doneTodayCount===5&&<div style={{textAlign:'center',marginTop:12,fontSize:14,color:'var(--green)',fontWeight:700}}>Semua Target Selesai Hari Ini!</div>}
           </div>
 
           {/* Per-habit stats */}
           <div className="grid2">
             {HABITS.map(h=>{const streak=getStreak(h.id);const rate=getRate(h.id);return(
               <div key={h.id} className="card card-p" style={{cursor:'pointer',borderColor:todayData[h.id]?h.color+'30':'var(--border)'}} onClick={()=>{setSelHabit(h.id);setView('calendar');}}>
-                <div style={{fontSize:22,marginBottom:6}}>{h.emoji}</div>
+                <div style={{fontSize:22,marginBottom:6,color:h.color}}>{h.emoji}</div>
                 <div style={{fontSize:13,fontWeight:700,color:'var(--text)',marginBottom:2}}>{h.label}</div>
                 <div style={{fontSize:11,color:'var(--text2)',fontFamily:'JetBrains Mono,monospace',marginBottom:8}}>Streak: <b style={{color:h.color}}>{streak} hari</b></div>
                 <div style={{height:4,background:'var(--surface3)',borderRadius:99,overflow:'hidden'}}><div style={{height:'100%',width:`${rate}%`,background:h.color,borderRadius:99,transition:'width 0.7s ease'}}/></div>
@@ -679,7 +699,7 @@ const HabitsPage=({habitLog,setHabitLog,today,dateKey,fmtDate})=>{
           {/* Habit tabs */}
           <div style={{display:'flex',gap:6,overflowX:'auto',paddingBottom:4}}>
             {HABITS.map(h=>(
-              <button key={h.id} onClick={()=>setSelHabit(h.id)} style={{padding:'7px 14px',borderRadius:8,border:`1px solid ${selHabit===h.id?h.color+'50':'var(--border)'}`,background:selHabit===h.id?h.color+'15':'var(--surface2)',color:selHabit===h.id?h.color:'var(--text2)',fontWeight:600,fontSize:13,cursor:'pointer',fontFamily:'Plus Jakarta Sans,sans-serif',transition:'all 0.15s',flexShrink:0,whiteSpace:'nowrap'}}>
+              <button key={h.id} onClick={()=>setSelHabit(h.id)} style={{display:'flex',alignItems:'center',gap:6,padding:'7px 14px',borderRadius:8,border:`1px solid ${selHabit===h.id?h.color+'50':'var(--border)'}`,background:selHabit===h.id?h.color+'15':'var(--surface2)',color:selHabit===h.id?h.color:'var(--text2)',fontWeight:600,fontSize:13,cursor:'pointer',fontFamily:'Poppins,sans-serif',transition:'all 0.15s',flexShrink:0,whiteSpace:'nowrap'}}>
                 {h.emoji} {h.label}
               </button>
             ))}
@@ -709,7 +729,7 @@ const HabitsPage=({habitLog,setHabitLog,today,dateKey,fmtDate})=>{
             return(
               <div className="card">
                 <div className="between" style={{marginBottom:14}}>
-                  <div><div style={{fontSize:15,fontWeight:700,color:'var(--text)'}}>{activeHabit.emoji} {activeHabit.label}</div><div style={{fontSize:11,color:'var(--text2)',fontFamily:'JetBrains Mono,monospace',marginTop:2}}>{doneCount} hari bersih bulan ini · Streak: {getStreak(activeHabit.id)} hari</div></div>
+                  <div><div style={{display:'flex',alignItems:'center',gap:8,fontSize:15,fontWeight:700,color:'var(--text)'}}><span style={{color:activeHabit.color}}>{activeHabit.emoji}</span> {activeHabit.label}</div><div style={{fontSize:11,color:'var(--text2)',fontFamily:'JetBrains Mono,monospace',marginTop:4}}>{doneCount} hari selesai bulan ini · Streak: {getStreak(activeHabit.id)} hari</div></div>
                   <div style={{fontSize:28,fontWeight:800,color:activeHabit.color}}>{getRate(activeHabit.id,daysInMonth)}%</div>
                 </div>
                 <div style={{height:4,background:'var(--surface3)',borderRadius:99,overflow:'hidden',marginBottom:16}}><div style={{height:'100%',width:`${getRate(activeHabit.id,daysInMonth)}%`,background:activeHabit.color,borderRadius:99}}/></div>
@@ -727,7 +747,7 @@ const HabitsPage=({habitLog,setHabitLog,today,dateKey,fmtDate})=>{
                   })}
                 </div>
                 <div style={{display:'flex',gap:12,marginTop:14,fontSize:12,color:'var(--text2)'}}>
-                  <div style={{display:'flex',alignItems:'center',gap:6}}><div style={{width:12,height:12,borderRadius:3,background:activeHabit.color+'22',border:`1px solid ${activeHabit.color+'40'}`}}/> Bersih</div>
+                  <div style={{display:'flex',alignItems:'center',gap:6}}><div style={{width:12,height:12,borderRadius:3,background:activeHabit.color+'22',border:`1px solid ${activeHabit.color+'40'}`}}/> Selesai</div>
                   <div style={{display:'flex',alignItems:'center',gap:6}}><div style={{width:12,height:12,borderRadius:3,background:'var(--surface2)',border:'1px solid var(--border)'}}/> Belum ditandai</div>
                 </div>
               </div>
@@ -746,7 +766,7 @@ const HabitsPage=({habitLog,setHabitLog,today,dateKey,fmtDate})=>{
             <div style={{display:'flex',flexDirection:'column',gap:10}}>
               {HABITS.map(h=>{const rate=getRate(h.id);return(
                 <div key={h.id} style={{display:'flex',alignItems:'center',gap:12}}>
-                  <div style={{width:26,textAlign:'center',fontSize:18,flexShrink:0}}>{h.emoji}</div>
+                  <div style={{width:26,textAlign:'center',fontSize:18,flexShrink:0,color:h.color}}>{h.emoji}</div>
                   <div style={{width:110,fontSize:12,color:'var(--text2)',fontWeight:600,flexShrink:0}}>{h.label}</div>
                   <div style={{flex:1,height:20,background:'var(--surface3)',borderRadius:6,overflow:'hidden',position:'relative'}}>
                     <div style={{width:`${rate}%`,height:'100%',background:h.color,borderRadius:6,transition:'width 0.8s cubic-bezier(0.34,1.56,0.64,1)',opacity:0.85}}/>
@@ -790,7 +810,7 @@ const HabitsPage=({habitLog,setHabitLog,today,dateKey,fmtDate})=>{
               {HABITS.map(h=>(
                 <div key={h.id} style={{display:'flex',alignItems:'center',gap:5,fontSize:11,color:'var(--text2)'}}>
                   <div style={{width:10,height:10,borderRadius:2,background:h.color,opacity:0.85}}/>
-                  {h.emoji} {h.label}
+                  <span style={{display:'inline-flex', color:h.color}}>{h.emoji}</span> {h.label}
                 </div>
               ))}
             </div>
@@ -805,7 +825,7 @@ const HabitsPage=({habitLog,setHabitLog,today,dateKey,fmtDate})=>{
                 let c=0;for(let i=0;i<7;i++){const d=new Date(today);d.setDate(today.getDate()-i);const k=d.toISOString().split('T')[0];if(safeLog[k]?.[h.id])c++;}
                 return(
                   <div key={h.id} style={{textAlign:'center',padding:'12px 8px',borderRadius:9,border:`1px solid ${h.color}30`,background:h.color+'10'}}>
-                    <div style={{fontSize:22,marginBottom:4}}>{h.emoji}</div>
+                    <div style={{display:'flex',justifyContent:'center',fontSize:22,marginBottom:4,color:h.color}}>{h.emoji}</div>
                     <div style={{fontSize:22,fontWeight:800,color:h.color,lineHeight:1}}>{c}</div>
                     <div style={{fontSize:10,color:'var(--text3)',fontFamily:'JetBrains Mono,monospace'}}>/ 7</div>
                     <div style={{fontSize:10,color:'var(--text2)',marginTop:4,fontWeight:600}}>{h.label.split(' ')[0]}</div>
@@ -820,67 +840,121 @@ const HabitsPage=({habitLog,setHabitLog,today,dateKey,fmtDate})=>{
   );
 };
 
-// ─── Streak Page ──────────────────────────────────────────
-const StreakPage=({streakNF,setStreakNF,streakNJ,setStreakNJ,today,nfStreak,njStreak})=>{
-  const[confirm,setConfirm]=useState(null);
-  const[calMonth,setCalMonth]=useState({y:today.getFullYear(),m:today.getMonth()});
-  const toggleDay=(setter,obj,dateStr)=>setter(p=>{const s=safeObj(p);return{...s,[dateStr]:!s[dateStr]};});
-  const doReset=type=>{if(type==='nf')setStreakNF({});else setStreakNJ({});setConfirm(null);};
+// ─── TOEFL Schedule Page ──────────────────────────────────
+const ToeflPage=({toeflSched,setToeflSched,toeflProg,setToeflProg,dayName,dateKey})=>{
+  const defaultDay = TOEFL_DAYS.includes(dayName) ? dayName : 'Senin';
+  const[selDay,setSelDay]=useState(defaultDay);
+  const[editTask,setEditTask]=useState(null);
+  const[editMeta,setEditMeta]=useState(false);
 
-  const renderCal=(label,obj,setter,accent,streak)=>{
-    const{y,m}=calMonth;const firstDay=new Date(y,m,1).getDay();const daysInMonth=new Date(y,m+1,0).getDate();const todayKey=today.toISOString().split('T')[0];
-    const cells=[];for(let i=0;i<firstDay;i++)cells.push(null);for(let d=1;d<=daysInMonth;d++)cells.push(d);
-    const dayLabels=['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
-    return(
-      <div className="card" style={{display:'flex',flexDirection:'column',gap:16}}>
-        <div className="between">
-          <div><div style={{fontSize:11,fontWeight:600,color:'var(--text2)',textTransform:'uppercase',letterSpacing:'0.08em',marginBottom:3}}>{label}</div><div style={{fontSize:32,fontWeight:800,color:accent,letterSpacing:'-0.03em',lineHeight:1}}>{streak} <span style={{fontSize:14,color:'var(--text2)',fontWeight:500}}>hari</span></div></div>
-          <button className="btn btn-red" style={{fontSize:12}} onClick={()=>setConfirm(label==='NoFap'?'nf':'nj')}>Reset</button>
-        </div>
-        <PBar cur={streak} tot={80} cls={accent===`var(--blue-hover)`?'':'g'}/>
-        <div style={{fontSize:11,color:'var(--text2)',fontFamily:'JetBrains Mono,monospace'}}>{streak}/80 hari — {Math.round((streak/80)*100)}%</div>
-        <div><div className="cal-grid" style={{marginBottom:2}}>{dayLabels.map(d=><div key={d} className="cal-day-label">{d}</div>)}</div>
-          <div className="cal-grid">{cells.map((d,i)=>{
-            if(d===null)return<div key={`e${i}`} className="cal-cell empty"/>;
-            const dateStr=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-            const isToday=dateStr===todayKey;const isFuture=new Date(y,m,d)>today;const isClean=!!obj[dateStr];
-            let cls='cal-cell';if(isFuture)cls+=' future';else if(isClean)cls+=' clean';else cls+=' past-unmarked';if(isToday)cls+=' today-cell';
-            return<div key={d} className={cls} title={dateStr} onClick={()=>!isFuture&&toggleDay(setter,obj,dateStr)} style={{outline:isToday?`2px solid ${accent}`:'none',outlineOffset:-1}}>{d}</div>;
-          })}</div>
-        </div>
-        <div style={{fontSize:11,color:'var(--text2)',lineHeight:1.6}}>Klik tanggal untuk menandai hari bersih.</div>
-      </div>
-    );
+  const tKeyFor = (day, task) => `${dateKey}-${day}-${task.name}`;
+  const isDoneFor = (day, task) => !!toeflProg[tKeyFor(day, task)];
+  
+  const toggleFor = (day, task) => setToeflProg(p => {
+    const s = safeObj(p);
+    const k = tKeyFor(day, task);
+    return {...s, [k]: !s[k]};
+  });
+
+  const dayData = toeflSched[selDay] || {focus: '', tasks: []};
+  const tasks = dayData.tasks || [];
+  const doneCount = tasks.filter(t => isDoneFor(selDay, t)).length;
+
+  const saveMeta = (f, v) => setToeflSched(p => {
+    const s = safeObj(p);
+    const d = s[selDay] || {focus: '', tasks: []};
+    return {...s, [selDay]: {...d, [f]: v}};
+  });
+
+  const saveTask = data => {
+    setToeflSched(p => {
+      const s = safeObj(p);
+      const d = s[data.dayKey] || {focus: '', tasks: []};
+      const list = [...(d.tasks || [])];
+      const nt = {name: data.name, detail: data.detail};
+      if(data.isNew) list.push(nt); else list[data.index] = nt;
+      return {...s, [data.dayKey]: {...d, tasks: list}};
+    });
+    setEditTask(null);
+  };
+
+  const delTask = (day, idx) => {
+    if(!confirm('Hapus materi ini?')) return;
+    setToeflSched(p => {
+      const s = safeObj(p);
+      const d = s[day] || {tasks: []};
+      const list = [...(d.tasks || [])];
+      list.splice(idx, 1);
+      return {...s, [day]: {...d, tasks: list}};
+    });
   };
 
   return(
-    <div className="fade-up" style={{display:'flex',flexDirection:'column',gap:16,maxWidth:900,margin:'0 auto'}}>
-      <div className="between">
-        <div style={{fontSize:15,fontWeight:700,color:'var(--text)'}}>{new Date(calMonth.y,calMonth.m,1).toLocaleDateString('id-ID',{month:'long',year:'numeric'})}</div>
-        <div style={{display:'flex',gap:6}}>
-          <button className="btn btn-ghost" style={{padding:'7px 10px'}} onClick={()=>setCalMonth(p=>{const d=new Date(p.y,p.m-1,1);return{y:d.getFullYear(),m:d.getMonth()};})}><I n="chL"/></button>
-          <button className="btn btn-ghost" style={{padding:'7px 10px',fontSize:12}} onClick={()=>setCalMonth({y:today.getFullYear(),m:today.getMonth()})}>Hari Ini</button>
-          <button className="btn btn-ghost" style={{padding:'7px 10px'}} onClick={()=>setCalMonth(p=>{const d=new Date(p.y,p.m+1,1);return{y:d.getFullYear(),m:d.getMonth()};})}><I n="chR"/></button>
+    <div className="fade-up" style={{display:'flex',flexDirection:'column',gap:16,maxWidth:780,margin:'0 auto'}}>
+      <div className="between" style={{flexWrap:'wrap',gap:12}}>
+        <div><div style={{fontSize:20,fontWeight:800,color:'var(--text)',letterSpacing:'-0.02em',marginBottom:2}}>TOEFL Preparation</div><div style={{fontSize:12,color:'var(--text2)',fontFamily:'JetBrains Mono,monospace'}}>Jadwal Belajar 5 Hari Seminggu</div></div>
+      </div>
+      
+      <div style={{display:'flex',flexDirection:'column',gap:14}}>
+        <div style={{display:'flex',gap:6,overflowX:'auto',paddingBottom:6}}>
+          {TOEFL_DAYS.map(d=>(
+            <button key={d} className={`day-btn${selDay===d?' on':''}`} onClick={()=>setSelDay(d)} style={{flexShrink:0,minWidth:72}}>
+              {d}{d===dayName&&<span style={{marginLeft:4,width:5,height:5,borderRadius:'50%',background:'var(--blue)',display:'inline-block'}}/>}
+            </button>
+          ))}
         </div>
-      </div>
-      <div className="grid2">
-        {renderCal('NoFap',streakNF,setStreakNF,'var(--blue-hover)',nfStreak)}
-        {renderCal('No Junkfood',streakNJ,setStreakNJ,'var(--green)',njStreak)}
-      </div>
-      {confirm&&(
-        <div className="overlay" onClick={e=>e.target===e.currentTarget&&setConfirm(null)}>
-          <div className="modal pop-in" style={{maxWidth:380}}>
-            <div className="modal-head"><span className="modal-title">Reset {confirm==='nf'?'NoFap':'No Junkfood'}?</span><button className="icon-btn" onClick={()=>setConfirm(null)}><I n="x"/></button></div>
-            <div className="modal-body" style={{display:'flex',flexDirection:'column',gap:16}}>
-              <div style={{fontSize:48,fontWeight:800,color:'var(--red)',lineHeight:1,letterSpacing:'-0.03em',textAlign:'center'}}>{confirm==='nf'?nfStreak:njStreak}</div>
-              <div style={{fontSize:13,color:'var(--text2)',textAlign:'center',lineHeight:1.6}}>Semua data kalender akan dihapus. Tidak bisa dibatalkan.</div>
-              <div style={{display:'flex',gap:10}}><button className="btn btn-ghost" style={{flex:1}} onClick={()=>setConfirm(null)}>Batalkan</button><button className="btn btn-red" style={{flex:1}} onClick={()=>doReset(confirm)}>Reset</button></div>
+        
+        <div className="card">
+          <div className="between" style={{marginBottom:12,flexWrap:'wrap',gap:10}}>
+            <div>
+              <div style={{fontSize:11,fontWeight:600,color:'var(--text2)',textTransform:'uppercase',letterSpacing:'0.08em',marginBottom:3}}>{selDay}</div>
+              <div style={{fontSize:16,fontWeight:700,color:'var(--text)',marginBottom:2}}>Fokus: {dayData.focus || 'Belum diatur'}</div>
+            </div>
+            <div style={{display:'flex',gap:12,alignItems:'center'}}>
+              <div style={{textAlign:'right'}}>
+                <div style={{fontSize:22,fontWeight:800,color:'var(--text)',lineHeight:1}}>{doneCount}<span style={{fontSize:12,color:'var(--text3)'}}>/{tasks.length}</span></div>
+              </div>
+              {selDay===dayName&&<span className="tag tag-blue">Hari Ini</span>}
+              <button className="icon-btn" onClick={()=>setEditMeta(p=>p===selDay?false:selDay)}><I n="pencil"/></button>
             </div>
           </div>
+          
+          <PBar cur={doneCount} tot={tasks.length} cls={doneCount === tasks.length && tasks.length > 0 ? "g" : ""} />
+
+          {editMeta===selDay&&(<div style={{display:'grid',gridTemplateColumns:'1fr',gap:10,marginBottom:14,paddingTop:12,marginTop:12,borderTop:'1px solid var(--border)'}}>
+            <div><span className="label">Fokus Belajar Hari Ini</span><input value={dayData.focus||''} onChange={e=>saveMeta('focus',e.target.value)} className="inp" style={{fontSize:12}} placeholder="Contoh: Reading Comprehension..."/></div>
+          </div>)}
+          
+          <div style={{marginTop: 18}}>
+            <button className="btn btn-ghost" style={{fontSize:12,marginBottom:12}} onClick={()=>setEditTask({isNew:true,dayKey:selDay,name:'',detail:''})}><I n="plus"/>Tambah Materi</button>
+            {tasks.map((task,i)=>(
+              <div key={i} className={`ex-card${isDoneFor(selDay,task)?' done':''}`} style={{cursor:'pointer',marginBottom:8,borderLeftColor:isDoneFor(selDay,task)?'var(--green)':'var(--blue)'}} onClick={()=>toggleFor(selDay,task)}>
+                <div className="ex-num" style={isDoneFor(selDay,task)?{background:'var(--green-dim)', borderColor:'rgba(34,197,94,0.3)', color:'var(--green)'}:{}}>{isDoneFor(selDay,task)?<I n="check" size={12}/>:i+1}</div>
+                <div style={{flex:1,minWidth:0}}><div className="ex-title">{task.name}</div><div className="ex-meta">{task.detail}</div></div>
+                <button className="icon-btn" onClick={e=>{e.stopPropagation();setEditTask({isNew:false,dayKey:selDay,index:i,...task});}}><I n="pencil"/></button>
+                <button className="icon-btn red" onClick={e=>{e.stopPropagation();delTask(selDay,i);}}><I n="trash"/></button>
+              </div>
+            ))}
+            {tasks.length === 0 && <div style={{fontSize:13, color:'var(--text2)', padding:'10px 0'}}>Belum ada target materi untuk hari ini. Tambahkan materi baru!</div>}
+          </div>
         </div>
-      )}
+      </div>
+      
+      <Modal open={!!editTask} onClose={()=>setEditTask(null)} title={editTask?.isNew?`Tambah Materi — ${editTask?.dayKey}`:'Edit Materi'}>
+        {editTask&&<ToeflTaskForm init={editTask} onSave={saveTask} onClose={()=>setEditTask(null)}/>}
+      </Modal>
     </div>
   );
+};
+
+const ToeflTaskForm=({init,onSave,onClose})=>{
+  const[name,setName]=useState(init.name||'');const[detail,setDetail]=useState(init.detail||'');
+  const sub=e=>{e.preventDefault();onSave({...init,name,detail});};
+  return(<form onSubmit={sub} style={{display:'flex',flexDirection:'column',gap:12}}>
+    <div><span className="label">Nama Materi / Tugas</span><input value={name} onChange={e=>setName(e.target.value)} className="inp" required placeholder="Contoh: Practice Test Part A..."/></div>
+    <div><span className="label">Detail / Durasi</span><input value={detail} onChange={e=>setDetail(e.target.value)} className="inp" required placeholder="Contoh: 30 menit / 15 soal..."/></div>
+    <div style={{display:'flex',gap:10,marginTop:4}}><button type="button" onClick={onClose} className="btn btn-ghost" style={{flex:1}}>Batal</button><button type="submit" className="btn btn-blue" style={{flex:2}}>Simpan</button></div>
+  </form>);
 };
 
 // ─── Diary ────────────────────────────────────────────────
@@ -913,8 +987,8 @@ const DiaryPage=({diary,setDiary,dateKey,fmtDate})=>{
       <Modal open={writing} onClose={()=>setWriting(false)} title={editId?'Edit Entri':'Tulis Diary'}>
         <div style={{display:'flex',flexDirection:'column',gap:14}}>
           <div style={{fontSize:12,color:'var(--text2)',fontFamily:'JetBrains Mono,monospace'}}>{fmtDate}</div>
-          <textarea className="inp" style={{minHeight:180,fontSize:14,lineHeight:1.75,fontFamily:'Instrument Serif,serif',background:'var(--bg)',borderColor:'var(--border2)'}} placeholder="Tulis refleksi, perasaan, atau apapun yang ingin kamu catat hari ini..." value={text} onChange={e=>setText(e.target.value)} autoFocus/>
-          <div><span className="label" style={{marginBottom:8}}>Mood hari ini</span><div style={{display:'flex',gap:8}}>{MOODS.map(m=>(<button key={m.key} onClick={()=>setMood(m.key)} style={{flex:1,padding:'9px',borderRadius:8,border:`1px solid ${mood===m.key?m.color+'50':'var(--border)'}`,background:mood===m.key?m.color+'15':'var(--surface2)',color:mood===m.key?m.color:'var(--text2)',fontWeight:600,fontSize:13,cursor:'pointer',fontFamily:'Plus Jakarta Sans,sans-serif',transition:'all 0.15s'}}>{m.label}</button>))}</div></div>
+          <textarea className="inp" style={{minHeight:180,fontSize:14,lineHeight:1.75,fontFamily:'Poppins,sans-serif',background:'var(--bg)',borderColor:'var(--border2)'}} placeholder="Tulis refleksi, perasaan, atau apapun yang ingin kamu catat hari ini..." value={text} onChange={e=>setText(e.target.value)} autoFocus/>
+          <div><span className="label" style={{marginBottom:8}}>Mood hari ini</span><div style={{display:'flex',gap:8}}>{MOODS.map(m=>(<button key={m.key} onClick={()=>setMood(m.key)} style={{flex:1,padding:'9px',borderRadius:8,border:`1px solid ${mood===m.key?m.color+'50':'var(--border)'}`,background:mood===m.key?m.color+'15':'var(--surface2)',color:mood===m.key?m.color:'var(--text2)',fontWeight:600,fontSize:13,cursor:'pointer',fontFamily:'Poppins,sans-serif',transition:'all 0.15s'}}>{m.label}</button>))}</div></div>
           <div style={{display:'flex',gap:10,marginTop:4}}><button className="btn btn-ghost" style={{flex:1}} onClick={()=>setWriting(false)}>Batal</button><button className="btn btn-blue" style={{flex:2}} onClick={save} disabled={!text.trim()}>Simpan</button></div>
         </div>
       </Modal>
@@ -1131,7 +1205,7 @@ const LibraryPage=({safeLib,setLibrary,bookEdit,setBookEdit,bookLog,setBookLog})
     </div>
     <Modal open={bookLog} onClose={()=>setBookLog(false)} title="Log Sesi Membaca (+15 hal)">
       <div style={{display:'flex',flexDirection:'column',gap:8}}>
-        {safeLib.map(b=>(<button key={b.id} onClick={()=>{setLibrary(p=>{const s=Array.isArray(p)?p:[];return s.map(bk=>bk.id===b.id?{...bk,currentPage:Math.min(bk.totalPages,bk.currentPage+15)}:bk);});setBookLog(false);}} style={{display:'flex',alignItems:'center',gap:12,padding:'11px 14px',background:'var(--surface2)',border:'1px solid var(--border)',borderRadius:9,textAlign:'left',cursor:'pointer',fontFamily:'Plus Jakarta Sans,sans-serif'}} onMouseOver={e=>e.currentTarget.style.borderColor='var(--border2)'} onMouseOut={e=>e.currentTarget.style.borderColor='var(--border)'}>
+        {safeLib.map(b=>(<button key={b.id} onClick={()=>{setLibrary(p=>{const s=Array.isArray(p)?p:[];return s.map(bk=>bk.id===b.id?{...bk,currentPage:Math.min(bk.totalPages,bk.currentPage+15)}:bk);});setBookLog(false);}} style={{display:'flex',alignItems:'center',gap:12,padding:'11px 14px',background:'var(--surface2)',border:'1px solid var(--border)',borderRadius:9,textAlign:'left',cursor:'pointer',fontFamily:'Poppins,sans-serif'}} onMouseOver={e=>e.currentTarget.style.borderColor='var(--border2)'} onMouseOut={e=>e.currentTarget.style.borderColor='var(--border)'}>
           <div style={{flex:1}}><div style={{fontSize:13,fontWeight:600,color:'var(--text)'}}>{b.title}</div><div style={{fontSize:11,color:'var(--text2)',fontFamily:'JetBrains Mono,monospace',marginTop:1}}>{b.currentPage}/{b.totalPages} hal</div></div><I n="plus" size={14}/>
         </button>))}
       </div>
@@ -1155,7 +1229,7 @@ const LibraryPage=({safeLib,setLibrary,bookEdit,setBookEdit,bookLog,setBookLog})
 );
 
 // ─── Settings Modal ───────────────────────────────────────
-const SettingsModal=({open,onClose,tab,setTab,roadmap,setRoadmap,workout,setWorkout,setRprog,setExDone,setHabitLog,setStreakNF,setStreakNJ,setDiary})=>(
+const SettingsModal=({open,onClose,tab,setTab,roadmap,setRoadmap,workout,setWorkout,setRprog,setExDone,setHabitLog,setToeflProg,setDiary})=>(
   <Modal open={open} onClose={onClose} title="Settings" wide>
     <div style={{display:'flex',gap:6,marginBottom:20,padding:'4px',background:'var(--surface2)',borderRadius:10,border:'1px solid var(--border)'}}>
       {[{id:'roadmap',l:'Roadmap'},{id:'workout',l:'Workout'},{id:'reset',l:'Reset Data'}].map(t=>(
@@ -1164,18 +1238,18 @@ const SettingsModal=({open,onClose,tab,setTab,roadmap,setRoadmap,workout,setWork
     </div>
     {tab==='roadmap'&&<RoadmapMgr roadmap={roadmap} setRoadmap={setRoadmap}/>}
     {tab==='workout'&&<WorkoutMgr workout={workout} setWorkout={setWorkout}/>}
-    {tab==='reset'&&<ResetPanel setRprog={setRprog} setExDone={setExDone} setHabitLog={setHabitLog} setStreakNF={setStreakNF} setStreakNJ={setStreakNJ} setDiary={setDiary} setRoadmap={setRoadmap}/>}
+    {tab==='reset'&&<ResetPanel setRprog={setRprog} setExDone={setExDone} setHabitLog={setHabitLog} setToeflProg={setToeflProg} setDiary={setDiary} setRoadmap={setRoadmap}/>}
   </Modal>
 );
 
 // ─── Reset Panel ──────────────────────────────────────────
-const ResetPanel=({setRprog,setExDone,setHabitLog,setStreakNF,setStreakNJ,setDiary,setRoadmap})=>{
+const ResetPanel=({setRprog,setExDone,setHabitLog,setToeflProg,setDiary,setRoadmap})=>{
   const[confirm,setConfirm]=useState(null);
   const resets=[
     {id:'rprog',label:'Roadmap Progress',desc:'Reset semua checklist video & project (tidak menghapus konten roadmap)',icon:'map',color:'var(--blue)',fn:()=>setRprog({})},
-    {id:'habits',label:'Daily Activity Log',desc:'Reset semua log daily habits (NoFap, Junkfood, Coding, Workout, Reading)',icon:'habits',color:'var(--green)',fn:()=>setHabitLog({})},
+    {id:'habits',label:'Daily Activity Log',desc:'Reset semua log daily habits (TOEFL, Junkfood, Coding, Workout, Reading)',icon:'habits',color:'var(--green)',fn:()=>setHabitLog({})},
     {id:'exdone',label:'Exercise Log',desc:'Reset semua log checklist workout harian',icon:'fitness',color:'var(--amber)',fn:()=>setExDone({})},
-    {id:'streak',label:'Streak Data',desc:'Reset kalender NoFap & No Junkfood di halaman Clean Streak',icon:'streak',color:'var(--indigo)',fn:()=>{setStreakNF({});setStreakNJ({});}},
+    {id:'toefl',label:'TOEFL Schedule Data',desc:'Reset progress checklist pelajaran TOEFL',icon:'globe',color:'var(--indigo)',fn:()=>setToeflProg({})},
     {id:'diary',label:'Diary',desc:'Hapus semua entri diary permanen',icon:'diary',color:'var(--red)',fn:()=>setDiary([])},
     {id:'roadmapdata',label:'Reset Konten Roadmap',desc:'Kembalikan roadmap Python ke konten default awal',icon:'reset',color:'var(--red)',fn:()=>setRoadmap(DEFAULT_ROADMAP)},
   ];
@@ -1208,7 +1282,7 @@ const ResetPanel=({setRprog,setExDone,setHabitLog,setStreakNF,setStreakNJ,setDia
   );
 };
 
-// ─── Roadmap Manager (Enhanced) ───────────────────────────
+// ─── Roadmap Manager ──────────────────────────────────────
 const RoadmapMgr=({roadmap,setRoadmap})=>{
   const[sel,setSel]=useState(null);
   const[editPhase,setEditPhase]=useState(null);
