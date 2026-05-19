@@ -370,18 +370,6 @@
     .cal-cell:hover:not(.empty) { border-color: var(--border2); transform: scale(1.05); }
     .cal-cell.empty { cursor: default; background: transparent; }
 
-    /* Custom styles for mini calendar on dashboard */
-    .mini-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-top: 10px;}
-    .mini-cal-day { font-size: 10px; color: var(--text3); font-weight: 600; text-align: center; margin-bottom: 4px; }
-    .mini-cal-date { 
-      aspect-ratio: 1; display: flex; align-items: center; justify-content: center; 
-      font-size: 11px; font-weight: 600; border-radius: 6px; color: var(--text2);
-    }
-    .mini-cal-date.past { background: var(--surface2); }
-    .mini-cal-date.active { background: var(--blue); color: #fff; box-shadow: var(--blue-glow); transform: scale(1.1); z-index: 2; position: relative;}
-    .mini-cal-date.future { opacity: 0.3; }
-    .mini-cal-date.done { border: 1px solid var(--blue); color: var(--blue-hover); background: var(--blue-dim); }
-    
     @media (max-width: 768px) {
       .sidebar { display: none; }
       .grid2, .grid3, .grid4 { grid-template-columns: 1fr; }
@@ -496,7 +484,6 @@ const IC = {
   loader: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg>,
   warn: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" /><line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" /></svg>,
   habits: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><polyline points="9 11 12 14 22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></svg>,
-  globe: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>,
   laptop: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="2" y1="20" x2="22" y2="20"></line></svg>,
   cpu: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2" /><rect x="9" y="9" width="6" height="6" /><line x1="9" y1="1" x2="9" y2="4" /><line x1="15" y1="1" x2="15" y2="4" /><line x1="9" y1="20" x2="9" y2="23" /><line x1="15" y1="20" x2="15" y2="23" /><line x1="20" y1="9" x2="23" y2="9" /><line x1="20" y1="14" x2="23" y2="14" /><line x1="1" y1="9" x2="4" y2="9" /><line x1="1" y1="14" x2="4" y2="14" /></svg>,
   sparkles: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M12 3v18" /><path d="M3 12h18" /><path d="M5.6 5.6l12.8 12.8" /><path d="M18.4 5.6L5.6 18.4" /></svg>
@@ -511,54 +498,11 @@ const I = ({ n, size = 18, c = '', style = {} }) => {
 };
 
 const HABITS = [
-  { id: 'toefl', label: 'Belajar TOEFL', color: '#3b82f6', emoji: <I n="globe" size={18} /> },
   { id: 'nojunkfood', label: 'No Junkfood', color: '#10b981', emoji: <I n="warn" size={18} /> },
   { id: 'coding', label: 'Belajar Coding', color: '#6366f1', emoji: <I n="laptop" size={18} /> },
   { id: 'workout', label: 'Workout', color: '#f59e0b', emoji: <I n="fitness" size={18} /> },
   { id: 'nofap', label: 'NoFap', color: '#0ea5e9', emoji: <I n="lock" size={18} /> },
 ];
-
-const DEFAULT_TOEFL = {
-  'Senin': { 
-    focus: 'Reading Skill 1', 
-    tasks: [
-      { name: 'Longman TOEFL Reading Skill 1', detail: 'Tonton & Pelajari', url: 'https://www.youtube.com/watch?v=K_HWqFI0H9Y&list=PLM-YGdSE-ABeCEAWi5Y1KNCRrbLOeZOj0' },
-      { name: 'Latihan Soal Reading', detail: 'Kerjakan latihan terkait' }
-    ] 
-  },
-  'Selasa': { 
-    focus: 'Structure Skill 1', 
-    tasks: [
-      { name: 'Longman TOEFL Structure Skill 1', detail: 'Tonton & Pelajari', url: 'https://www.youtube.com/watch?v=aZbwhvzAtpo&list=PLM-YGdSE-ABdEur6prrjjShLdUUcBofdj' },
-      { name: 'Latihan Soal Structure', detail: 'Kerjakan latihan terkait' }
-    ] 
-  },
-  'Rabu': { 
-    focus: 'Listening Skill 1', 
-    tasks: [
-      { name: 'Longman TOEFL Listening Skill 1', detail: 'Tonton & Pelajari', url: 'https://www.youtube.com/watch?v=YoGVQVIgdmc&list=PLM-YGdSE-ABdgy8iWFWEzmy-Q5BxB2Ztc' },
-      { name: 'Latihan Soal Listening', detail: 'Kerjakan latihan terkait' }
-    ] 
-  },
-  'Kamis': { 
-    focus: 'Latihan Random', 
-    tasks: [
-      { name: 'Belajar Latihan Soal dari Youtube', detail: 'Pilih video random', url: 'https://www.youtube.com/results?search_query=toefl+practice+test' },
-      { name: 'Latihan Soal', detail: 'Kerjakan & Evaluasi' }
-    ] 
-  },
-  'Jumat': { 
-    focus: 'Latihan Random', 
-    tasks: [
-      { name: 'Belajar Latihan Soal dari Youtube', detail: 'Pilih video random', url: 'https://www.youtube.com/results?search_query=toefl+practice+test' },
-      { name: 'Latihan Soal', detail: 'Kerjakan & Evaluasi' }
-    ] 
-  },
-  'Sabtu': { focus: 'Rest Day', tasks: [] },
-  'Minggu': { focus: 'Rest Day', tasks: [] }
-};
-
-const TOEFL_DAYS = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
 
 const DEFAULT_ROADMAP = [
   {
@@ -767,47 +711,79 @@ const Modal = ({ open, onClose, title, children, wide = false }) => {
   );
 };
 
-// Mini Calendar Component for Dashboard
-const MiniCalendar = ({ dayN, total }) => {
+// Prominent Calendar Component for Dashboard
+const DashboardCalendar = ({ dayN, total, habitLog }) => {
   const today = new Date();
   const y = today.getFullYear();
   const m = today.getMonth();
-  
+
   const firstDay = new Date(y, m, 1).getDay();
   const daysInMonth = new Date(y, m + 1, 0).getDate();
   const dayLabels = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
-  
+
   const cells = [];
   for (let i = 0; i < firstDay; i++) cells.push(null);
   for (let d = 1; d <= daysInMonth; d++) cells.push(d);
 
+  const safeLog = safeObj(habitLog);
+
   return (
     <div className="card card-p" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-      <div className="between" style={{ marginBottom: 12 }}>
-        <span style={{ fontSize: 15, fontWeight: 700, color: 'var(--text)' }}>
-          {new Date(y, m, 1).toLocaleDateString('id-ID', { month: 'long', year: 'numeric' })}
-        </span>
-        <span style={{ fontSize: 12, color: 'var(--blue)', fontWeight: 600, padding: '4px 8px', background: 'var(--blue-dim)', borderRadius: 8 }}>
-          Day {dayN}/{total}
-        </span>
+      <div className="between" style={{ marginBottom: 20 }}>
+        <div>
+          <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--text)' }}>
+            {new Date(y, m, 1).toLocaleDateString('id-ID', { month: 'long', year: 'numeric' })}
+          </div>
+          <div style={{ fontSize: 12, color: 'var(--text3)' }}>Hari ke-{dayN} dari {total} Protocol</div>
+        </div>
+        <div style={{ display: 'flex', gap: 12, fontSize: 11, color: 'var(--text2)', fontWeight: 500 }}>
+           <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}><span style={{ width: 10, height: 10, borderRadius: 3, background: 'var(--blue)' }}></span> Hari Ini</div>
+           <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}><span style={{ width: 10, height: 10, borderRadius: 3, background: 'var(--blue-dim)', border: '1px solid var(--blue-border)' }}></span> Perfect Day</div>
+        </div>
       </div>
-      <div className="mini-cal-grid">
-        {dayLabels.map(l => <div key={l} className="mini-cal-day">{l}</div>)}
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '8px' }}>
+        {dayLabels.map(l => <div key={l} style={{ fontSize: 12, fontWeight: 600, color: 'var(--text3)', textAlign: 'center', paddingBottom: 8 }}>{l}</div>)}
         {cells.map((d, i) => {
           if (!d) return <div key={`e${i}`} />;
           const cellDate = new Date(y, m, d);
           cellDate.setHours(0,0,0,0);
           const t = new Date(today); t.setHours(0,0,0,0);
-          
+          const dateKey = `${y}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+
           let status = '';
-          if (cellDate.getTime() === t.getTime()) status = 'active';
+          if (cellDate.getTime() === t.getTime()) status = 'today';
           else if (cellDate < START) status = 'past';
           else if (cellDate > new Date(START.getTime() + (TOTAL * 86400000))) status = 'future';
-          else if (cellDate < t) status = 'done';
+          else if (cellDate < t) status = 'past';
           else status = 'pending';
 
+          // Check habits logic for past days
+          let habitsDoneCount = 0;
+          if (status === 'past' && cellDate >= START) {
+            const hl = safeLog[dateKey] || {};
+            habitsDoneCount = HABITS.filter(h => hl[h.id]).length;
+            if (habitsDoneCount === HABITS.length) status = 'done-all';
+          }
+
+          let bg = 'transparent';
+          let border = '1px solid transparent';
+          let color = 'var(--text2)';
+
+          if (status === 'today') {
+            bg = 'var(--blue)'; color = '#fff'; border = '1px solid var(--blue)';
+          } else if (status === 'done-all') {
+             bg = 'var(--blue-dim)'; color = 'var(--blue-hover)'; border = '1px solid var(--blue-border)';
+          } else if (status === 'past') {
+            bg = 'var(--surface2)'; color = 'var(--text3)'; border = '1px solid var(--border)';
+          } else if (status === 'future') {
+            color = 'var(--surface3)';
+          } else if (status === 'pending') {
+             bg = 'var(--surface)'; color = 'var(--text3)'; border = '1px solid var(--border)';
+          }
+
           return (
-            <div key={i} className={`mini-cal-date ${status}`}>
+            <div key={i} style={{ aspectRatio: '1', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 600, borderRadius: '8px', background: bg, border: border, color: color, transition: 'all 0.2s', cursor: d ? 'pointer' : 'default', boxShadow: status === 'today' ? 'var(--blue-glow)' : 'none' }}>
               {d}
             </div>
           );
@@ -878,20 +854,18 @@ const App = () => {
   const [roadPhase, setRoadPhase] = useState(null);
 
   // States
-  const [roadmap, setRoadmap, r1] = useSync('roadmap_data_v3', DEFAULT_ROADMAP, uid); // Upgraded version to pull new defaults
+  const [roadmap, setRoadmap, r1] = useSync('roadmap_data_v3', DEFAULT_ROADMAP, uid); 
   const [weight, setWeight, r2] = useSync('weight', { start: 78, current: 78, target: 63 }, uid);
   const [exDone, setExDone, r3] = useSync('exercises', {}, uid);
   const [rprog, setRprog, r4] = useSync('roadmap_v2', {}, uid);
-  const [workout, setWorkout, r6] = useSync('workout_schedule_v2', DEFAULT_WORKOUT, uid); // Upgraded version
+  const [workout, setWorkout, r6] = useSync('workout_schedule_v2', DEFAULT_WORKOUT, uid); 
   const [streakNF, setStreakNF, r7] = useSync('streak_nofap', {}, uid);
   const [streakNJ, setStreakNJ, r8] = useSync('streak_nojunkfood', {}, uid);
   const [diary, setDiary, r9] = useSync('diary', [], uid);
   const [habitLog, setHabitLog, r10] = useSync('habit_log', {}, uid);
-  const [toeflSched, setToeflSched, r11] = useSync('toefl_schedule_v2', DEFAULT_TOEFL, uid); // Upgraded version
-  const [toeflProg, setToeflProg, r12] = useSync('toefl_progress', {}, uid);
   const [weeklyAnalysis, setWeeklyAnalysis, r13] = useSync('weekly_analysis', [], uid);
 
-  const isReady = r1 && r2 && r3 && r4 && r6 && r7 && r8 && r9 && r10 && r11 && r12 && r13;
+  const isReady = r1 && r2 && r3 && r4 && r6 && r7 && r8 && r9 && r10 && r13;
 
   const today = new Date();
   const diffDays = Math.floor((today - START) / 86400000);
@@ -914,7 +888,6 @@ const App = () => {
   const safeNF = safeObj(streakNF);
   const safeNJ = safeObj(streakNJ);
   const safeHL = safeObj(habitLog);
-  const safeToeflProg = safeObj(toeflProg);
   const safeWeeklyAnalysis = Array.isArray(weeklyAnalysis) ? weeklyAnalysis : [];
 
   const ws = safeWO[dayName] || { type: 'Rest', focus: '-', exercises: [] };
@@ -988,7 +961,6 @@ const App = () => {
   const NAV = [
     { id: 'dashboard', n: 'home', l: 'Overview' },
     { id: 'habits', n: 'habits', l: 'Daily Activity' },
-    { id: 'toefl', n: 'globe', l: 'TOEFL Prep' },
     { id: 'diary', n: 'diary', l: 'Diary & AI' },
     { id: 'fitness', n: 'fitness', l: 'Fitness' },
     { id: 'roadmap', n: 'map', l: 'Roadmap' }
@@ -1054,14 +1026,11 @@ const App = () => {
           {tab === 'habits' && (
             <HabitsPage habitLog={safeHL} setHabitLog={setHabitLog} today={today} dateKey={dateKey} fmtDate={fmtDate} />
           )}
-          {tab === 'toefl' && (
-            <ToeflPage toeflSched={toeflSched} setToeflSched={setToeflSched} toeflProg={safeToeflProg} setToeflProg={setToeflProg} dayName={dayName} dateKey={dateKey} />
-          )}
           {tab === 'diary' && (
             <DiaryPage 
               diary={safeDiary} setDiary={setDiary} dateKey={dateKey} fmtDate={fmtDate} safeHL={safeHL} 
               safeExDone={safeExDone} today={today} weeklyAnalysis={safeWeeklyAnalysis} setWeeklyAnalysis={setWeeklyAnalysis} 
-              codeDone={codeDone} totalCode={allVids.length} toeflProg={safeToeflProg} toeflSched={toeflSched}
+              codeDone={codeDone} totalCode={allVids.length}
             />
           )}
           {tab === 'fitness' && (
@@ -1118,7 +1087,7 @@ const App = () => {
         </form>
       </Modal>
 
-      <SettingsModal open={settOpen} onClose={() => setSettOpen(false)} tab={settTab} setTab={setSettTab} roadmap={safeRM} setRoadmap={setRoadmap} workout={safeWO} setWorkout={setWorkout} setRprog={setRprog} setExDone={setExDone} setHabitLog={setHabitLog} setToeflProg={setToeflProg} setDiary={setDiary} />
+      <SettingsModal open={settOpen} onClose={() => setSettOpen(false)} tab={settTab} setTab={setSettTab} roadmap={safeRM} setRoadmap={setRoadmap} workout={safeWO} setWorkout={setWorkout} setRprog={setRprog} setExDone={setExDone} setHabitLog={setHabitLog} setDiary={setDiary} />
     </div>
   );
 };
@@ -1149,7 +1118,7 @@ const DashPage = ({ dayN, pct, weight, fp, nfStreak, njStreak, todayM, safeRprog
         ))}
       </div>
 
-      <div style={{display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 16}}>
+      <div style={{display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: 16}}>
         <div className="card card-p" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
           <div className="between" style={{ marginBottom: 14 }}>
             <span style={{ fontSize: 15, fontWeight: 600, color: 'var(--text2)' }}>Protocol Progress — Day {dayN}</span>
@@ -1158,8 +1127,8 @@ const DashPage = ({ dayN, pct, weight, fp, nfStreak, njStreak, todayM, safeRprog
           <PBar cur={dayN} tot={TOTAL} />
         </div>
         
-        {/* New Mini Calendar injected into dashboard layout */}
-        <MiniCalendar dayN={dayN} total={TOTAL} />
+        {/* Prominent Calendar on Dashboard */}
+        <DashboardCalendar dayN={dayN} total={TOTAL} habitLog={safeHL} />
       </div>
 
       <div className="grid2">
@@ -1169,7 +1138,7 @@ const DashPage = ({ dayN, pct, weight, fp, nfStreak, njStreak, todayM, safeRprog
               <div style={{ fontSize: 11, fontWeight: 600, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>Daily Activity</div>
               <div style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)' }}>Habits Hari Ini</div>
             </div>
-            <span style={{ fontSize: 14, color: 'var(--text2)', fontWeight: 600 }}>{habitDone}/5</span>
+            <span style={{ fontSize: 14, color: 'var(--text2)', fontWeight: 600 }}>{habitDone}/{HABITS.length}</span>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {HABITS.map(h => {
@@ -1184,7 +1153,7 @@ const DashPage = ({ dayN, pct, weight, fp, nfStreak, njStreak, todayM, safeRprog
               );
             })}
           </div>
-          <PBar cur={habitDone} tot={5} cls="g" />
+          <PBar cur={habitDone} tot={HABITS.length} cls="g" />
         </div>
 
         <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -1255,7 +1224,7 @@ const DashPage = ({ dayN, pct, weight, fp, nfStreak, njStreak, todayM, safeRprog
 
 const HabitsPage = ({ habitLog, setHabitLog, today, dateKey, fmtDate }) => {
   const [view, setView] = useState('today');
-  const [selHabit, setSelHabit] = useState('toefl');
+  const [selHabit, setSelHabit] = useState('coding');
   const [calMonth, setCalMonth] = useState({ y: today.getFullYear(), m: today.getMonth() });
 
   const safeLog = safeObj(habitLog);
@@ -1294,7 +1263,7 @@ const HabitsPage = ({ habitLog, setHabitLog, today, dateKey, fmtDate }) => {
       <div className="between" style={{ flexWrap: 'wrap', gap: 16 }}>
         <div>
           <div style={{ fontSize: 24, fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.02em', marginBottom: 4 }}>Daily Activity</div>
-          <div style={{ fontSize: 14, color: 'var(--text2)', fontWeight: 500 }}>{fmtDate} — {doneTodayCount}/5 selesai hari ini</div>
+          <div style={{ fontSize: 14, color: 'var(--text2)', fontWeight: 500 }}>{fmtDate} — {doneTodayCount}/{HABITS.length} selesai hari ini</div>
         </div>
         <div style={{ display: 'flex', gap: 0, background: 'var(--surface)', borderRadius: 12, border: '1px solid var(--border)', overflow: 'hidden' }}>
           {[
@@ -1314,7 +1283,7 @@ const HabitsPage = ({ habitLog, setHabitLog, today, dateKey, fmtDate }) => {
               <div style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)' }}>Checklist Hari Ini</div>
               <div style={{ textAlign: 'center' }}>
                 <div style={{ fontSize: 48, fontWeight: 800, color: 'var(--text)', lineHeight: 1 }}>{doneTodayCount}</div>
-                <div style={{ fontSize: 13, color: 'var(--text3)', fontWeight: 600 }}>/ 5</div>
+                <div style={{ fontSize: 13, color: 'var(--text3)', fontWeight: 600 }}>/ {HABITS.length}</div>
               </div>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 20 }}>
@@ -1337,7 +1306,7 @@ const HabitsPage = ({ habitLog, setHabitLog, today, dateKey, fmtDate }) => {
                 );
               })}
             </div>
-            <PBar cur={doneTodayCount} tot={5} cls="g" />
+            <PBar cur={doneTodayCount} tot={HABITS.length} cls="g" />
           </div>
 
           <div className="grid2">
@@ -1450,162 +1419,7 @@ const HabitsPage = ({ habitLog, setHabitLog, today, dateKey, fmtDate }) => {
   );
 };
 
-const ToeflPage = ({ toeflSched, setToeflSched, toeflProg, setToeflProg, dayName, dateKey }) => {
-  const defaultDay = TOEFL_DAYS.includes(dayName) ? dayName : 'Senin';
-  const [selDay, setSelDay] = useState(defaultDay);
-  const [editTask, setEditTask] = useState(null);
-  const [editMeta, setEditMeta] = useState(false);
-
-  const tKeyFor = (day, task) => `${dateKey}-${day}-${task.name}`;
-  const isDoneFor = (day, task) => !!toeflProg[tKeyFor(day, task)];
-  
-  const toggleFor = (day, task) => setToeflProg(p => { 
-    const s = safeObj(p); const k = tKeyFor(day, task); 
-    return { ...s, [k]: !s[k] }; 
-  });
-  
-  const dayData = toeflSched[selDay] || { focus: '', tasks: [] };
-  const tasks = dayData.tasks || [];
-  const doneCount = tasks.filter(t => isDoneFor(selDay, t)).length;
-
-  const saveMeta = (f, v) => setToeflSched(p => { 
-    const s = safeObj(p); const d = s[selDay] || { focus: '', tasks: [] }; 
-    return { ...s, [selDay]: { ...d, [f]: v } }; 
-  });
-  
-  const saveTask = data => { 
-    setToeflSched(p => { 
-      const s = safeObj(p); const d = s[data.dayKey] || { focus: '', tasks: [] }; 
-      const list = [...(d.tasks || [])]; 
-      const nt = { name: data.name, detail: data.detail, url: data.url }; 
-      if (data.isNew) list.push(nt); else list[data.index] = nt;
-      return { ...s, [data.dayKey]: { ...d, tasks: list } }; 
-    }); 
-    setEditTask(null); 
-  };
-  
-  const delTask = (day, idx) => { 
-    if (!confirm('Hapus materi ini?')) return; 
-    setToeflSched(p => { 
-      const s = safeObj(p); const d = s[day] || { tasks: [] }; 
-      const list = [...(d.tasks || [])]; list.splice(idx, 1); 
-      return { ...s, [day]: { ...d, tasks: list } }; 
-    }); 
-  };
-
-  return (
-    <div className="fade-up" style={{ display: 'flex', flexDirection: 'column', gap: 20, maxWidth: 800, margin: '0 auto' }}>
-      <div className="between" style={{ flexWrap: 'wrap', gap: 12 }}>
-        <div>
-          <div style={{ fontSize: 24, fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.02em', marginBottom: 4 }}>TOEFL Preparation</div>
-          <div style={{ fontSize: 14, color: 'var(--text2)' }}>Jadwal Belajar Rutinan YouTube</div>
-        </div>
-      </div>
-      
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-        <div style={{ display: 'flex', gap: 10, overflowX: 'auto', paddingBottom: 8 }}>
-          {TOEFL_DAYS.map(d => (
-            <button key={d} className={`day-btn${selDay === d ? ' on' : ''}`} onClick={() => setSelDay(d)} style={{ flexShrink: 0, minWidth: 80 }}>
-              {d}
-              {d === dayName && <span style={{ marginLeft: 6, width: 6, height: 6, borderRadius: '50%', background: 'var(--blue)', display: 'inline-block' }} />}
-            </button>
-          ))}
-        </div>
-        
-        <div className="card">
-          <div className="between" style={{ marginBottom: 16, flexWrap: 'wrap', gap: 10 }}>
-            <div>
-              <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>{selDay}</div>
-              <div style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)' }}>Fokus: {dayData.focus || 'Belum diatur'}</div>
-            </div>
-            <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
-              <div style={{ textAlign: 'right' }}>
-                <div style={{ fontSize: 28, fontWeight: 800, color: 'var(--text)', lineHeight: 1 }}>
-                  {doneCount} <span style={{ fontSize: 14, color: 'var(--text3)', fontWeight: 600 }}>&nbsp;/{tasks.length}</span>
-                </div>
-              </div>
-              {selDay === dayName && <span className="tag tag-blue">Hari Ini</span>}
-              <button className="icon-btn" onClick={() => setEditMeta(p => p === selDay ? false : selDay)}><I n="pencil" /></button>
-            </div>
-          </div>
-          
-          <PBar cur={doneCount} tot={tasks.length} cls={doneCount === tasks.length && tasks.length > 0 ? "g" : ""} />
-
-          {editMeta === selDay && (
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 12, marginBottom: 16, paddingTop: 16, marginTop: 16, borderTop: '1px solid var(--border)' }}>
-              <div>
-                <span className="label">Fokus Belajar Hari Ini</span>
-                <input value={dayData.focus || ''} onChange={e => saveMeta('focus', e.target.value)} className="inp" placeholder="Contoh: Reading Comprehension..." />
-              </div>
-            </div>
-          )}
-          
-          <div style={{ marginTop: 24 }}>
-            <button className="btn btn-ghost" style={{ marginBottom: 16 }} onClick={() => setEditTask({ isNew: true, dayKey: selDay, name: '', detail: '', url: '' })}>
-              <I n="plus" />Tambah Materi
-            </button>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              {tasks.map((task, i) => (
-                <div key={i} className={`ex-card${isDoneFor(selDay, task) ? ' done' : ''}`} style={{ borderLeftColor: isDoneFor(selDay, task) ? 'var(--green)' : 'var(--blue)' }} onClick={() => toggleFor(selDay, task)}>
-                  <div className="ex-num" style={isDoneFor(selDay, task) ? { background: 'var(--green-dim)', borderColor: 'var(--green)' } : {}}>
-                    {isDoneFor(selDay, task) ? <I n="check" size={14} /> : i + 1}
-                  </div>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div className="ex-title">{task.name}</div>
-                    <div className="ex-meta">{task.detail}</div>
-                    {task.url && (
-                       <a href={task.url} target="_blank" rel="noopener" style={{ fontSize: 12, color: 'var(--blue-hover)', marginTop: 6, display: 'inline-flex', alignItems: 'center', gap: 4, textDecoration: 'none', fontWeight: 500 }} onClick={e => e.stopPropagation()}>
-                         <I n="play" size={12} /> Buka Video Belajar
-                       </a>
-                    )}
-                  </div>
-                  <button className="icon-btn" onClick={e => { e.stopPropagation(); setEditTask({ isNew: false, dayKey: selDay, index: i, ...task }); }}><I n="pencil" /></button>
-                  <button className="icon-btn red" onClick={e => { e.stopPropagation(); delTask(selDay, i); }}><I n="trash" /></button>
-                </div>
-              ))}
-            </div>
-            {tasks.length === 0 && <div style={{ fontSize: 14, color: 'var(--text3)', padding: '12px 0', textAlign: 'center' }}>Belum ada target materi untuk hari ini.</div>}
-          </div>
-        </div>
-      </div>
-      
-      <Modal open={!!editTask} onClose={() => setEditTask(null)} title={editTask?.isNew ? `Tambah Materi — ${editTask?.dayKey}` : 'Edit Materi'}>
-        {editTask && <ToeflTaskForm init={editTask} onSave={saveTask} onClose={() => setEditTask(null)} />}
-      </Modal>
-    </div>
-  );
-};
-
-const ToeflTaskForm = ({ init, onSave, onClose }) => {
-  const [name, setName] = useState(init.name || '');
-  const [detail, setDetail] = useState(init.detail || '');
-  const [url, setUrl] = useState(init.url || '');
-  
-  const sub = e => { e.preventDefault(); onSave({ ...init, name, detail, url }); };
-  
-  return (
-    <form onSubmit={sub} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-      <div>
-        <span className="label">Nama Materi / Tugas</span>
-        <input value={name} onChange={e => setName(e.target.value)} className="inp" required placeholder="Contoh: Practice Test Part A..." />
-      </div>
-      <div>
-        <span className="label">Detail / Instruksi</span>
-        <input value={detail} onChange={e => setDetail(e.target.value)} className="inp" required placeholder="Contoh: Tonton video & catat..." />
-      </div>
-      <div>
-        <span className="label">Link Referensi/Video (Opsional)</span>
-        <input value={url} onChange={e => setUrl(e.target.value)} className="inp" placeholder="https://youtube.com/..." />
-      </div>
-      <div style={{ display: 'flex', gap: 12, marginTop: 8 }}>
-        <button type="button" onClick={onClose} className="btn btn-ghost" style={{ flex: 1 }}>Batal</button>
-        <button type="submit" className="btn btn-blue" style={{ flex: 2 }}>Simpan</button>
-      </div>
-    </form>
-  );
-};
-
-const DiaryPage = ({ diary, setDiary, dateKey, fmtDate, safeHL, safeExDone, today, weeklyAnalysis, setWeeklyAnalysis, codeDone, totalCode, toeflProg, toeflSched }) => {
+const DiaryPage = ({ diary, setDiary, dateKey, fmtDate, safeHL, safeExDone, today, weeklyAnalysis, setWeeklyAnalysis, codeDone, totalCode }) => {
   const [writing, setWriting] = useState(false);
   const [text, setText] = useState('');
   const [mood, setMood] = useState('neutral');
@@ -1616,8 +1430,6 @@ const DiaryPage = ({ diary, setDiary, dateKey, fmtDate, safeHL, safeExDone, toda
   const [aiDailyDraft, setAiDailyDraft] = useState(null);
 
   const todayEntry = diary.find(e => e.date === dateKey);
-  const todayToeflKeys = Object.keys(toeflProg).filter(k => k.startsWith(dateKey) && toeflProg[k]);
-  const toeflToday = todayToeflKeys.length;
 
   const openNew = () => {
     if (todayEntry) { setEditId(todayEntry.id); setText(todayEntry.text); setMood(todayEntry.mood || 'neutral'); setAiDailyDraft(todayEntry.aiAnalysis || null); } 
@@ -1640,7 +1452,7 @@ const DiaryPage = ({ diary, setDiary, dateKey, fmtDate, safeHL, safeExDone, toda
   const askFridayDaily = async () => {
     if (!text.trim()) { alert('Tulis sesuatu dulu agar Friday bisa menganalisisnya.'); return; }
     setAiLoading(true);
-    const prompt = `Ini adalah tulisan diary saya hari ini: "${text}". Mood saya: ${mood}. Progres hari ini: Roadmap Coding (${codeDone}/${totalCode} selesai secara keseluruhan), TOEFL (hari ini selesai ${toeflToday} tugas). Tolong baca dan pahami isi diary saya, berikan tanggapan yang empatik dan personal layaknya asisten Friday. Setelah itu, buatkan tabel HTML sederhana (gunakan <table>, <tr>, <th>, <td>) yang merangkum 'Fokus Utama' dan 'Saran Besok' menyertakan hasil evaluasi atas isi diary, roadmap, dan toefl hari ini.`;
+    const prompt = `Ini adalah tulisan diary saya hari ini: "${text}". Mood saya: ${mood}. Progres hari ini: Roadmap Coding (${codeDone}/${totalCode} selesai secara keseluruhan). Tolong baca dan pahami isi diary saya, berikan tanggapan yang empatik dan personal layaknya asisten Friday. Setelah itu, buatkan tabel HTML sederhana (gunakan <table>, <tr>, <th>, <td>) yang merangkum 'Fokus Utama' dan 'Saran Besok' menyertakan hasil evaluasi atas isi diary, roadmap coding, dan habit harian (No Junkfood, Belajar Coding, Workout, NoFap).`;
     const sysIns = "Kamu adalah Friday, AI asisten personal cerdas. Output HANYA boleh dalam format HTML murni (<b>, <i>, <p>, <table>, <ul>, dsb). DILARANG KERAS menggunakan format Markdown seperti **, ###, atau asteris. Gunakan bahasa Indonesia yang elegan, profesional, dan empatik terhadap cerita pengguna.";
     const response = await callFridayAI(prompt, sysIns);
     setAiDailyDraft(response); setAiLoading(false);
@@ -1649,20 +1461,16 @@ const DiaryPage = ({ diary, setDiary, dateKey, fmtDate, safeHL, safeExDone, toda
   const generateWeeklyAnalysis = async () => {
     setAiLoading(true);
     let reportData = "Data 7 Hari Terakhir:\n\n";
-    let toeflWeekly = 0;
     for (let i = 0; i < 7; i++) {
       const d = new Date(today); d.setDate(today.getDate() - i); const k = d.toISOString().split('T')[0];
       const dayHabits = safeHL[k] ? HABITS.filter(h => safeHL[k][h.id]).length : 0;
       const diaryEn = diary.find(e => e.date === k);
       const moodText = diaryEn ? diaryEn.mood : 'Tidak ada catatan mood';
       const diaryText = diaryEn ? diaryEn.text : 'Tidak ada tulisan diary hari ini';
-      const dayToefl = Object.keys(toeflProg).filter(key => key.startsWith(k) && toeflProg[key]).length;
-      toeflWeekly += dayToefl;
-      reportData += `- Tanggal: ${k} | Habits: ${dayHabits}/5 | TOEFL: ${dayToefl} tugas | Mood: ${moodText} | Isi Diary: "${diaryText}"\n`;
+      reportData += `- Tanggal: ${k} | Habits (No Junkfood, Coding, Workout, NoFap): ${dayHabits}/${HABITS.length} | Mood: ${moodText} | Isi Diary: "${diaryText}"\n`;
     }
-    const toeflAllTime = Object.keys(toeflProg).filter(k => toeflProg[k]).length;
-    reportData += `\nProgres Keseluruhan:\n- Roadmap Python: ${codeDone} dari ${totalCode} materi telah diselesaikan.\n- Total aktivitas TOEFL yang telah diselesaikan (selama protokol): ${toeflAllTime} tugas.\n\n`;
-    reportData += "Tolong baca curhatan diary saya di atas. Buat laporan mingguan menggunakan tabel HTML (wajib ada <table>, <tr>, <th>, <td>) untuk merangkum performa per hari. Berikan insight mendalam mengenai pola tulisan diary saya, konsistensi kebiasaan, progres roadmap, persiapan TOEFL, dan tren emosi saya di bawah tabel tersebut. Ingat, hanya gunakan tag HTML murni, JANGAN gunakan Markdown sama sekali.";
+    reportData += `\nProgres Keseluruhan Roadmap Python: ${codeDone} dari ${totalCode} materi telah diselesaikan.\n\n`;
+    reportData += "Tolong baca curhatan diary saya di atas. Buat laporan mingguan menggunakan tabel HTML (wajib ada <table>, <tr>, <th>, <td>) untuk merangkum performa per hari. Berikan insight mendalam mengenai pola tulisan diary saya, konsistensi 4 kebiasaan utama, progres roadmap coding, dan tren emosi saya di bawah tabel tersebut. Ingat, hanya gunakan tag HTML murni, JANGAN gunakan Markdown sama sekali.";
     const sysIns = "Kamu adalah Friday, AI asisten personal. Kamu pandai menganalisa jurnal dan memberikan feedback membangun. Output WAJIB dalam format HTML murni. DILARANG menggunakan Markdown (seperti **, ###). Gunakan tabel HTML untuk menampilkan data agar rapi.";
     const response = await callFridayAI(reportData, sysIns);
     const newAnalysis = { id: Date.now(), date: dateKey, text: response };
@@ -1746,7 +1554,7 @@ const DiaryPage = ({ diary, setDiary, dateKey, fmtDate, safeHL, safeExDone, toda
             <I n="cpu" size={48} style={{ color: 'var(--blue)', marginBottom: 16 }} c="pulse-glow" />
             <h3 style={{ fontSize: 20, fontWeight: 800, marginBottom: 8 }}>Evaluasi Mingguan Bersama Friday</h3>
             <p style={{ fontSize: 14, color: 'var(--text2)', marginBottom: 20, maxWidth: 500, margin: '0 auto 20px' }}>
-              Friday akan menganalisis data aktivitas, kebiasaan, dan jurnal Anda selama 7 hari terakhir untuk memberikan evaluasi komprehensif.
+              Friday akan menganalisis data aktivitas, 4 kebiasaan utama, progres roadmap coding, dan jurnal Anda selama 7 hari terakhir.
             </p>
             <button className="btn btn-blue btn-lg" onClick={generateWeeklyAnalysis} disabled={aiLoading}>
               {aiLoading ? <><span className="spin-it"><I n="loader" /></span> Menganalisis Data...</> : <><I n="sparkles" />Hasilkan Laporan Mingguan</>}
@@ -1782,7 +1590,7 @@ const DiaryPage = ({ diary, setDiary, dateKey, fmtDate, safeHL, safeExDone, toda
               ))}
             </div>
           </div>
-          <textarea className="inp" style={{ minHeight: 220, fontSize: 15, lineHeight: 1.7 }} placeholder="Tulis kejadian penting, progres, atau kendala yang kamu hadapi hari ini..." value={text} onChange={e => setText(e.target.value)} autoFocus />
+          <textarea className="inp" style={{ minHeight: 220, fontSize: 15, lineHeight: 1.7 }} placeholder="Tulis kejadian penting, progres coding, performa workout/diet, atau kendala hari ini..." value={text} onChange={e => setText(e.target.value)} autoFocus />
           {aiDailyDraft && (
             <div className="ai-box">
               <div className="ai-header"><I n="sparkles" size={16} /> Friday's Insight</div>
@@ -2083,7 +1891,7 @@ const RoadmapPage = ({ safeRM, setRoadmap, safeRprog, toggleRprog, roadPhase, se
   );
 };
 
-const SettingsModal = ({ open, onClose, tab, setTab, roadmap, setRoadmap, workout, setWorkout, setRprog, setExDone, setHabitLog, setToeflProg, setDiary }) => (
+const SettingsModal = ({ open, onClose, tab, setTab, roadmap, setRoadmap, workout, setWorkout, setRprog, setExDone, setHabitLog, setDiary }) => (
   <Modal open={open} onClose={onClose} title="Settings & Management" wide>
     <div style={{ display: 'flex', gap: 8, marginBottom: 24, padding: '6px', background: 'var(--surface)', borderRadius: 14, border: '1px solid var(--border)', overflowX: 'auto' }}>
       {[ { id: 'roadmap', l: 'Roadmap' }, { id: 'workout', l: 'Workout' }, { id: 'reset', l: 'Data' } ].map(t => (
@@ -2092,17 +1900,16 @@ const SettingsModal = ({ open, onClose, tab, setTab, roadmap, setRoadmap, workou
     </div>
     {tab === 'roadmap' && <RoadmapMgr roadmap={roadmap} setRoadmap={setRoadmap} />}
     {tab === 'workout' && <WorkoutMgr workout={workout} setWorkout={setWorkout} />}
-    {tab === 'reset' && <ResetPanel setRprog={setRprog} setExDone={setExDone} setHabitLog={setHabitLog} setToeflProg={setToeflProg} setDiary={setDiary} setRoadmap={setRoadmap} />}
+    {tab === 'reset' && <ResetPanel setRprog={setRprog} setExDone={setExDone} setHabitLog={setHabitLog} setDiary={setDiary} setRoadmap={setRoadmap} />}
   </Modal>
 );
 
-const ResetPanel = ({ setRprog, setExDone, setHabitLog, setToeflProg, setDiary, setRoadmap }) => {
+const ResetPanel = ({ setRprog, setExDone, setHabitLog, setDiary, setRoadmap }) => {
   const [confirm, setConfirm] = useState(null);
   const resets = [
     { id: 'rprog', label: 'Roadmap Progress', desc: 'Reset semua checklist video & project', icon: 'map', color: 'var(--blue)', fn: () => setRprog({}) },
     { id: 'habits', label: 'Daily Activity Log', desc: 'Reset semua log daily habits', icon: 'habits', color: 'var(--green)', fn: () => setHabitLog({}) },
     { id: 'exdone', label: 'Exercise Log', desc: 'Reset semua log checklist workout harian', icon: 'fitness', color: 'var(--amber)', fn: () => setExDone({}) },
-    { id: 'toefl', label: 'TOEFL Schedule Data', desc: 'Reset progress checklist pelajaran TOEFL', icon: 'globe', color: 'var(--indigo)', fn: () => setToeflProg({}) },
     { id: 'diary', label: 'Diary & AI History', desc: 'Hapus semua entri diary permanen', icon: 'diary', color: 'var(--red)', fn: () => setDiary([]) },
     { id: 'roadmapdata', label: 'Reset Konten Roadmap', desc: 'Kembalikan roadmap Python ke default awal', icon: 'settings', color: 'var(--red)', fn: () => setRoadmap(DEFAULT_ROADMAP) },
   ];
