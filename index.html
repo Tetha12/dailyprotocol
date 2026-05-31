@@ -6,12 +6,12 @@
     name="viewport" 
     content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
   >
-  <title>Monk Mode - Project Friday</title>
+  <title>Monk Mode - Brutal Transformation</title>
   
   <link 
     rel="icon" 
     type="image/svg+xml" 
-    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='10' fill='%230a0f1c'/%3E%3Crect x='14' y='6' width='4' height='20' rx='2' fill='%233b82f6'/%3E%3Crect x='6' y='14' width='20' height='4' rx='2' fill='%233b82f6' opacity='0.5'/%3E%3C/svg%3E"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='10' fill='%230a0f1c'/%3E%3Crect x='14' y='6' width='4' height='20' rx='2' fill='%23f43f5e'/%3E%3Crect x='6' y='14' width='20' height='4' rx='2' fill='%23f43f5e' opacity='0.5'/%3E%3C/svg%3E"
   >
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -49,14 +49,14 @@
   
   <style>
     /* ==========================================================================
-       Modern Minimalist 2026 Theme - Deep Blue & Glassmorphism
+       Monk Mode Theme - Deep Dark & Brutal Transformation
        ========================================================================== */
     :root {
       --bg: #030712; 
-      --surface: rgba(15, 23, 42, 0.4); 
+      --surface: rgba(15, 23, 42, 0.5); 
       --surface-solid: #0f172a;
-      --surface2: rgba(30, 41, 59, 0.5); 
-      --surface3: rgba(51, 65, 85, 0.6);
+      --surface2: rgba(30, 41, 59, 0.6); 
+      --surface3: rgba(51, 65, 85, 0.7);
       
       --blue: #3b82f6; 
       --blue-hover: #60a5fa; 
@@ -66,16 +66,16 @@
       
       --text: #f8fafc; 
       --text2: #cbd5e1; 
-      --text3: #64748b; 
+      --text3: #94a3b8; 
       
-      --border: rgba(255, 255, 255, 0.08); 
-      --border2: rgba(255, 255, 255, 0.15);
+      --border: rgba(255, 255, 255, 0.1); 
+      --border2: rgba(255, 255, 255, 0.18);
       
       --green: #10b981; 
       --green-dim: rgba(16, 185, 129, 0.15); 
       
-      --red: #f43f5e; 
-      --red-dim: rgba(244, 63, 94, 0.15);
+      --red: #e11d48; 
+      --red-dim: rgba(225, 29, 72, 0.15);
       
       --amber: #f59e0b; 
       --purple: #8b5cf6; 
@@ -86,7 +86,7 @@
       --radius: 16px; 
       --radius-sm: 10px;
       
-      --shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      --shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
     }
     
     *, 
@@ -105,8 +105,8 @@
     body { 
       background-color: var(--bg); 
       background-image: 
-        radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.05), transparent 25%),
-        radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.03), transparent 25%);
+        radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.04), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(225, 29, 72, 0.03), transparent 25%);
       color: var(--text); 
       overflow: hidden; 
       height: 100vh; 
@@ -131,17 +131,23 @@
       70% { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); } 
       100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); } 
     }
+    @keyframes redGlow { 
+      0% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.4); } 
+      70% { box-shadow: 0 0 0 10px rgba(225, 29, 72, 0); } 
+      100% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0); } 
+    }
     
     .fade-up { animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
     .pop-in { animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) both; }
     .spin-it { animation: spin 1s linear infinite; display: inline-flex; }
     .pulse-glow { animation: pulseGlow 2s infinite; }
+    .red-glow { animation: redGlow 2s infinite; }
     
     .shell { display: flex; height: 100vh; overflow: hidden; }
 
     .sidebar { 
-      width: 240px; flex-shrink: 0; background: rgba(10, 15, 28, 0.6); 
-      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); 
+      width: 240px; flex-shrink: 0; background: rgba(10, 15, 28, 0.7); 
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); 
       border-right: 1px solid var(--border); display: flex; flex-direction: column; 
       transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1); overflow: hidden; z-index: 20; 
     }
@@ -149,11 +155,11 @@
     
     .sb-top { padding: 24px 20px 20px; display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
     .sb-logo { 
-      width: 38px; height: 38px; flex-shrink: 0; background: linear-gradient(135deg, var(--blue), var(--indigo)); 
-      border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: var(--blue-glow); 
+      width: 38px; height: 38px; flex-shrink: 0; background: linear-gradient(135deg, var(--red), var(--purple)); 
+      border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(225,29,72,0.3); 
     }
-    .sb-title { font-size: 16px; font-weight: 700; color: var(--text); white-space: nowrap; letter-spacing: -0.01em; }
-    .sb-sub { font-size: 11px; color: var(--blue-hover); font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; margin-top: 2px; }
+    .sb-title { font-size: 16px; font-weight: 800; color: var(--text); white-space: nowrap; letter-spacing: -0.01em; text-transform: uppercase; }
+    .sb-sub { font-size: 11px; color: var(--text3); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px; }
     
     .sb-nav { flex: 1; padding: 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; }
     .nb { 
@@ -168,17 +174,17 @@
     }
     .nb svg { width: 18px; height: 18px; flex-shrink: 0; opacity: 0.8; }
     .nb.on svg { opacity: 1; }
-    .sb-foot { padding: 12px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 4px; background: rgba(0,0,0,0.1); }
+    .sb-foot { padding: 12px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 4px; background: rgba(0,0,0,0.2); }
 
     .main { flex: 1; overflow-y: auto; display: flex; flex-direction: column; scroll-behavior: smooth; }
     .topbar { 
-      position: sticky; top: 0; z-index: 10; background: rgba(3, 7, 18, 0.7); 
+      position: sticky; top: 0; z-index: 10; background: rgba(3, 7, 18, 0.8); 
       backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); 
       border-bottom: 1px solid var(--border); padding: 16px 32px; display: flex; 
       justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; 
     }
-    .tb-title { font-size: 20px; font-weight: 700; color: var(--text); letter-spacing: -0.02em; }
-    .tb-sub { font-size: 12px; color: var(--text3); font-weight: 500; margin-top: 4px; }
+    .tb-title { font-size: 20px; font-weight: 800; color: var(--text); letter-spacing: -0.02em; text-transform: uppercase;}
+    .tb-sub { font-size: 12px; color: var(--text3); font-weight: 600; margin-top: 4px; letter-spacing: 0.05em; }
     
     .stat-chip { 
       display: flex; align-items: center; gap: 12px; padding: 10px 16px; background: var(--surface); 
@@ -186,7 +192,7 @@
     }
     .stat-chip:hover { border-color: var(--blue-border); background: var(--surface2); transform: translateY(-1px); }
     .chip-label { font-size: 10px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px; }
-    .chip-val { font-size: 16px; font-weight: 700; color: var(--text); line-height: 1; }
+    .chip-val { font-size: 16px; font-weight: 800; color: var(--text); line-height: 1; }
     
     .page { padding: 32px; max-width: 1140px; margin: 0 auto; width: 100%; }
 
@@ -212,19 +218,20 @@
     .prog-bar.g { background: linear-gradient(90deg, #059669, #10b981); } 
     .prog-bar.r { background: linear-gradient(90deg, #e11d48, #f43f5e); } 
     .prog-bar.a { background: linear-gradient(90deg, #d97706, #f59e0b); }
+    .prog-bar.p { background: linear-gradient(90deg, #8b5cf6, #d946ef); }
     
     .btn { 
       display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 20px; 
       border-radius: var(--radius-sm); border: 1px solid transparent; cursor: pointer; font-size: 13.5px; 
-      font-weight: 600; transition: all 0.2s ease; letter-spacing: 0.01em; outline: none; 
+      font-weight: 600; transition: all 0.2s ease; letter-spacing: 0.02em; outline: none; text-transform: uppercase;
     }
     .btn svg { width: 16px; height: 16px; flex-shrink: 0; }
     .btn-blue { background: var(--blue); color: #fff; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); } 
     .btn-blue:hover:not(:disabled) { background: var(--blue-hover); transform: translateY(-1px); box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4); }
     .btn-ghost { background: var(--surface2); border-color: var(--border); color: var(--text2); } 
     .btn-ghost:hover:not(:disabled) { color: var(--text); border-color: var(--border2); background: rgba(255,255,255,0.05); }
-    .btn-red { background: var(--red-dim); border-color: rgba(244,63,94,0.3); color: var(--red); } 
-    .btn-red:hover:not(:disabled) { background: rgba(244,63,94,0.2); border-color: var(--red); }
+    .btn-red { background: var(--red-dim); border-color: rgba(225,29,72,0.3); color: var(--red); } 
+    .btn-red:hover:not(:disabled) { background: rgba(225,29,72,0.2); border-color: var(--red); }
     .btn-lg { padding: 14px 28px; font-size: 15px; border-radius: var(--radius); }
     .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
     
@@ -244,51 +251,51 @@
     .inp::placeholder { color: var(--text3); }
     textarea.inp { resize: vertical; line-height: 1.6; }
     
-    .label { font-size: 12px; font-weight: 600; color: var(--text2); display: block; margin-bottom: 8px; }
-    .tag { display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; letter-spacing: 0.02em; }
+    .label { font-size: 12px; font-weight: 600; color: var(--text2); display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .tag { display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;}
     .tag-blue { background: var(--blue-dim); color: var(--blue-hover); border: 1px solid var(--blue-border); }
     .tag-green { background: var(--green-dim); color: var(--green); border: 1px solid rgba(16,185,129,0.3); }
     .tag-dim { background: var(--surface2); color: var(--text2); border: 1px solid var(--border); }
 
     .overlay { 
-      position: fixed; inset: 0; z-index: 100; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); 
-      -webkit-backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; padding: 20px; 
+      position: fixed; inset: 0; z-index: 100; background: rgba(0,0,0,0.8); backdrop-filter: blur(12px); 
+      -webkit-backdrop-filter: blur(12px); display: flex; align-items: center; justify-content: center; padding: 20px; 
     }
     .modal { 
       background: var(--surface-solid); border: 1px solid var(--border2); border-radius: 24px; width: 100%; 
       max-width: 540px; max-height: 90vh; display: flex; flex-direction: column; 
-      box-shadow: 0 24px 48px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1); position: relative; overflow: hidden; 
+      box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1); position: relative; overflow: hidden; 
     }
     .modal::before { 
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; 
-      background: linear-gradient(90deg, transparent, var(--blue), transparent); opacity: 0.5; 
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; 
+      background: linear-gradient(90deg, transparent, var(--red), transparent); opacity: 0.7; 
     }
     .modal.wide { max-width: 800px; }
     .modal-head { 
       padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; 
       justify-content: space-between; align-items: center; flex-shrink: 0; background: rgba(255,255,255,0.02); 
     }
-    .modal-title { font-size: 17px; font-weight: 700; color: var(--text); letter-spacing: -0.01em; }
+    .modal-title { font-size: 17px; font-weight: 800; color: var(--text); letter-spacing: -0.01em; text-transform: uppercase; }
     .modal-body { padding: 24px; overflow-y: auto; flex: 1; }
     
     .auth-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; background: var(--bg); }
-    .auth-box { width: 100%; max-width: 400px; }
+    .auth-box { width: 100%; max-width: 420px; text-align: center;}
     .auth-logo { 
-      width: 56px; height: 56px; background: linear-gradient(135deg, var(--blue), var(--indigo)); 
-      border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; box-shadow: var(--blue-glow); 
+      width: 64px; height: 64px; background: linear-gradient(135deg, var(--red), var(--purple)); 
+      border-radius: 18px; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; box-shadow: 0 0 30px rgba(225,29,72,0.4); 
     }
-    .auth-h1 { font-size: 32px; font-weight: 800; color: var(--text); margin-bottom: 8px; letter-spacing: -0.03em; }
-    .auth-tagline { font-size: 14px; color: var(--text3); margin-bottom: 32px; line-height: 1.5; font-weight: 500; }
+    .auth-h1 { font-size: 34px; font-weight: 800; color: var(--text); margin-bottom: 8px; letter-spacing: -0.03em; text-transform: uppercase;}
+    .auth-tagline { font-size: 14px; color: var(--text3); margin-bottom: 32px; line-height: 1.6; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;}
     .auth-form { 
       background: var(--surface); backdrop-filter: blur(20px); border: 1px solid var(--border); 
-      border-radius: var(--radius-lg); padding: 32px; display: flex; flex-direction: column; gap: 20px; box-shadow: var(--shadow); 
+      border-radius: var(--radius-lg); padding: 32px; display: flex; flex-direction: column; gap: 20px; box-shadow: var(--shadow); text-align: left;
     }
     
     .habit-card { 
       display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: var(--radius); 
       border: 1px solid var(--border); background: var(--surface2); cursor: pointer; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); 
     }
-    .habit-card:hover { border-color: var(--text3); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .habit-card:hover { border-color: var(--text3); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
     .habit-card.done { background: rgba(59, 130, 246, 0.08); border-color: var(--blue-border); }
     .habit-check { 
       width: 24px; height: 24px; border-radius: 8px; border: 2px solid var(--text3); 
@@ -304,31 +311,31 @@
     .ex-card.done { border-left-color: var(--green); opacity: 0.7; background: rgba(16, 185, 129, 0.05); }
     .ex-num { 
       width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0; background: var(--surface-solid); 
-      border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: var(--text2); transition: all 0.2s; 
+      border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: var(--text2); transition: all 0.2s; 
     }
     .ex-card.done .ex-num { background: var(--green-dim); border-color: rgba(16,185,129,0.3); color: var(--green); }
-    .ex-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+    .ex-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
     .ex-card.done .ex-title { color: var(--text3); text-decoration: line-through; }
     .ex-meta { font-size: 12px; color: var(--text3); font-weight: 500; }
     
     .diary-entry { padding: 24px; border-radius: var(--radius-lg); border: 1px solid var(--border); background: var(--surface); transition: all 0.2s; }
     .diary-entry:hover { border-color: var(--border2); box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
-    .diary-date { font-size: 13px; font-weight: 600; color: var(--text2); margin-bottom: 12px; display: block; }
+    .diary-date { font-size: 13px; font-weight: 600; color: var(--text2); margin-bottom: 12px; display: block; text-transform: uppercase; letter-spacing: 0.05em; }
     .diary-text { font-size: 15px; color: var(--text); line-height: 1.7; white-space: pre-wrap; word-break: break-word; font-weight: 400; }
     
     .ai-box { 
       background: linear-gradient(145deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.4)); 
-      border: 1px solid var(--blue-border); border-radius: var(--radius); padding: 20px; position: relative; overflow: hidden; margin-top: 16px; 
+      border: 1px solid var(--red-dim); border-radius: var(--radius); padding: 20px; position: relative; overflow: hidden; margin-top: 16px; 
     }
-    .ai-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--blue), transparent); }
-    .ai-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; color: var(--blue-hover); font-weight: 700; font-size: 14px; }
+    .ai-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--red), transparent); }
+    .ai-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; color: var(--red); font-weight: 800; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em;}
     .ai-content { font-size: 14px; line-height: 1.6; color: var(--text2); }
-    .ai-content strong, .ai-content b { color: var(--text); font-weight: 600; }
+    .ai-content strong, .ai-content b { color: var(--text); font-weight: 700; }
     .ai-content p { margin-bottom: 12px; }
     .ai-content ul, .ai-content ol { padding-left: 20px; margin-top: 8px; margin-bottom: 12px; }
     .ai-content li { margin-bottom: 4px; }
-    .ai-content table { width: 100%; border-collapse: collapse; margin: 16px 0; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: rgba(0,0,0,0.2); }
-    .ai-content th { text-align: left; padding: 12px 16px; background: var(--blue-dim); color: var(--blue-hover); font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--border); }
+    .ai-content table { width: 100%; border-collapse: collapse; margin: 16px 0; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: rgba(0,0,0,0.3); }
+    .ai-content th { text-align: left; padding: 12px 16px; background: rgba(225,29,72,0.15); color: var(--red); font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--border); }
     .ai-content td { padding: 12px 16px; border-bottom: 1px solid var(--border); color: var(--text2); font-size: 13px; }
     .ai-content tr:last-child td { border-bottom: none; }
     .ai-content tr:nth-child(even) { background: rgba(255,255,255,0.02); }
@@ -336,43 +343,44 @@
     .grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
     .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
     .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .grid5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
     .flex { display: flex; align-items: center; }
     .between { display: flex; align-items: center; justify-content: space-between; }
     .col { display: flex; flex-direction: column; }
     .sep { display: flex; align-items: center; gap: 16px; margin: 24px 0 16px; }
     .sep-line { flex: 1; height: 1px; background: var(--border); }
-    .sep-label { font-size: 12px; font-weight: 600; color: var(--text3); white-space: nowrap; text-transform: uppercase; letter-spacing: 0.1em; }
+    .sep-label { font-size: 12px; font-weight: 700; color: var(--text3); white-space: nowrap; text-transform: uppercase; letter-spacing: 0.1em; }
     
     .mobnav { 
-      position: fixed; bottom: 0; left: 0; right: 0; background: rgba(3, 7, 18, 0.9); 
+      position: fixed; bottom: 0; left: 0; right: 0; background: rgba(3, 7, 18, 0.95); 
       backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-top: 1px solid var(--border); 
       display: flex; justify-content: space-around; align-items: center; padding: 12px 8px 24px; z-index: 50; 
     }
     .mobbtn { 
       display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 12px; 
-      border-radius: 12px; font-size: 11px; font-weight: 600; cursor: pointer; border: none; background: transparent; color: var(--text3); transition: all 0.2s; 
+      border-radius: 12px; font-size: 11px; font-weight: 700; cursor: pointer; border: none; background: transparent; color: var(--text3); transition: all 0.2s; text-transform: uppercase;
     }
     .mobbtn.on { color: var(--blue-hover); background: var(--blue-dim); }
     .mobbtn svg { width: 20px; height: 20px; }
     
-    .stab { padding: 10px 16px; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid transparent; color: var(--text2); background: transparent; transition: all 0.2s; white-space: nowrap; }
+    .stab { padding: 10px 16px; border-radius: 10px; font-size: 13px; font-weight: 700; cursor: pointer; border: 1px solid transparent; color: var(--text2); background: transparent; transition: all 0.2s; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.05em; }
     .stab.on { background: var(--blue-dim); border-color: var(--blue-border); color: var(--blue-hover); }
-    .day-btn { padding: 8px 16px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface2); color: var(--text2); font-weight: 600; font-size: 13px; cursor: pointer; transition: all 0.2s; }
+    .day-btn { padding: 8px 16px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface2); color: var(--text2); font-weight: 700; font-size: 13px; cursor: pointer; transition: all 0.2s; text-transform: uppercase;}
     .day-btn:hover { border-color: var(--text3); color: var(--text); }
     .day-btn.on { background: var(--blue-dim); border-color: var(--blue-border); color: var(--blue-hover); box-shadow: inset 0 0 10px rgba(59, 130, 246, 0.1); }
     
     .cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 6px; }
-    .cal-day-label { font-size: 11px; font-weight: 600; color: var(--text3); text-align: center; padding: 4px 0; text-transform: uppercase; letter-spacing: 0.05em; }
+    .cal-day-label { font-size: 11px; font-weight: 700; color: var(--text3); text-align: center; padding: 4px 0; text-transform: uppercase; letter-spacing: 0.1em; }
     .cal-cell { 
       aspect-ratio: 1; border-radius: 8px; display: flex; align-items: center; justify-content: center; 
-      font-size: 12px; font-weight: 600; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; position: relative; 
+      font-size: 12px; font-weight: 700; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; position: relative; 
     }
     .cal-cell:hover:not(.empty) { border-color: var(--border2); transform: scale(1.05); }
     .cal-cell.empty { cursor: default; background: transparent; }
 
     @media (max-width: 768px) {
       .sidebar { display: none; }
-      .grid2, .grid3, .grid4 { grid-template-columns: 1fr; }
+      .grid2, .grid3, .grid4, .grid5 { grid-template-columns: 1fr; }
       .page { padding: 20px 20px 100px; }
       .topbar { padding: 16px 20px; }
       .card { padding: 20px; }
@@ -446,7 +454,7 @@ const callFridayAI = async (prompt, systemInstruction) => {
       });
       if (!response.ok) throw new Error(`API Error: ${response.status}`);
       const data = await response.json();
-      let rawText = data.choices?.[0]?.message?.content || "Maaf, Friday tidak bisa memproses permintaan ini saat ini.";
+      let rawText = data.choices?.[0]?.message?.content || "Maaf, sistem AI tidak merespon.";
       rawText = rawText.replace(/```html\n?/g, '').replace(/```\n?/g, '');
       return rawText;
     } catch (error) {
@@ -454,7 +462,7 @@ const callFridayAI = async (prompt, systemInstruction) => {
         await new Promise(res => setTimeout(res, delay));
         return attemptFetch(retries - 1, delay * 2);
       }
-      return `Koneksi ke Friday terputus. (Error: ${error.message})`;
+      return `Koneksi terputus. Tetap jalankan protokol. (Error: ${error.message})`;
     }
   };
   return await attemptFetch();
@@ -500,6 +508,7 @@ const I = ({ n, size = 18, c = '', style = {} }) => {
 const HABITS = [
   { id: 'nojunkfood', label: 'No Junkfood', color: '#10b981', emoji: <I n="warn" size={18} /> },
   { id: 'coding', label: 'Belajar Coding', color: '#6366f1', emoji: <I n="laptop" size={18} /> },
+  { id: 'toefl', label: 'Belajar TOEFL', color: '#8b5cf6', emoji: <I n="book" size={18} /> },
   { id: 'workout', label: 'Workout', color: '#f59e0b', emoji: <I n="fitness" size={18} /> },
   { id: 'nofap', label: 'NoFap', color: '#0ea5e9', emoji: <I n="lock" size={18} /> },
 ];
@@ -507,18 +516,22 @@ const HABITS = [
 const DEFAULT_ROADMAP = [
   {
     id: 'py_fund', title: 'Python Fundamentals', week: '1–2',
-    desc: 'Sintaks dasar, tipe data, loop, fungsi, OOP, file I/O.',
-    color: '#3b82f6', pl: 'https://www.youtube.com/watch?v=nLRL_NcnK-4',
+    desc: 'Sintaks dasar, tipe data, struktur data (List, Dict), dan fungsi untuk Data Analisis.',
+    color: '#3b82f6', pl: 'https://www.youtube.com/watch?v=iA8lLwmtKQM&list=PLZS-MHyEIRo59lUBwU-XHH7Ymmb04ffOY',
     videos: [
-      { id: 'pf01', title: '#01 — Setup Python & VS Code', url: 'https://www.youtube.com/watch?v=nLRL_NcnK-4' },
-      { id: 'pf02', title: '#02 — Variables, Types & Operators', url: '' },
-      { id: 'pf03', title: '#03 — Control Flow (if/else/loop)', url: '' },
-      { id: 'pf04', title: '#04 — Functions & Lambda', url: '' },
-      { id: 'pf05', title: '#05 — OOP: Class & Object', url: '' },
-      { id: 'pf06', title: '#06 — File I/O & Exception Handling', url: '' },
+      { id: 'pf01', title: '#01 — Install & Setup Python', url: 'https://www.youtube.com/watch?v=iA8lLwmtKQM&list=PLZS-MHyEIRo59lUBwU-XHH7Ymmb04ffOY&index=1' },
+      { id: 'pf02', title: '#02 — Variabel & Tipe Data Dasar', url: '' },
+      { id: 'pf03', title: '#03 — Operasi Aritmatika & Logika', url: '' },
+      { id: 'pf04', title: '#04 — Manipulasi String', url: '' },
+      { id: 'pf05', title: '#05 — Percabangan (If, Elif, Else)', url: '' },
+      { id: 'pf06', title: '#06 — Perulangan (For & While Loop)', url: '' },
+      { id: 'pf07', title: '#07 — List & Tuples (Data Collection)', url: '' },
+      { id: 'pf08', title: '#08 — Dictionary (Data Key-Value)', url: '' },
+      { id: 'pf09', title: '#09 — Pengenalan Fungsi (Def)', url: '' },
+      { id: 'pf10', title: '#10 — Import Module & Package', url: '' }
     ],
     casestudies: [
-      { id: 'pfcs1', title: 'Project: Data Calculator CLI', desc: 'Buat kalkulator statistik sederhana via terminal dengan OOP.' }
+      { id: 'pfcs1', title: 'Project: Ekstraksi Data Sederhana', desc: 'Gunakan List dan Dictionary untuk memanipulasi data dummy.' }
     ]
   },
   {
@@ -548,6 +561,63 @@ const DEFAULT_ROADMAP = [
     ],
     casestudies: [
       { id: 'vzcs1', title: 'Project: Customer Analytics Dashboard', desc: 'Dashboard interaktif data pelanggan dengan Plotly.' }
+    ]
+  }
+];
+
+const DEFAULT_TOEFL = [
+  {
+    id: 'toefl_reading', title: 'Reading Comprehension', week: '1-2',
+    desc: 'Fokus pada vocab, skimming, scanning, dan inference questions.',
+    color: '#8b5cf6',
+    items: [
+      { id: 'tr_01', title: 'Vocab Builder: Academic Words 1-100' },
+      { id: 'tr_02', title: 'Strategy: Skimming & Scanning' },
+      { id: 'tr_03', title: 'Practice: Factual Information Questions' },
+      { id: 'tr_04', title: 'Practice: Inference & Rhetorical' }
+    ]
+  },
+  {
+    id: 'toefl_listening', title: 'Listening Comprehension', week: '3-4',
+    desc: 'Memahami main idea, details, function, dan attitude dari percakapan akademik.',
+    color: '#3b82f6',
+    items: [
+      { id: 'tl_01', title: 'Note-taking Strategies' },
+      { id: 'tl_02', title: 'Practice: Campus Conversations' },
+      { id: 'tl_03', title: 'Practice: Academic Lectures (Science)' },
+      { id: 'tl_04', title: 'Practice: Academic Lectures (Arts/History)' }
+    ]
+  },
+  {
+    id: 'toefl_speaking', title: 'Speaking Section', week: '5-6',
+    desc: 'Independent & Integrated Speaking practice.',
+    color: '#10b981',
+    items: [
+      { id: 'ts_01', title: 'Task 1: Independent Speaking (Templates)' },
+      { id: 'ts_02', title: 'Task 2: Campus Situation' },
+      { id: 'ts_03', title: 'Task 3: Academic Reading & Listening' },
+      { id: 'ts_04', title: 'Task 4: Academic Lecture Summary' }
+    ]
+  },
+  {
+    id: 'toefl_writing', title: 'Writing Section', week: '7-8',
+    desc: 'Integrated & Academic Discussion (New Format).',
+    color: '#f59e0b',
+    items: [
+      { id: 'tw_01', title: 'Integrated Writing: Structuring the Essay' },
+      { id: 'tw_02', title: 'Integrated Writing: Practice Test' },
+      { id: 'tw_03', title: 'Academic Discussion: Expressing Opinion' },
+      { id: 'tw_04', title: 'Full Practice Test: Writing Section' }
+    ]
+  },
+  {
+    id: 'toefl_full', title: 'Full Practice Tests', week: '9-10',
+    desc: 'Simulasi ujian lengkap TOEFL iBT.',
+    color: '#f43f5e',
+    items: [
+      { id: 'tf_01', title: 'Full Mock Test 1 & Review' },
+      { id: 'tf_02', title: 'Full Mock Test 2 & Review' },
+      { id: 'tf_03', title: 'Target Score Evaluation' }
     ]
   }
 ];
@@ -629,15 +699,72 @@ const DEFAULT_WORKOUT = {
   },
 };
 
+const DEFAULT_TOEFL_SCHEDULE = {
+  'Senin': {
+    type: 'Reading Focus', focus: 'Membaca Cepat & Analisa',
+    tasks: [
+      { name: 'Hafal 20 Vocab Baru', detail: 'Gunakan Anki/Quizlet', time: '15m' },
+      { name: '1 Academic Passage', detail: 'Simulasi tes (18 menit)', time: '20m' },
+      { name: 'Evaluasi Jawaban', detail: 'Analisis letak kesalahan', time: '15m' }
+    ]
+  },
+  'Selasa': {
+    type: 'Listening Focus', focus: 'Note-taking & Pemahaman',
+    tasks: [
+      { name: '1 Conversation + 1 Lecture', detail: 'Dengar & catat poin penting', time: '20m' },
+      { name: 'Shadowing Latihan', detail: 'Tirukan intonasi speaker native', time: '15m' },
+      { name: 'Review Script', detail: 'Cari vocab yang tidak dikenali', time: '15m' }
+    ]
+  },
+  'Rabu': {
+    type: 'Speaking Focus', focus: 'Pronunciation & Struktur',
+    tasks: [
+      { name: 'Task 1 (Independent)', detail: 'Latihan 2 topik, rekam suara', time: '15m' },
+      { name: 'Task 2/3 (Integrated)', detail: 'Latihan baca-dengar-bicara', time: '20m' },
+      { name: 'Self-Evaluation', detail: 'Dengarkan ulang dan kritik rekaman', time: '10m' }
+    ]
+  },
+  'Kamis': {
+    type: 'Writing Focus', focus: 'Grammar & Kecepatan Ngetik',
+    tasks: [
+      { name: 'Academic Discussion', detail: 'Tulis 100+ kata dalam 10 menit', time: '15m' },
+      { name: 'Integrated Writing Outline', detail: 'Latihan membuat kerangka essay', time: '20m' },
+      { name: 'Grammar Review', detail: 'Perbaiki sentence structure di Grammarly', time: '15m' }
+    ]
+  },
+  'Jumat': {
+    type: 'Mixed Practice', focus: 'Target Kelemahan',
+    tasks: [
+      { name: 'Mini Test Bebas', detail: 'Gabungan bagian yang paling lemah', time: '30m' },
+      { name: 'Review Total Mingguan', detail: 'Evaluasi progress belajar minggu ini', time: '20m' }
+    ]
+  },
+  'Sabtu': {
+    type: 'Simulation', focus: 'Endurance Building',
+    tasks: [
+      { name: 'Full Section Test', detail: 'Kerjakan 1 section penuh secara intens', time: '60m' }
+    ]
+  },
+  'Minggu': {
+    type: 'Passive Immersion', focus: 'Rest & Enjoyment',
+    tasks: [
+      { name: 'Podcast/Movie (No Subtitle)', detail: 'Minimal 30 menit fokus mendengar', time: '30m' },
+      { name: 'Light Reading', detail: 'Artikel/Berita bahasa Inggris kesukaan', time: '15m' }
+    ]
+  },
+};
+
 const DAYS = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
-const TOTAL = 80; 
-const START = new Date(2026, 4, 10); 
+
+// MULAI 1 JUNI 2026 - 31 DESEMBER 2026 (214 HARI)
+const TOTAL = 214; 
+const START = new Date(2026, 5, 1); 
 START.setHours(0, 0, 0, 0);
 
 const MOODS = [
-  { key: 'good', label: 'Luar Biasa', color: 'var(--green)' },
-  { key: 'neutral', label: 'Normal', color: 'var(--blue-hover)' },
-  { key: 'bad', label: 'Berat', color: 'var(--red)' }
+  { key: 'good', label: 'Tak Terkalahkan', color: 'var(--green)' },
+  { key: 'neutral', label: 'Disiplin', color: 'var(--blue-hover)' },
+  { key: 'bad', label: 'Berdarah-darah', color: 'var(--red)' }
 ];
 
 const safeObj = (v) => (v && typeof v === 'object' && !Array.isArray(v)) ? v : {};
@@ -731,19 +858,19 @@ const DashboardCalendar = ({ dayN, total, habitLog }) => {
     <div className="card card-p" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <div className="between" style={{ marginBottom: 20 }}>
         <div>
-          <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--text)' }}>
+          <div style={{ fontSize: 16, fontWeight: 800, color: 'var(--text)', textTransform: 'uppercase' }}>
             {new Date(y, m, 1).toLocaleDateString('id-ID', { month: 'long', year: 'numeric' })}
           </div>
-          <div style={{ fontSize: 12, color: 'var(--text3)' }}>Hari ke-{dayN} dari {total} Protocol</div>
+          <div style={{ fontSize: 12, color: 'var(--text3)', fontWeight: 600 }}>Hari ke-{dayN} dari {total} Protocol</div>
         </div>
-        <div style={{ display: 'flex', gap: 12, fontSize: 11, color: 'var(--text2)', fontWeight: 500 }}>
-           <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}><span style={{ width: 10, height: 10, borderRadius: 3, background: 'var(--blue)' }}></span> Hari Ini</div>
+        <div style={{ display: 'flex', gap: 12, fontSize: 11, color: 'var(--text2)', fontWeight: 700, textTransform: 'uppercase' }}>
+           <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}><span style={{ width: 10, height: 10, borderRadius: 3, background: 'var(--red)' }}></span> Hari Ini</div>
            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}><span style={{ width: 10, height: 10, borderRadius: 3, background: 'var(--blue-dim)', border: '1px solid var(--blue-border)' }}></span> Perfect Day</div>
         </div>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '8px' }}>
-        {dayLabels.map(l => <div key={l} style={{ fontSize: 12, fontWeight: 600, color: 'var(--text3)', textAlign: 'center', paddingBottom: 8 }}>{l}</div>)}
+        {dayLabels.map(l => <div key={l} style={{ fontSize: 12, fontWeight: 700, color: 'var(--text3)', textAlign: 'center', paddingBottom: 8 }}>{l}</div>)}
         {cells.map((d, i) => {
           if (!d) return <div key={`e${i}`} />;
           const cellDate = new Date(y, m, d);
@@ -771,7 +898,7 @@ const DashboardCalendar = ({ dayN, total, habitLog }) => {
           let color = 'var(--text2)';
 
           if (status === 'today') {
-            bg = 'var(--blue)'; color = '#fff'; border = '1px solid var(--blue)';
+            bg = 'var(--red)'; color = '#fff'; border = '1px solid var(--red)';
           } else if (status === 'done-all') {
              bg = 'var(--blue-dim)'; color = 'var(--blue-hover)'; border = '1px solid var(--blue-border)';
           } else if (status === 'past') {
@@ -783,7 +910,7 @@ const DashboardCalendar = ({ dayN, total, habitLog }) => {
           }
 
           return (
-            <div key={i} style={{ aspectRatio: '1', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 600, borderRadius: '8px', background: bg, border: border, color: color, transition: 'all 0.2s', cursor: d ? 'pointer' : 'default', boxShadow: status === 'today' ? 'var(--blue-glow)' : 'none' }}>
+            <div key={i} style={{ aspectRatio: '1', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 700, borderRadius: '8px', background: bg, border: border, color: color, transition: 'all 0.2s', cursor: d ? 'pointer' : 'default', boxShadow: status === 'today' ? '0 0 15px rgba(225,29,72,0.4)' : 'none' }}>
               {d}
             </div>
           );
@@ -823,18 +950,18 @@ const AuthGate = ({ onLogin }) => {
   return (
     <div className="auth-wrap">
       <div className="auth-box fade-up">
-        <div className="auth-logo"><I n="cpu" size={28} c="pulse-glow" /></div>
-        <h1 className="auth-h1">Project Friday</h1>
-        <p className="auth-tagline">80 Day Discipline Protocol<br />10 Mei → 28 Jul 2026</p>
+        <div className="auth-logo red-glow"><I n="cpu" size={28} /></div>
+        <h1 className="auth-h1">Brutal Transformation</h1>
+        <p className="auth-tagline">214 Day Monk Mode Protocol<br />1 Jun → 31 Des 2026</p>
         <form className="auth-form" onSubmit={submit}>
           {err && <div style={{ background: 'var(--red-dim)', border: '1px solid rgba(244,63,94,0.3)', borderRadius: 12, padding: '12px 16px', fontSize: 13, color: 'var(--red)' }}>{err}</div>}
           <div>
             <span className="label">Akses ID Protokol</span>
             <input value={u} onChange={e => setU(e.target.value.replace(/[^a-zA-Z0-9_]/g, ''))} className="inp" placeholder="Masukkan ID..." maxLength={30} autoCapitalize="none" autoComplete="off" />
           </div>
-          <button type="submit" className="btn btn-blue btn-lg" style={{ width: '100%', marginTop: 8 }} disabled={loading || u.length < 3}>
-            {loading ? <span className="spin-it"><I n="loader" /></span> : <I n="sparkles" />}
-            {loading ? 'Inisiasi Protocol...' : 'Masuk'}
+          <button type="submit" className="btn btn-red btn-lg" style={{ width: '100%', marginTop: 8 }} disabled={loading || u.length < 3}>
+            {loading ? <span className="spin-it"><I n="loader" /></span> : <I n="lock" />}
+            {loading ? 'Inisiasi Protocol...' : 'Mulai Eksekusi'}
           </button>
         </form>
       </div>
@@ -851,7 +978,9 @@ const App = () => {
   const [wtOpen, setWtOpen] = useState(false);
   const [settOpen, setSettOpen] = useState(false);
   const [settTab, setSettTab] = useState('roadmap');
+  
   const [roadPhase, setRoadPhase] = useState(null);
+  const [toeflPhase, setToeflPhase] = useState(null);
 
   // States
   const [roadmap, setRoadmap, r1] = useSync('roadmap_data_v3', DEFAULT_ROADMAP, uid); 
@@ -864,8 +993,12 @@ const App = () => {
   const [diary, setDiary, r9] = useSync('diary', [], uid);
   const [habitLog, setHabitLog, r10] = useSync('habit_log', {}, uid);
   const [weeklyAnalysis, setWeeklyAnalysis, r13] = useSync('weekly_analysis', [], uid);
+  const [toeflData, setToeflData, r14] = useSync('toefl_data_v1', DEFAULT_TOEFL, uid);
+  const [toeflProg, setToeflProg, r15] = useSync('toefl_prog_v1', {}, uid);
+  const [toeflSched, setToeflSched, r16] = useSync('toefl_sched_v1', DEFAULT_TOEFL_SCHEDULE, uid);
+  const [toeflDaily, setToeflDaily, r17] = useSync('toefl_daily_v1', {}, uid);
 
-  const isReady = r1 && r2 && r3 && r4 && r6 && r7 && r8 && r9 && r10 && r13;
+  const isReady = r1 && r2 && r3 && r4 && r6 && r7 && r8 && r9 && r10 && r13 && r14 && r15 && r16 && r17;
 
   const today = new Date();
   const diffDays = Math.floor((today - START) / 86400000);
@@ -889,6 +1022,11 @@ const App = () => {
   const safeNJ = safeObj(streakNJ);
   const safeHL = safeObj(habitLog);
   const safeWeeklyAnalysis = Array.isArray(weeklyAnalysis) ? weeklyAnalysis : [];
+  
+  const safeToefl = Array.isArray(toeflData) ? toeflData : DEFAULT_TOEFL;
+  const safeToeflProg = safeObj(toeflProg);
+  const safeToeflSched = typeof toeflSched === 'object' && !Array.isArray(toeflSched) ? toeflSched : DEFAULT_TOEFL_SCHEDULE;
+  const safeToeflDaily = safeObj(toeflDaily);
 
   const ws = safeWO[dayName] || { type: 'Rest', focus: '-', exercises: [] };
   const exKey = ex => `${dateKey}-${dayName}-${ex.name}`;
@@ -911,6 +1049,10 @@ const App = () => {
   ]);
   const codeDone = allVids.filter(id => safeRprog[id]).length;
   const toggleRprog = id => setRprog(p => { const s = safeObj(p); return { ...s, [id]: !s[id] }; });
+  
+  const allToeflItems = safeToefl.flatMap(p => (p.items || []).map(i => i.id));
+  const toeflDone = allToeflItems.filter(id => safeToeflProg[id]).length;
+  const toggleToeflProg = id => setToeflProg(p => { const s = safeObj(p); return { ...s, [id]: !s[id] }; });
 
   const missions = useMemo(() => {
     const vids = []; const cases = [];
@@ -953,8 +1095,8 @@ const App = () => {
   
   if (!isReady) return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 16, background: 'var(--bg)' }}>
-      <div className="spin-it pulse-glow" style={{ borderRadius: '50%' }}><I n="loader" size={32} c="pulse-glow" style={{ color: 'var(--blue)' }} /></div>
-      <span style={{ fontSize: 14, color: 'var(--text2)', fontWeight: 500, letterSpacing: '0.1em' }}>MEMUAT DATA...</span>
+      <div className="spin-it red-glow" style={{ borderRadius: '50%' }}><I n="loader" size={32} style={{ color: 'var(--red)' }} /></div>
+      <span style={{ fontSize: 14, color: 'var(--text2)', fontWeight: 700, letterSpacing: '0.1em' }}>MENGINISIASI PROTOKOL...</span>
     </div>
   );
 
@@ -963,7 +1105,8 @@ const App = () => {
     { id: 'habits', n: 'habits', l: 'Daily Activity' },
     { id: 'diary', n: 'diary', l: 'Diary & AI' },
     { id: 'fitness', n: 'fitness', l: 'Fitness' },
-    { id: 'roadmap', n: 'map', l: 'Roadmap' }
+    { id: 'roadmap', n: 'map', l: 'Roadmap' },
+    { id: 'toefl', n: 'book', l: 'TOEFL Focus' }
   ];
 
   return (
@@ -972,7 +1115,7 @@ const App = () => {
         <div className={`sidebar${slim ? ' slim' : ''}`}>
           <div className="sb-top">
             <div className="sb-logo"><I n="cpu" size={20} /></div>
-            {!slim && (<div><div className="sb-title">Monk Mode</div><div className="sb-sub">Project Friday</div></div>)}
+            {!slim && (<div><div className="sb-title">Monk Mode</div><div className="sb-sub">Brutal Transformation</div></div>)}
           </div>
           <div className="sb-nav" style={{ marginTop: 10 }}>
             {NAV.map(n => (
@@ -1021,6 +1164,7 @@ const App = () => {
               safeRprog={safeRprog} toggleRprog={toggleRprog} codeDone={codeDone} allVids={allVids} setTab={setTab} 
               ws={ws} priEx={priEx} isExDone={isExDone} toggleEx={toggleEx} dayName={dayName} safeDiary={safeDiary} 
               safeHL={safeHL} setHabitLog={setHabitLog} dateKey={dateKey}
+              toeflDone={toeflDone} allToeflLength={allToeflItems.length}
             />
           )}
           {tab === 'habits' && (
@@ -1042,6 +1186,15 @@ const App = () => {
           {tab === 'roadmap' && (
             <RoadmapPage safeRM={safeRM} setRoadmap={setRoadmap} safeRprog={safeRprog} toggleRprog={toggleRprog} roadPhase={roadPhase} setRoadPhase={setRoadPhase} setSettTab={setSettTab} setSettOpen={setSettOpen} />
           )}
+          {tab === 'toefl' && (
+            <ToeflPage 
+              safeToefl={safeToefl} safeToeflProg={safeToeflProg} toggleToeflProg={toggleToeflProg} 
+              toeflPhase={toeflPhase} setToeflPhase={setToeflPhase}
+              toeflSched={safeToeflSched} setToeflSched={setToeflSched}
+              toeflDaily={safeToeflDaily} setToeflDaily={setToeflDaily}
+              dayName={dayName} dateKey={dateKey} setSettTab={setSettTab} setSettOpen={setSettOpen}
+            />
+          )}
         </div>
       </div>
 
@@ -1056,18 +1209,18 @@ const App = () => {
       )}
 
       {/* Full Timeline Modal */}
-      <Modal open={calOpen} onClose={() => setCalOpen(false)} title="Timeline — 80 Hari Protocol">
+      <Modal open={calOpen} onClose={() => setCalOpen(false)} title={`Timeline — ${TOTAL} Hari Protocol`}>
         <div style={{ marginBottom: 20, display: 'flex', gap: 16, fontSize: 13, color: 'var(--text2)', flexWrap: 'wrap' }}>
-          <span>Mulai: <b style={{ color: 'var(--text)' }}>10 Mei 2026</b></span>
+          <span>Mulai: <b style={{ color: 'var(--text)' }}>1 Juni 2026</b></span>
           <span>Selesai: <b style={{ color: 'var(--text)' }}>{end.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}</b></span>
-          <span>Hari ini: <b style={{ color: 'var(--blue-hover)' }}>Day {dayN}</b></span>
+          <span>Hari ini: <b style={{ color: 'var(--red)' }}>Day {dayN}</b></span>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(10,1fr)', gap: 8 }}>
           {Array.from({ length: TOTAL }).map((_, i) => {
             const d = i + 1; const past = d < dayN; const cur = d === dayN;
             const dt = new Date(START); dt.setDate(START.getDate() + i);
             return (
-              <div key={i} title={`Day ${d} — ${dt.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}`} style={{ aspectRatio: '1', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 700, background: cur ? 'var(--blue)' : past ? 'var(--blue-dim)' : 'var(--surface2)', color: cur ? '#fff' : past ? 'var(--blue-hover)' : 'var(--text3)', boxShadow: cur ? 'var(--blue-glow)' : 'none' }}>
+              <div key={i} title={`Day ${d} — ${dt.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}`} style={{ aspectRatio: '1', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 800, background: cur ? 'var(--red)' : past ? 'var(--blue-dim)' : 'var(--surface2)', color: cur ? '#fff' : past ? 'var(--blue-hover)' : 'var(--text3)', boxShadow: cur ? '0 0 10px rgba(225,29,72,0.5)' : 'none' }}>
                 {d}
               </div>
             );
@@ -1083,16 +1236,16 @@ const App = () => {
         </div>
         <form onSubmit={e => { e.preventDefault(); setWeight(p => ({ ...p, current: parseFloat(e.target.w.value) })); setWtOpen(false); }} style={{ display: 'flex', gap: 12 }}>
           <input name="w" type="number" step="0.1" placeholder={weight.current} className="inp" style={{ flex: 1, fontSize: 16, textAlign: 'center' }} required />
-          <button className="btn btn-blue" type="submit" style={{ padding: '0 24px' }}>Update</button>
+          <button className="btn btn-red" type="submit" style={{ padding: '0 24px' }}>Update</button>
         </form>
       </Modal>
 
-      <SettingsModal open={settOpen} onClose={() => setSettOpen(false)} tab={settTab} setTab={setSettTab} roadmap={safeRM} setRoadmap={setRoadmap} workout={safeWO} setWorkout={setWorkout} setRprog={setRprog} setExDone={setExDone} setHabitLog={setHabitLog} setDiary={setDiary} />
+      <SettingsModal open={settOpen} onClose={() => setSettOpen(false)} tab={settTab} setTab={setSettTab} roadmap={safeRM} setRoadmap={setRoadmap} workout={safeWO} setWorkout={setWorkout} toeflSched={safeToeflSched} setToeflSched={setToeflSched} setRprog={setRprog} setExDone={setExDone} setHabitLog={setHabitLog} setDiary={setDiary} setToeflProg={setToeflProg} />
     </div>
   );
 };
 
-const DashPage = ({ dayN, pct, weight, fp, nfStreak, njStreak, todayM, safeRprog, toggleRprog, codeDone, allVids, setTab, ws, priEx, isExDone, toggleEx, dayName, safeDiary, safeHL, setHabitLog, dateKey }) => {
+const DashPage = ({ dayN, pct, weight, fp, nfStreak, njStreak, todayM, safeRprog, toggleRprog, codeDone, allVids, setTab, ws, priEx, isExDone, toggleEx, dayName, safeDiary, safeHL, setHabitLog, dateKey, toeflDone, allToeflLength }) => {
   const lastEntry = safeDiary.length > 0 ? safeDiary[safeDiary.length - 1] : null;
   const todayHabits = safeObj(safeHL[dateKey]);
   const habitDone = HABITS.filter(h => todayHabits[h.id]).length;
@@ -1104,27 +1257,28 @@ const DashPage = ({ dayN, pct, weight, fp, nfStreak, njStreak, todayM, safeRprog
 
   return (
     <div className="fade-up" style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-      <div className="grid4">
+      <div className="grid5">
         {[
           { l: 'NoFap Streak', v: `${nfStreak} hari`, c: 'var(--blue-hover)' },
           { l: 'No Junkfood', v: `${njStreak} hari`, c: 'var(--green)' },
           { l: 'Coding', v: `${codeDone}/${allVids.length}`, c: 'var(--text)' },
+          { l: 'TOEFL', v: `${toeflDone}/${allToeflLength}`, c: 'var(--purple)' },
           { l: 'Berat', v: `${weight.current}kg`, c: 'var(--text)' }
         ].map(s => (
           <div key={s.l} className="card card-p" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <div style={{ fontSize: 11, fontWeight: 600, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>{s.l}</div>
+            <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>{s.l}</div>
             <div style={{ fontSize: 28, fontWeight: 800, color: s.c, letterSpacing: '-0.02em', lineHeight: 1 }}>{s.v}</div>
           </div>
         ))}
       </div>
 
       <div style={{display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: 16}}>
-        <div className="card card-p" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+        <div className="card card-p" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', borderColor: 'var(--red-dim)' }}>
           <div className="between" style={{ marginBottom: 14 }}>
-            <span style={{ fontSize: 15, fontWeight: 600, color: 'var(--text2)' }}>Protocol Progress — Day {dayN}</span>
-            <span style={{ fontSize: 18, fontWeight: 800, color: 'var(--blue-hover)' }}>{pct}%</span>
+            <span style={{ fontSize: 15, fontWeight: 800, color: 'var(--text2)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Brutal Transformation — Day {dayN}</span>
+            <span style={{ fontSize: 20, fontWeight: 800, color: 'var(--red)' }}>{pct}%</span>
           </div>
-          <PBar cur={dayN} tot={TOTAL} />
+          <PBar cur={dayN} tot={TOTAL} cls="r" />
         </div>
         
         {/* Prominent Calendar on Dashboard */}
@@ -1135,10 +1289,10 @@ const DashPage = ({ dayN, pct, weight, fp, nfStreak, njStreak, todayM, safeRprog
         <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           <div className="between">
             <div>
-              <div style={{ fontSize: 11, fontWeight: 600, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>Daily Activity</div>
-              <div style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)' }}>Habits Hari Ini</div>
+              <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>Daily Activity</div>
+              <div style={{ fontSize: 18, fontWeight: 800, color: 'var(--text)' }}>Habits Hari Ini</div>
             </div>
-            <span style={{ fontSize: 14, color: 'var(--text2)', fontWeight: 600 }}>{habitDone}/{HABITS.length}</span>
+            <span style={{ fontSize: 14, color: 'var(--text2)', fontWeight: 800 }}>{habitDone}/{HABITS.length}</span>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {HABITS.map(h => {
@@ -1146,8 +1300,8 @@ const DashPage = ({ dayN, pct, weight, fp, nfStreak, njStreak, todayM, safeRprog
               return (
                 <div key={h.id} className={`habit-card${done ? ' done' : ''}`} onClick={() => toggleH(h.id)}>
                   <div className="habit-check">{done && <I n="check" size={14} />}</div>
-                  <span style={{ display: 'flex', alignItems: 'center', gap: 12, fontSize: 14, fontWeight: 600, color: done ? 'var(--text2)' : 'var(--text)', flex: 1 }}>
-                    {h.emoji} {h.label}
+                  <span style={{ display: 'flex', alignItems: 'center', gap: 12, fontSize: 14, fontWeight: 700, color: done ? 'var(--text2)' : 'var(--text)', flex: 1 }}>
+                    <span style={{ color: done ? h.color : 'inherit' }}>{h.emoji}</span> {h.label}
                   </span>
                 </div>
               );
@@ -1159,10 +1313,10 @@ const DashPage = ({ dayN, pct, weight, fp, nfStreak, njStreak, todayM, safeRprog
         <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           <div className="between">
             <div>
-              <div style={{ fontSize: 11, fontWeight: 600, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>{ws.type}</div>
-              <div style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)' }}>{dayName} — {ws.focus}</div>
+              <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>{ws.type}</div>
+              <div style={{ fontSize: 18, fontWeight: 800, color: 'var(--text)' }}>{dayName} — {ws.focus}</div>
             </div>
-            <span style={{ fontSize: 14, color: 'var(--text2)', fontWeight: 600 }}>{fp.done}/{fp.total}</span>
+            <span style={{ fontSize: 14, color: 'var(--text2)', fontWeight: 800 }}>{fp.done}/{fp.total}</span>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {priEx.slice(0, 4).map((ex, i) => {
@@ -1182,12 +1336,12 @@ const DashPage = ({ dayN, pct, weight, fp, nfStreak, njStreak, todayM, safeRprog
       <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
         <div className="between">
           <div>
-            <div style={{ fontSize: 11, fontWeight: 600, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>Python Data Analytics — Day {dayN}</div>
-            <div style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)' }}>Target Coding Hari Ini</div>
+            <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>Python Data Analytics — Day {dayN}</div>
+            <div style={{ fontSize: 18, fontWeight: 800, color: 'var(--text)' }}>Target Coding Hari Ini</div>
           </div>
-          <span style={{ fontSize: 14, color: 'var(--text2)', fontWeight: 600 }}>{codeDone}/{allVids.length}</span>
+          <span style={{ fontSize: 14, color: 'var(--text2)', fontWeight: 800 }}>{codeDone}/{allVids.length}</span>
         </div>
-        {todayM.length === 0 && <div style={{ fontSize: 14, color: 'var(--text2)', padding: '10px 0' }}>Target hari ini sudah selesai.</div>}
+        {todayM.length === 0 && <div style={{ fontSize: 14, color: 'var(--text2)', padding: '10px 0' }}>Target hari ini sudah selesai. Lanjutkan progres di luar modul.</div>}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
           {todayM.map(m => {
             const done = safeRprog[m.id];
@@ -1200,8 +1354,8 @@ const DashPage = ({ dayN, pct, weight, fp, nfStreak, njStreak, todayM, safeRprog
                   <div style={{ display: 'flex', gap: 6, marginBottom: 6 }}>
                     <span className={`tag ${m.type === 'video' ? 'tag-blue' : 'tag-dim'}`}>{m.type === 'video' ? 'Video' : 'Case'}</span>
                   </div>
-                  <div style={{ fontSize: 14, fontWeight: 600, color: done ? 'var(--text3)' : 'var(--text)', textDecoration: done ? 'line-through' : 'none', lineHeight: 1.4 }}>{m.title}</div>
-                  {m.url && <a href={m.url} target="_blank" rel="noopener" style={{ fontSize: 12, color: 'var(--blue-hover)', marginTop: 6, display: 'inline-flex', alignItems: 'center', gap: 4, textDecoration: 'none', fontWeight: 500 }} onClick={e => e.stopPropagation()}><I n="ext" size={12} /> Buka Link</a>}
+                  <div style={{ fontSize: 14, fontWeight: 700, color: done ? 'var(--text3)' : 'var(--text)', textDecoration: done ? 'line-through' : 'none', lineHeight: 1.4 }}>{m.title}</div>
+                  {m.url && <a href={m.url} target="_blank" rel="noopener" style={{ fontSize: 12, color: 'var(--blue-hover)', marginTop: 6, display: 'inline-flex', alignItems: 'center', gap: 4, textDecoration: 'none', fontWeight: 600 }} onClick={e => e.stopPropagation()}><I n="ext" size={12} /> Buka Link</a>}
                 </div>
               </div>
             );
@@ -1212,8 +1366,8 @@ const DashPage = ({ dayN, pct, weight, fp, nfStreak, njStreak, todayM, safeRprog
       {lastEntry && (
         <div className="card card-p" style={{ cursor: 'pointer' }} onClick={() => setTab('diary')}>
           <div className="between" style={{ marginBottom: 12 }}>
-            <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Entri Diary Terakhir</span>
-            <span style={{ fontSize: 13, color: 'var(--text2)', fontWeight: 500 }}>{lastEntry.date}</span>
+            <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Entri Diary Terakhir</span>
+            <span style={{ fontSize: 13, color: 'var(--text2)', fontWeight: 600 }}>{lastEntry.date}</span>
           </div>
           <div style={{ fontSize: 15, color: 'var(--text)', lineHeight: 1.7, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{lastEntry.text}</div>
         </div>
@@ -1263,13 +1417,13 @@ const HabitsPage = ({ habitLog, setHabitLog, today, dateKey, fmtDate }) => {
       <div className="between" style={{ flexWrap: 'wrap', gap: 16 }}>
         <div>
           <div style={{ fontSize: 24, fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.02em', marginBottom: 4 }}>Daily Activity</div>
-          <div style={{ fontSize: 14, color: 'var(--text2)', fontWeight: 500 }}>{fmtDate} — {doneTodayCount}/{HABITS.length} selesai hari ini</div>
+          <div style={{ fontSize: 14, color: 'var(--text2)', fontWeight: 600 }}>{fmtDate} — {doneTodayCount}/{HABITS.length} selesai hari ini</div>
         </div>
         <div style={{ display: 'flex', gap: 0, background: 'var(--surface)', borderRadius: 12, border: '1px solid var(--border)', overflow: 'hidden' }}>
           {[
             { id: 'today', l: 'Hari Ini' }, { id: 'calendar', l: 'Kalender' }, { id: 'chart', l: 'Grafik' }
           ].map((v, vi) => (
-            <button key={v.id} onClick={() => setView(v.id)} style={{ padding: '10px 18px', border: 'none', borderRight: vi < 2 ? '1px solid var(--border)' : 'none', background: view === v.id ? 'var(--blue-dim)' : 'transparent', color: view === v.id ? 'var(--blue-hover)' : 'var(--text2)', fontWeight: 600, fontSize: 14, cursor: 'pointer', transition: 'all 0.2s' }}>
+            <button key={v.id} onClick={() => setView(v.id)} style={{ padding: '10px 18px', border: 'none', borderRight: vi < 2 ? '1px solid var(--border)' : 'none', background: view === v.id ? 'var(--blue-dim)' : 'transparent', color: view === v.id ? 'var(--blue-hover)' : 'var(--text2)', fontWeight: 700, fontSize: 13, cursor: 'pointer', transition: 'all 0.2s', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
               {v.l}
             </button>
           ))}
@@ -1280,10 +1434,10 @@ const HabitsPage = ({ habitLog, setHabitLog, today, dateKey, fmtDate }) => {
         <div style={{ maxWidth: 600, display: 'flex', flexDirection: 'column', gap: 16 }}>
           <div className="card card-p">
             <div className="between" style={{ marginBottom: 20 }}>
-              <div style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)' }}>Checklist Hari Ini</div>
+              <div style={{ fontSize: 18, fontWeight: 800, color: 'var(--text)' }}>Checklist Hari Ini</div>
               <div style={{ textAlign: 'center' }}>
                 <div style={{ fontSize: 48, fontWeight: 800, color: 'var(--text)', lineHeight: 1 }}>{doneTodayCount}</div>
-                <div style={{ fontSize: 13, color: 'var(--text3)', fontWeight: 600 }}>/ {HABITS.length}</div>
+                <div style={{ fontSize: 13, color: 'var(--text3)', fontWeight: 700 }}>/ {HABITS.length}</div>
               </div>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 20 }}>
@@ -1295,10 +1449,10 @@ const HabitsPage = ({ habitLog, setHabitLog, today, dateKey, fmtDate }) => {
                       {done && <I n="check" size={14} />}
                     </div>
                     <div style={{ flex: 1 }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 16, fontWeight: 600, color: done ? h.color : 'var(--text)' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 16, fontWeight: 700, color: done ? h.color : 'var(--text)' }}>
                         <span style={{ color: done ? h.color : 'var(--text2)' }}>{h.emoji}</span> {h.label}
                       </div>
-                      <div style={{ fontSize: 12, color: 'var(--text3)', marginTop: 6, fontWeight: 500 }}>
+                      <div style={{ fontSize: 12, color: 'var(--text3)', marginTop: 6, fontWeight: 600 }}>
                         Streak: <span style={{ color: done ? h.color : 'var(--text2)' }}>{getStreak(h.id)} hari</span> · {getRate(h.id)}% konsistensi
                       </div>
                     </div>
@@ -1315,12 +1469,12 @@ const HabitsPage = ({ habitLog, setHabitLog, today, dateKey, fmtDate }) => {
               return (
                 <div key={h.id} className="card card-p" style={{ cursor: 'pointer', borderColor: todayData[h.id] ? h.color + '40' : 'var(--border)', background: todayData[h.id] ? h.color + '0a' : 'var(--surface)' }} onClick={() => { setSelHabit(h.id); setView('calendar'); }}>
                   <div style={{ fontSize: 26, marginBottom: 10, color: h.color }}>{h.emoji}</div>
-                  <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)', marginBottom: 4 }}>{h.label}</div>
-                  <div style={{ fontSize: 12, color: 'var(--text2)', marginBottom: 12, fontWeight: 500 }}>Streak: <b style={{ color: h.color }}>{streak} hari</b></div>
+                  <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>{h.label}</div>
+                  <div style={{ fontSize: 12, color: 'var(--text2)', marginBottom: 12, fontWeight: 600 }}>Streak: <b style={{ color: h.color }}>{streak} hari</b></div>
                   <div style={{ height: 6, background: 'var(--surface-solid)', borderRadius: 99, overflow: 'hidden' }}>
                     <div style={{ height: '100%', width: `${rate}%`, background: h.color, borderRadius: 99 }} />
                   </div>
-                  <div style={{ fontSize: 11, color: 'var(--text3)', marginTop: 8, fontWeight: 600 }}>{rate}% dalam 30 hari</div>
+                  <div style={{ fontSize: 11, color: 'var(--text3)', marginTop: 8, fontWeight: 700 }}>{rate}% dalam 30 hari</div>
                 </div>
               );
             })}
@@ -1332,13 +1486,13 @@ const HabitsPage = ({ habitLog, setHabitLog, today, dateKey, fmtDate }) => {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20, maxWidth: 720 }}>
           <div style={{ display: 'flex', gap: 10, overflowX: 'auto', paddingBottom: 8 }}>
             {HABITS.map(h => (
-              <button key={h.id} onClick={() => setSelHabit(h.id)} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 20px', borderRadius: 12, border: `1px solid ${selHabit === h.id ? h.color + '50' : 'var(--border)'}`, background: selHabit === h.id ? h.color + '15' : 'var(--surface)', color: selHabit === h.id ? h.color : 'var(--text2)', fontWeight: 600, fontSize: 14, cursor: 'pointer', transition: 'all 0.2s', flexShrink: 0 }}>
+              <button key={h.id} onClick={() => setSelHabit(h.id)} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 20px', borderRadius: 12, border: `1px solid ${selHabit === h.id ? h.color + '50' : 'var(--border)'}`, background: selHabit === h.id ? h.color + '15' : 'var(--surface)', color: selHabit === h.id ? h.color : 'var(--text2)', fontWeight: 700, fontSize: 14, cursor: 'pointer', transition: 'all 0.2s', flexShrink: 0 }}>
                 {h.emoji} {h.label}
               </button>
             ))}
           </div>
           <div className="between">
-            <div style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)' }}>
+            <div style={{ fontSize: 18, fontWeight: 800, color: 'var(--text)' }}>
               {new Date(calMonth.y, calMonth.m, 1).toLocaleDateString('id-ID', { month: 'long', year: 'numeric' })}
             </div>
             <div style={{ display: 'flex', gap: 8 }}>
@@ -1362,10 +1516,10 @@ const HabitsPage = ({ habitLog, setHabitLog, today, dateKey, fmtDate }) => {
               <div className="card">
                 <div className="between" style={{ marginBottom: 20 }}>
                   <div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 18, fontWeight: 700, color: 'var(--text)' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 18, fontWeight: 800, color: 'var(--text)' }}>
                       <span style={{ color: activeHabit.color }}>{activeHabit.emoji}</span> {activeHabit.label}
                     </div>
-                    <div style={{ fontSize: 13, color: 'var(--text2)', marginTop: 6 }}>
+                    <div style={{ fontSize: 13, color: 'var(--text2)', marginTop: 6, fontWeight: 600 }}>
                       {doneCount} hari selesai bulan ini · Streak: {getStreak(activeHabit.id)} hari
                     </div>
                   </div>
@@ -1396,18 +1550,18 @@ const HabitsPage = ({ habitLog, setHabitLog, today, dateKey, fmtDate }) => {
       {view === 'chart' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20, maxWidth: 800 }}>
           <div className="card">
-            <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--text)', marginBottom: 6 }}>Tingkat Konsistensi (30 Hari)</div>
+            <div style={{ fontSize: 16, fontWeight: 800, color: 'var(--text)', marginBottom: 6 }}>Tingkat Konsistensi (30 Hari)</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginTop: 20 }}>
               {HABITS.map(h => {
                 const rate = getRate(h.id);
                 return (
                   <div key={h.id} style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
                     <div style={{ width: 32, textAlign: 'center', fontSize: 20, flexShrink: 0, color: h.color }}>{h.emoji}</div>
-                    <div style={{ width: 120, fontSize: 13, color: 'var(--text)', fontWeight: 600, flexShrink: 0 }}>{h.label}</div>
+                    <div style={{ width: 120, fontSize: 13, color: 'var(--text)', fontWeight: 700, flexShrink: 0 }}>{h.label}</div>
                     <div style={{ flex: 1, height: 24, background: 'var(--surface-solid)', borderRadius: 8, overflow: 'hidden', border: '1px solid var(--border)' }}>
                       <div style={{ width: `${rate}%`, height: '100%', background: h.color, borderRadius: 8, opacity: 0.9 }} />
                     </div>
-                    <div style={{ width: 50, fontSize: 15, fontWeight: 700, color: h.color, flexShrink: 0, textAlign: 'right' }}>{rate}%</div>
+                    <div style={{ width: 50, fontSize: 15, fontWeight: 800, color: h.color, flexShrink: 0, textAlign: 'right' }}>{rate}%</div>
                   </div>
                 );
               })}
@@ -1452,26 +1606,26 @@ const DiaryPage = ({ diary, setDiary, dateKey, fmtDate, safeHL, safeExDone, toda
   const askFridayDaily = async () => {
     if (!text.trim()) { alert('Tulis sesuatu dulu agar Friday bisa menganalisisnya.'); return; }
     setAiLoading(true);
-    const prompt = `Ini adalah tulisan diary saya hari ini: "${text}". Mood saya: ${mood}. Progres hari ini: Roadmap Coding (${codeDone}/${totalCode} selesai secara keseluruhan). Tolong baca dan pahami isi diary saya, berikan tanggapan yang empatik dan personal layaknya asisten Friday. Setelah itu, buatkan tabel HTML sederhana (gunakan <table>, <tr>, <th>, <td>) yang merangkum 'Fokus Utama' dan 'Saran Besok' menyertakan hasil evaluasi atas isi diary, roadmap coding, dan habit harian (No Junkfood, Belajar Coding, Workout, NoFap).`;
-    const sysIns = "Kamu adalah Friday, AI asisten personal cerdas. Output HANYA boleh dalam format HTML murni (<b>, <i>, <p>, <table>, <ul>, dsb). DILARANG KERAS menggunakan format Markdown seperti **, ###, atau asteris. Gunakan bahasa Indonesia yang elegan, profesional, dan empatik terhadap cerita pengguna.";
+    const prompt = `Ini adalah tulisan diary saya hari ini: "${text}". Mood saya: ${mood}. Progres hari ini: Roadmap Coding (${codeDone}/${totalCode} selesai secara keseluruhan). Tolong baca dan pahami isi diary saya, lalu berikan tanggapan layaknya AI Asisten Monk Mode yang bernama "Friday". Ingat fokus saya adalah "Brutal Transformation" selama 214 hari ke depan. Jangan memanjakan saya, bersikaplah logis, sangat disiplin, namun tetap solutif. Setelah memberi tanggapan, buatkan tabel HTML sederhana (gunakan <table>, <tr>, <th>, <td>) yang merangkum 'Kelemahan Hari Ini' dan 'Tindakan Besok' menyertakan hasil evaluasi atas isi diary, progres belajar, dan habit harian (No Junkfood, Belajar Coding, Belajar TOEFL, Workout, NoFap).`;
+    const sysIns = "Kamu adalah Friday, AI asisten personal Monk Mode yang dingin, analitis, logis, dan menjunjung tinggi disiplin ekstrem (Brutal Transformation). Output HANYA boleh dalam format HTML murni (<b>, <i>, <p>, <table>, <ul>, dsb). DILARANG KERAS menggunakan format Markdown seperti **, ###, atau asteris. Gunakan bahasa Indonesia yang formal, tegas, tajam namun tetap membangun.";
     const response = await callFridayAI(prompt, sysIns);
     setAiDailyDraft(response); setAiLoading(false);
   };
 
   const generateWeeklyAnalysis = async () => {
     setAiLoading(true);
-    let reportData = "Data 7 Hari Terakhir:\n\n";
+    let reportData = "Data 7 Hari Terakhir (Fokus: Brutal Transformation):\n\n";
     for (let i = 0; i < 7; i++) {
       const d = new Date(today); d.setDate(today.getDate() - i); const k = d.toISOString().split('T')[0];
       const dayHabits = safeHL[k] ? HABITS.filter(h => safeHL[k][h.id]).length : 0;
       const diaryEn = diary.find(e => e.date === k);
       const moodText = diaryEn ? diaryEn.mood : 'Tidak ada catatan mood';
       const diaryText = diaryEn ? diaryEn.text : 'Tidak ada tulisan diary hari ini';
-      reportData += `- Tanggal: ${k} | Habits (No Junkfood, Coding, Workout, NoFap): ${dayHabits}/${HABITS.length} | Mood: ${moodText} | Isi Diary: "${diaryText}"\n`;
+      reportData += `- Tanggal: ${k} | Habits (${HABITS.map(h=>h.label).join(', ')}): ${dayHabits}/${HABITS.length} | Mood: ${moodText} | Isi Diary: "${diaryText}"\n`;
     }
-    reportData += `\nProgres Keseluruhan Roadmap Python: ${codeDone} dari ${totalCode} materi telah diselesaikan.\n\n`;
-    reportData += "Tolong baca curhatan diary saya di atas. Buat laporan mingguan menggunakan tabel HTML (wajib ada <table>, <tr>, <th>, <td>) untuk merangkum performa per hari. Berikan insight mendalam mengenai pola tulisan diary saya, konsistensi 4 kebiasaan utama, progres roadmap coding, dan tren emosi saya di bawah tabel tersebut. Ingat, hanya gunakan tag HTML murni, JANGAN gunakan Markdown sama sekali.";
-    const sysIns = "Kamu adalah Friday, AI asisten personal. Kamu pandai menganalisa jurnal dan memberikan feedback membangun. Output WAJIB dalam format HTML murni. DILARANG menggunakan Markdown (seperti **, ###). Gunakan tabel HTML untuk menampilkan data agar rapi.";
+    reportData += `\nProgres Keseluruhan Roadmap Belajar: ${codeDone} dari ${totalCode} materi telah diselesaikan.\n\n`;
+    reportData += "Tolong evaluasi secara ketat dan tanpa basa-basi data jurnal saya di atas. Apakah saya sudah layak disebut menjalankan Monk Mode? Buat laporan mingguan menggunakan tabel HTML (wajib ada <table>, <tr>, <th>, <td>) untuk merangkum performa per hari. Berikan insight mendalam mengenai pola tulisan diary saya, kelemahan disiplin, konsistensi habit utama, progres belajar, dan tren emosi saya di bawah tabel tersebut. Ingat, hanya gunakan tag HTML murni, JANGAN gunakan Markdown sama sekali.";
+    const sysIns = "Kamu adalah Friday, AI asisten Monk Mode. Kamu pandai menganalisa kelemahan dan memberikan teguran serta feedback rasional untuk Brutal Transformation. Output WAJIB dalam format HTML murni. DILARANG menggunakan Markdown (seperti **, ###). Gunakan tabel HTML untuk menampilkan data agar terstruktur dan profesional.";
     const response = await callFridayAI(reportData, sysIns);
     const newAnalysis = { id: Date.now(), date: dateKey, text: response };
     setWeeklyAnalysis(p => Array.isArray(p) ? [newAnalysis, ...p] : [newAnalysis]);
@@ -1481,20 +1635,20 @@ const DiaryPage = ({ diary, setDiary, dateKey, fmtDate, safeHL, safeExDone, toda
   const sorted = [...diary].reverse();
   const visible = showAll ? sorted : sorted.slice(0, 10);
   const moodColors = { good: 'var(--green)', neutral: 'var(--blue-hover)', bad: 'var(--red)' };
-  const moodLabel = { good: 'Luar Biasa', neutral: 'Normal', bad: 'Berat' };
+  const moodLabel = { good: 'Tak Terkalahkan', neutral: 'Disiplin', bad: 'Berdarah-darah' };
 
   return (
     <div className="fade-up" style={{ display: 'flex', flexDirection: 'column', gap: 20, maxWidth: 800, margin: '0 auto' }}>
       <div className="between" style={{ flexWrap: 'wrap', gap: 16 }}>
         <div>
           <div style={{ fontSize: 24, fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.02em', marginBottom: 4, display: 'flex', alignItems: 'center', gap: 10 }}>
-            Diary & Friday AI <I n="sparkles" size={24} style={{ color: 'var(--blue)' }} />
+            Diary & Friday AI <I n="sparkles" size={24} style={{ color: 'var(--red)' }} />
           </div>
-          <div style={{ fontSize: 14, color: 'var(--text2)' }}>Refleksi Harian & Analisis Cerdas</div>
+          <div style={{ fontSize: 14, color: 'var(--text2)', fontWeight: 600 }}>Refleksi Brutal & Analisis Cerdas</div>
         </div>
         <div style={{ display: 'flex', gap: 0, background: 'var(--surface)', borderRadius: 12, border: '1px solid var(--border)', overflow: 'hidden' }}>
           {[ { id: 'daily', l: 'Catatan Harian' }, { id: 'weekly', l: 'Analisis Mingguan' } ].map((v, vi) => (
-            <button key={v.id} onClick={() => setViewTab(v.id)} style={{ padding: '10px 18px', border: 'none', borderRight: vi === 0 ? '1px solid var(--border)' : 'none', background: viewTab === v.id ? 'var(--blue-dim)' : 'transparent', color: viewTab === v.id ? 'var(--blue-hover)' : 'var(--text2)', fontWeight: 600, fontSize: 14, cursor: 'pointer', transition: 'all 0.2s' }}>
+            <button key={v.id} onClick={() => setViewTab(v.id)} style={{ padding: '10px 18px', border: 'none', borderRight: vi === 0 ? '1px solid var(--border)' : 'none', background: viewTab === v.id ? 'var(--blue-dim)' : 'transparent', color: viewTab === v.id ? 'var(--blue-hover)' : 'var(--text2)', fontWeight: 700, fontSize: 13, cursor: 'pointer', transition: 'all 0.2s', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
               {v.l}
             </button>
           ))}
@@ -1504,15 +1658,15 @@ const DiaryPage = ({ diary, setDiary, dateKey, fmtDate, safeHL, safeExDone, toda
       {viewTab === 'daily' && (
         <>
           <div className="between">
-            <div style={{ fontSize: 14, color: 'var(--text3)', fontWeight: 600 }}>{diary.length} Entri Tersimpan</div>
-            <button className="btn btn-blue" onClick={openNew}><I n="pencil" />{todayEntry ? 'Edit Hari Ini' : 'Tulis Hari Ini'}</button>
+            <div style={{ fontSize: 14, color: 'var(--text3)', fontWeight: 700 }}>{diary.length} Entri Tersimpan</div>
+            <button className="btn btn-red" onClick={openNew}><I n="pencil" />{todayEntry ? 'Edit Hari Ini' : 'Tulis Hari Ini'}</button>
           </div>
           
           {!todayEntry && (
             <div className="card" style={{ borderStyle: 'dashed', textAlign: 'center', padding: '40px 20px', background: 'var(--surface2)' }}>
               <I n="diary" size={40} style={{ color: 'var(--text3)', marginBottom: 16 }} />
-              <div style={{ fontSize: 16, color: 'var(--text2)', marginBottom: 16, fontWeight: 500 }}>Belum ada refleksi untuk hari ini.</div>
-              <button className="btn btn-blue" onClick={openNew}><I n="pencil" />Mulai Menulis</button>
+              <div style={{ fontSize: 16, color: 'var(--text2)', marginBottom: 16, fontWeight: 600 }}>Belum ada refleksi untuk hari ini. Jangan lari dari evaluasi.</div>
+              <button className="btn btn-red" onClick={openNew}><I n="pencil" />Mulai Evaluasi Diri</button>
             </div>
           )}
           
@@ -1523,7 +1677,7 @@ const DiaryPage = ({ diary, setDiary, dateKey, fmtDate, safeHL, safeExDone, toda
                   <span className="diary-date" style={{ marginBottom: 0, fontSize: 14 }}>{e.dateLabel || e.date}</span>
                   {e.date === dateKey && <span className="tag tag-blue">Hari ini</span>}
                   {e.mood && (
-                    <span style={{ padding: '4px 10px', borderRadius: 6, fontSize: 11, fontWeight: 700, background: `${moodColors[e.mood]}15`, color: moodColors[e.mood], border: `1px solid ${moodColors[e.mood]}30` }}>
+                    <span style={{ padding: '4px 10px', borderRadius: 6, fontSize: 11, fontWeight: 800, background: `${moodColors[e.mood]}15`, color: moodColors[e.mood], border: `1px solid ${moodColors[e.mood]}30` }}>
                       {moodLabel[e.mood]}
                     </span>
                   )}
@@ -1536,7 +1690,7 @@ const DiaryPage = ({ diary, setDiary, dateKey, fmtDate, safeHL, safeExDone, toda
               <div className="diary-text">{e.text}</div>
               {e.aiAnalysis && (
                 <div className="ai-box">
-                  <div className="ai-header"><I n="sparkles" size={16} /> Friday's Insight</div>
+                  <div className="ai-header"><I n="cpu" size={16} /> Friday's Brutal Insight</div>
                   <div className="ai-content">{formatAIResponse(e.aiAnalysis)}</div>
                 </div>
               )}
@@ -1551,59 +1705,59 @@ const DiaryPage = ({ diary, setDiary, dateKey, fmtDate, safeHL, safeExDone, toda
       {viewTab === 'weekly' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
           <div className="card card-p" style={{ textAlign: 'center', background: 'linear-gradient(145deg, rgba(15, 23, 42, 0.6), rgba(30, 41, 59, 0.2))' }}>
-            <I n="cpu" size={48} style={{ color: 'var(--blue)', marginBottom: 16 }} c="pulse-glow" />
-            <h3 style={{ fontSize: 20, fontWeight: 800, marginBottom: 8 }}>Evaluasi Mingguan Bersama Friday</h3>
-            <p style={{ fontSize: 14, color: 'var(--text2)', marginBottom: 20, maxWidth: 500, margin: '0 auto 20px' }}>
-              Friday akan menganalisis data aktivitas, 4 kebiasaan utama, progres roadmap coding, dan jurnal Anda selama 7 hari terakhir.
+            <I n="cpu" size={48} style={{ color: 'var(--red)' }} c="pulse-glow red-glow" style={{ marginBottom: 16 }} />
+            <h3 style={{ fontSize: 20, fontWeight: 800, marginBottom: 8, textTransform: 'uppercase' }}>Evaluasi Brutal Mingguan</h3>
+            <p style={{ fontSize: 14, color: 'var(--text2)', marginBottom: 20, maxWidth: 500, margin: '0 auto 20px', fontWeight: 500 }}>
+              Friday akan membongkar data aktivitas, kemalasan, dan konsistensi Anda selama 7 hari terakhir. Tidak ada tempat untuk alasan.
             </p>
-            <button className="btn btn-blue btn-lg" onClick={generateWeeklyAnalysis} disabled={aiLoading}>
-              {aiLoading ? <><span className="spin-it"><I n="loader" /></span> Menganalisis Data...</> : <><I n="sparkles" />Hasilkan Laporan Mingguan</>}
+            <button className="btn btn-red btn-lg" onClick={generateWeeklyAnalysis} disabled={aiLoading}>
+              {aiLoading ? <><span className="spin-it"><I n="loader" /></span> Mengumpulkan Bukti...</> : <><I n="sparkles" />Hasilkan Laporan Mingguan</>}
             </button>
           </div>
 
           {weeklyAnalysis.map((wa) => (
-             <div key={wa.id} className="card card-p" style={{ borderColor: 'var(--blue-border)' }}>
+             <div key={wa.id} className="card card-p" style={{ borderColor: 'var(--red-dim)' }}>
                <div className="between" style={{ marginBottom: 16, borderBottom: '1px solid var(--border)', paddingBottom: 16 }}>
-                 <div style={{ display: 'flex', alignItems: 'center', gap: 10, color: 'var(--blue-hover)', fontWeight: 700, fontSize: 16 }}>
-                   <I n="cpu" size={20} /> Laporan: {wa.date}
+                 <div style={{ display: 'flex', alignItems: 'center', gap: 10, color: 'var(--red)', fontWeight: 800, fontSize: 16, textTransform: 'uppercase' }}>
+                   <I n="cpu" size={20} /> Laporan Audit: {wa.date}
                  </div>
                </div>
                <div className="ai-content" style={{ fontSize: 15 }}>{formatAIResponse(wa.text)}</div>
              </div>
           ))}
           {weeklyAnalysis.length === 0 && !aiLoading && (
-            <div style={{ textAlign: 'center', padding: '20px', color: 'var(--text3)' }}>Belum ada laporan mingguan.</div>
+            <div style={{ textAlign: 'center', padding: '20px', color: 'var(--text3)', fontWeight: 600 }}>Belum ada laporan mingguan. Buktikan Anda pantas dievaluasi.</div>
           )}
         </div>
       )}
 
-      <Modal open={writing} onClose={() => setWriting(false)} title={editId ? 'Edit Catatan' : 'Refleksi Hari Ini'} wide>
+      <Modal open={writing} onClose={() => setWriting(false)} title={editId ? 'Edit Audit' : 'Refleksi Diri (Audit Harian)'} wide>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-          <div style={{ fontSize: 14, color: 'var(--text2)', fontWeight: 500 }}>{fmtDate}</div>
+          <div style={{ fontSize: 14, color: 'var(--text2)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{fmtDate}</div>
           <div>
-            <span className="label">Bagaimana perasaanmu hari ini?</span>
+            <span className="label">Bagaimana performa disiplinmu hari ini?</span>
             <div style={{ display: 'flex', gap: 12 }}>
               {MOODS.map(m => (
-                <button key={m.key} onClick={() => setMood(m.key)} style={{ flex: 1, padding: '12px', borderRadius: 12, border: `2px solid ${mood === m.key ? m.color : 'var(--border)'}`, background: mood === m.key ? m.color + '15' : 'var(--surface2)', color: mood === m.key ? m.color : 'var(--text2)', fontWeight: 600, fontSize: 14, cursor: 'pointer', transition: 'all 0.2s' }}>
+                <button key={m.key} onClick={() => setMood(m.key)} style={{ flex: 1, padding: '12px', borderRadius: 12, border: `2px solid ${mood === m.key ? m.color : 'var(--border)'}`, background: mood === m.key ? m.color + '15' : 'var(--surface2)', color: mood === m.key ? m.color : 'var(--text2)', fontWeight: 700, fontSize: 14, cursor: 'pointer', transition: 'all 0.2s', textTransform: 'uppercase' }}>
                   {m.label}
                 </button>
               ))}
             </div>
           </div>
-          <textarea className="inp" style={{ minHeight: 220, fontSize: 15, lineHeight: 1.7 }} placeholder="Tulis kejadian penting, progres coding, performa workout/diet, atau kendala hari ini..." value={text} onChange={e => setText(e.target.value)} autoFocus />
+          <textarea className="inp" style={{ minHeight: 220, fontSize: 15, lineHeight: 1.7 }} placeholder="Jangan berbohong pada diri sendiri. Tulis di mana kamu gagal, apa yang sudah kamu kerjakan (Coding/TOEFL/Workout), dan apa kendalamu..." value={text} onChange={e => setText(e.target.value)} autoFocus />
           {aiDailyDraft && (
             <div className="ai-box">
-              <div className="ai-header"><I n="sparkles" size={16} /> Friday's Insight</div>
+              <div className="ai-header"><I n="cpu" size={16} /> Friday's Brutal Insight</div>
               <div className="ai-content">{formatAIResponse(aiDailyDraft)}</div>
             </div>
           )}
           <div style={{ display: 'flex', gap: 12, marginTop: 8 }}>
             <button className="btn btn-ghost" style={{ padding: '12px' }} onClick={askFridayDaily} disabled={aiLoading || !text.trim()}>
-              {aiLoading ? <><span className="spin-it"><I n="loader" /></span> Menganalisis...</> : <><I n="sparkles" /> Tanya Friday</>}
+              {aiLoading ? <><span className="spin-it"><I n="loader" /></span> Memproses...</> : <><I n="sparkles" /> Audit dengan Friday</>}
             </button>
             <div style={{ flex: 1 }}></div>
             <button className="btn btn-ghost" onClick={() => setWriting(false)}>Batal</button>
-            <button className="btn btn-blue" onClick={save} disabled={!text.trim() || aiLoading}>Simpan Catatan</button>
+            <button className="btn btn-red" onClick={save} disabled={!text.trim() || aiLoading}>Simpan Audit</button>
           </div>
         </div>
       </Modal>
@@ -1665,11 +1819,11 @@ const FitnessPage = ({ safeWO, setWorkout, dayName, dateKey, safeExDone, setExDo
       <div className="between" style={{ flexWrap: 'wrap', gap: 16 }}>
         <div>
           <div style={{ fontSize: 24, fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.02em', marginBottom: 4 }}>Fitness Protocol</div>
-          <div style={{ fontSize: 14, color: 'var(--text2)' }}>Latihan Inti + Scapular Winging</div>
+          <div style={{ fontSize: 14, color: 'var(--text2)', fontWeight: 600 }}>Penderitaan Fisik Membangun Mental Kuat</div>
         </div>
         <div style={{ display: 'flex', gap: 0, background: 'var(--surface)', borderRadius: 12, border: '1px solid var(--border)', overflow: 'hidden' }}>
           {[ { id: 'today', l: 'Hari Ini' }, { id: 'weekly', l: 'Mingguan' } ].map((v, vi) => (
-            <button key={v.id} onClick={() => setView(v.id)} style={{ padding: '10px 18px', border: 'none', borderRight: vi === 0 ? '1px solid var(--border)' : 'none', background: view === v.id ? 'var(--blue-dim)' : 'transparent', color: view === v.id ? 'var(--blue-hover)' : 'var(--text2)', fontWeight: 600, fontSize: 14, cursor: 'pointer', transition: 'all 0.2s' }}>
+            <button key={v.id} onClick={() => setView(v.id)} style={{ padding: '10px 18px', border: 'none', borderRight: vi === 0 ? '1px solid var(--border)' : 'none', background: view === v.id ? 'var(--blue-dim)' : 'transparent', color: view === v.id ? 'var(--blue-hover)' : 'var(--text2)', fontWeight: 700, fontSize: 13, cursor: 'pointer', transition: 'all 0.2s', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
               {v.l}
             </button>
           ))}
@@ -1680,16 +1834,16 @@ const FitnessPage = ({ safeWO, setWorkout, dayName, dateKey, safeExDone, setExDo
           <div className="card card-p">
             <div className="between" style={{ marginBottom: 16, flexWrap: 'wrap', gap: 10 }}>
               <div>
-                <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>{dayName}</div>
-                <div style={{ fontSize: 20, fontWeight: 700, color: 'var(--text)' }}>{ws.type} — {ws.focus}</div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>{dayName}</div>
+                <div style={{ fontSize: 20, fontWeight: 800, color: 'var(--text)' }}>{ws.type} — {ws.focus}</div>
               </div>
               <div style={{ textAlign: 'center' }}>
                 <div style={{ fontSize: 42, fontWeight: 800, color: 'var(--text)', lineHeight: 1 }}>{totalDone}</div>
-                <div style={{ fontSize: 14, color: 'var(--text3)', fontWeight: 600 }}>/ {totalTot}</div>
+                <div style={{ fontSize: 14, color: 'var(--text3)', fontWeight: 700 }}>/ {totalTot}</div>
               </div>
             </div>
             <PBar cur={totalDone} tot={totalTot} />
-            <div style={{ display: 'flex', gap: 16, marginTop: 12, fontSize: 13, color: 'var(--text2)', fontWeight: 500 }}>
+            <div style={{ display: 'flex', gap: 16, marginTop: 12, fontSize: 13, color: 'var(--text2)', fontWeight: 600 }}>
               <span>Inti: <strong style={{ color: 'var(--text)' }}>{priDone}/{priToday.length}</strong></span>
               <span>Scapular: <strong style={{ color: 'var(--text)' }}>{scapDone}/{SCAPULAR.length}</strong></span>
             </div>
@@ -1741,7 +1895,7 @@ const FitnessPage = ({ safeWO, setWorkout, dayName, dateKey, safeExDone, setExDo
           </div>
           <div className="card">
             <div className="between" style={{ marginBottom: 16, flexWrap: 'wrap', gap: 10 }}>
-              <div><div style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>{selDay} — {viewWS.type}</div><div style={{ fontSize: 14, color: 'var(--text2)' }}>{viewWS.focus}</div></div>
+              <div><div style={{ fontSize: 18, fontWeight: 800, color: 'var(--text)', marginBottom: 4 }}>{selDay} — {viewWS.type}</div><div style={{ fontSize: 14, color: 'var(--text2)', fontWeight: 500 }}>{viewWS.focus}</div></div>
               <div style={{ display: 'flex', gap: 10 }}>
                 {selDay === dayName && <span className="tag tag-green">Hari Ini</span>}
                 <button className="icon-btn" onClick={() => setEditMeta(p => p === selDay ? false : selDay)}><I n="pencil" /></button>
@@ -1804,14 +1958,14 @@ const RoadmapPage = ({ safeRM, setRoadmap, safeRprog, toggleRprog, roadPhase, se
     <div className="fade-up">
       <div className="between" style={{ marginBottom: 20, flexWrap: 'wrap', gap: 16 }}>
         <div>
-          <div style={{ fontSize: 24, fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.02em', marginBottom: 4 }}>Python for Data Analytics</div>
-          <div style={{ fontSize: 14, color: 'var(--text2)' }}>80 Hari Roadmap — {totalDone}/{totalAll} materi selesai</div>
+          <div style={{ fontSize: 24, fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.02em', marginBottom: 4 }}>Python Data Analytics</div>
+          <div style={{ fontSize: 14, color: 'var(--text2)', fontWeight: 600 }}>Tingkatkan Nilai Diri Lewat Skill Berharga</div>
         </div>
-        <button className="btn btn-ghost" onClick={() => { setSettTab('roadmap'); setSettOpen(true); }}><I n="settings" />Kelola Konten</button>
+        <button className="btn btn-ghost" onClick={() => { setSettTab('roadmap'); setSettOpen(true); }}><I n="settings" />Kelola Modul</button>
       </div>
       <div className="card card-p" style={{ marginBottom: 24 }}>
         <div className="between" style={{ marginBottom: 12 }}>
-          <span style={{ fontSize: 15, fontWeight: 600, color: 'var(--text2)' }}>Total Progress</span>
+          <span style={{ fontSize: 15, fontWeight: 700, color: 'var(--text2)', textTransform: 'uppercase' }}>Total Penguasaan Materi</span>
           <span style={{ fontSize: 18, fontWeight: 800, color: 'var(--blue-hover)' }}>{Math.round((totalDone / Math.max(totalAll, 1)) * 100)}%</span>
         </div>
         <PBar cur={totalDone} tot={totalAll} />
@@ -1826,7 +1980,7 @@ const RoadmapPage = ({ safeRM, setRoadmap, safeRprog, toggleRprog, roadPhase, se
               <div className="between" style={{ marginBottom: 20 }}>
                 <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
                   <div style={{ width: 48, height: 48, borderRadius: 12, background: `${p.color || '#3b82f6'}15`, border: `1px solid ${p.color || '#3b82f6'}40`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, fontWeight: 800, color: p.color || '#3b82f6', flexShrink: 0 }}>{idx + 1}</div>
-                  <div><div style={{ fontSize: 16, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>{p.title}</div><div style={{ fontSize: 13, color: 'var(--text3)', fontWeight: 500 }}>Week {p.week} · {(p.videos || []).length}v {(p.casestudies || []).length}cs</div></div>
+                  <div><div style={{ fontSize: 16, fontWeight: 800, color: 'var(--text)', marginBottom: 4 }}>{p.title}</div><div style={{ fontSize: 13, color: 'var(--text3)', fontWeight: 600 }}>Week {p.week} · {(p.videos || []).length}v {(p.casestudies || []).length}cs</div></div>
                 </div>
                 <span style={{ fontSize: 24, fontWeight: 800, color: pct === 100 ? 'var(--green)' : 'var(--text3)' }}>{pct}%</span>
               </div>
@@ -1844,20 +1998,20 @@ const RoadmapPage = ({ safeRM, setRoadmap, safeRprog, toggleRprog, roadPhase, se
             <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
               {active.pl && (
                 <a href={active.pl} target="_blank" rel="noopener" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 20px', background: `${active.color || '#3b82f6'}10`, border: `1px solid ${active.color || '#3b82f6'}30`, borderRadius: 'var(--radius-sm)', textDecoration: 'none', color: 'var(--text)', transition: 'all 0.2s' }}>
-                  <div><div style={{ fontSize: 15, fontWeight: 700 }}>Buka Playlist YouTube</div><div style={{ fontSize: 13, color: 'var(--text2)', marginTop: 4 }}>{pvids.length} video · {pcases.length} project</div></div>
+                  <div><div style={{ fontSize: 15, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Buka Playlist Eksekusi</div><div style={{ fontSize: 13, color: 'var(--text2)', marginTop: 4, fontWeight: 600 }}>{pvids.length} video · {pcases.length} project</div></div>
                   <I n="play" size={20} />
                 </a>
               )}
               <p style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.7 }}>{active.desc}</p>
               <div>
-                <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>Video ({pvids.filter(v => safeRprog[v.id]).length}/{pvids.length})</div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>Video ({pvids.filter(v => safeRprog[v.id]).length}/{pvids.length})</div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8, maxHeight: 300, overflowY: 'auto' }}>
                   {pvids.map((v, i) => {
                     const done = safeRprog[v.id];
                     return (
                       <div key={v.id} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px', borderRadius: 10, border: `1px solid ${done ? 'var(--blue-border)' : 'var(--border)'}`, background: done ? 'var(--blue-dim)' : 'var(--surface2)', cursor: 'pointer', transition: 'all 0.2s' }} onClick={() => toggleRprog(v.id)}>
                         <div style={{ width: 20, height: 20, borderRadius: 6, border: `2px solid ${done ? 'var(--blue)' : 'var(--text3)'}`, background: done ? 'var(--blue)' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{done && <I n="check" size={12} style={{ color: 'white' }} />}</div>
-                        <div style={{ flex: 1, fontSize: 14, fontWeight: 600, color: done ? 'var(--text3)' : 'var(--text)', textDecoration: done ? 'line-through' : 'none' }}>{i + 1}. {v.title}</div>
+                        <div style={{ flex: 1, fontSize: 14, fontWeight: 700, color: done ? 'var(--text3)' : 'var(--text)', textDecoration: done ? 'line-through' : 'none' }}>{i + 1}. {v.title}</div>
                         {v.url && <a href={v.url} target="_blank" rel="noopener" className="icon-btn" onClick={e => e.stopPropagation()} style={{ flexShrink: 0 }}><I n="play" /></a>}
                       </div>
                     );
@@ -1866,7 +2020,7 @@ const RoadmapPage = ({ safeRM, setRoadmap, safeRprog, toggleRprog, roadPhase, se
               </div>
               {pcases.length > 0 && (
                 <div>
-                  <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>Projects ({pcases.filter(c => safeRprog[c.id]).length}/{pcases.length})</div>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>Projects ({pcases.filter(c => safeRprog[c.id]).length}/{pcases.length})</div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                     {pcases.map(cs => {
                       const done = safeRprog[cs.id];
@@ -1874,8 +2028,8 @@ const RoadmapPage = ({ safeRM, setRoadmap, safeRprog, toggleRprog, roadPhase, se
                         <div key={cs.id} style={{ display: 'flex', alignItems: 'flex-start', gap: 12, padding: '12px 14px', borderRadius: 10, border: `1px solid ${done ? 'var(--blue-border)' : 'var(--border)'}`, background: done ? 'var(--blue-dim)' : 'var(--surface2)', cursor: 'pointer', transition: 'all 0.2s' }} onClick={() => toggleRprog(cs.id)}>
                           <div style={{ width: 20, height: 20, borderRadius: 6, border: `2px solid ${done ? 'var(--blue)' : 'var(--text3)'}`, background: done ? 'var(--blue)' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 2 }}>{done && <I n="check" size={12} style={{ color: 'white' }} />}</div>
                           <div>
-                            <div style={{ fontSize: 14, fontWeight: 600, color: done ? 'var(--text3)' : 'var(--text)', textDecoration: done ? 'line-through' : 'none', marginBottom: 4 }}>{cs.title}</div>
-                            {cs.desc && <div style={{ fontSize: 13, color: 'var(--text2)' }}>{cs.desc}</div>}
+                            <div style={{ fontSize: 14, fontWeight: 700, color: done ? 'var(--text3)' : 'var(--text)', textDecoration: done ? 'line-through' : 'none', marginBottom: 4 }}>{cs.title}</div>
+                            {cs.desc && <div style={{ fontSize: 13, color: 'var(--text2)', fontWeight: 500 }}>{cs.desc}</div>}
                           </div>
                         </div>
                       );
@@ -1891,47 +2045,231 @@ const RoadmapPage = ({ safeRM, setRoadmap, safeRprog, toggleRprog, roadPhase, se
   );
 };
 
-const SettingsModal = ({ open, onClose, tab, setTab, roadmap, setRoadmap, workout, setWorkout, setRprog, setExDone, setHabitLog, setDiary }) => (
-  <Modal open={open} onClose={onClose} title="Settings & Management" wide>
+const ToeflPage = ({ safeToefl, safeToeflProg, toggleToeflProg, toeflPhase, setToeflPhase, toeflSched, setToeflSched, toeflDaily, setToeflDaily, dayName, dateKey, setSettTab, setSettOpen }) => {
+  const [view, setView] = useState('today');
+  const [selDay, setSelDay] = useState(dayName);
+
+  const activeRoadmap = safeToefl.find(p => p.id === toeflPhase);
+  const totalAllRoadmap = safeToefl.reduce((a, p) => a + (p.items || []).length, 0);
+  const totalDoneRoadmap = Object.keys(safeToeflProg).filter(k => safeToeflProg[k]).length;
+  
+  const dailyKeyFor = (day, taskName) => `${dateKey}-toefl-${day}-${taskName}`;
+  const isTaskDone = (day, taskName) => !!toeflDaily[dailyKeyFor(day, taskName)];
+  
+  const toggleTask = (day, taskName) => setToeflDaily(p => { 
+    const s = safeObj(p); const k = dailyKeyFor(day, taskName); 
+    return { ...s, [k]: !s[k] }; 
+  });
+
+  const todaySched = toeflSched[dayName] || { type: 'Rest', focus: '-', tasks: [] };
+  const todayTasks = todaySched.tasks || [];
+  const todayDone = todayTasks.filter(t => isTaskDone(dayName, t.name)).length;
+  
+  const viewSched = toeflSched[view === 'today' ? dayName : selDay] || { type: 'Rest', focus: '-', tasks: [] };
+  const viewTasks = viewSched.tasks || [];
+
+  return (
+    <div className="fade-up">
+      <div className="between" style={{ marginBottom: 20, flexWrap: 'wrap', gap: 16 }}>
+        <div>
+          <div style={{ fontSize: 24, fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.02em', marginBottom: 4 }}>TOEFL iBT Preparation</div>
+          <div style={{ fontSize: 14, color: 'var(--text2)', fontWeight: 600 }}>Dominasi Bahasa Inggris Akademik</div>
+        </div>
+        <div style={{ display: 'flex', gap: 0, background: 'var(--surface)', borderRadius: 12, border: '1px solid var(--border)', overflow: 'hidden' }}>
+          {[ { id: 'today', l: 'Hari Ini' }, { id: 'weekly', l: 'Mingguan' }, { id: 'roadmap', l: 'Syllabus' } ].map((v, vi) => (
+            <button key={v.id} onClick={() => setView(v.id)} style={{ padding: '10px 18px', border: 'none', borderRight: vi < 2 ? '1px solid var(--border)' : 'none', background: view === v.id ? 'var(--blue-dim)' : 'transparent', color: view === v.id ? 'var(--blue-hover)' : 'var(--text2)', fontWeight: 700, fontSize: 13, cursor: 'pointer', transition: 'all 0.2s', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              {v.l}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {view === 'today' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 800, margin: '0 auto' }}>
+          <div className="card card-p">
+            <div className="between" style={{ marginBottom: 16, flexWrap: 'wrap', gap: 10 }}>
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>{dayName} — Jadwal TOEFL</div>
+                <div style={{ fontSize: 20, fontWeight: 800, color: 'var(--purple)' }}>{todaySched.type}</div>
+                <div style={{ fontSize: 14, color: 'var(--text)', marginTop: 4, fontWeight: 500 }}>Fokus: {todaySched.focus}</div>
+              </div>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: 42, fontWeight: 800, color: 'var(--text)', lineHeight: 1 }}>{todayDone}</div>
+                <div style={{ fontSize: 14, color: 'var(--text3)', fontWeight: 700 }}>/ {todayTasks.length}</div>
+              </div>
+            </div>
+            <PBar cur={todayDone} tot={todayTasks.length} cls="p" />
+          </div>
+          
+          <div className="sep"><div className="sep-line" /><div className="sep-label" style={{ color: 'var(--purple)' }}>Misi Hari Ini</div><div className="sep-line" /></div>
+          
+          {todayTasks.length > 0 ? (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              {todayTasks.map((t, i) => {
+                const done = isTaskDone(dayName, t.name);
+                return (
+                  <div key={i} className={`ex-card${done ? ' done' : ''}`} style={{ borderLeftColor: 'var(--purple)' }} onClick={() => toggleTask(dayName, t.name)}>
+                    <div className="ex-num" style={{ borderColor: done ? 'var(--green)' : 'var(--purple)', color: done ? 'var(--green)' : 'var(--purple)' }}>{done ? <I n="check" size={14} /> : i + 1}</div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div className="ex-title" style={{ color: done ? 'var(--text3)' : 'var(--text)' }}>{t.name}</div>
+                      <div className="ex-meta">{t.detail}</div>
+                    </div>
+                    <div style={{ fontSize: 12, fontWeight: 800, color: done ? 'var(--green)' : 'var(--purple)', background: 'var(--surface)', padding: '6px 10px', borderRadius: 8, border: '1px solid var(--border)', flexShrink: 0 }}>{t.time}</div>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <div style={{ textAlign: 'center', padding: '40px 20px', color: 'var(--text3)', fontWeight: 600 }}>Tidak ada jadwal untuk hari ini. Disiplin adalah kunci.</div>
+          )}
+        </div>
+      )}
+
+      {view === 'weekly' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 800, margin: '0 auto' }}>
+          <div className="between">
+            <div style={{ display: 'flex', gap: 10, overflowX: 'auto', paddingBottom: 8 }}>
+              {DAYS.map(d => (
+                <button key={d} className={`day-btn${selDay === d ? ' on' : ''}`} onClick={() => setSelDay(d)} style={{ flexShrink: 0, minWidth: 80 }}>
+                  {d} {d === dayName && <span style={{ marginLeft: 6, width: 6, height: 6, borderRadius: '50%', background: 'var(--green)', display: 'inline-block' }} />}
+                </button>
+              ))}
+            </div>
+            <button className="btn btn-ghost" onClick={() => { setSettTab('toefl'); setSettOpen(true); }}><I n="settings" />Kelola Jadwal</button>
+          </div>
+          <div className="card">
+            <div className="between" style={{ marginBottom: 16, flexWrap: 'wrap', gap: 10 }}>
+              <div>
+                <div style={{ fontSize: 18, fontWeight: 800, color: 'var(--purple)', marginBottom: 4 }}>{selDay} — {viewSched.type}</div>
+                <div style={{ fontSize: 14, color: 'var(--text2)', fontWeight: 500 }}>Fokus: {viewSched.focus}</div>
+              </div>
+              <div style={{ display: 'flex', gap: 10 }}>
+                {selDay === dayName && <span className="tag tag-green">Hari Ini</span>}
+              </div>
+            </div>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {viewTasks.map((t, i) => (
+                <div key={i} className={`ex-card${isTaskDone(selDay, t.name) ? ' done' : ''}`} style={{ borderLeftColor: 'var(--purple)', cursor: 'default' }}>
+                  <div className="ex-num" style={{ borderColor: isTaskDone(selDay, t.name) ? 'var(--green)' : 'var(--purple)', color: isTaskDone(selDay, t.name) ? 'var(--green)' : 'var(--purple)' }}>{isTaskDone(selDay, t.name) ? <I n="check" size={14} /> : i + 1}</div>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div className="ex-title">{t.name}</div>
+                    <div className="ex-meta">{t.detail}</div>
+                  </div>
+                  <div style={{ fontSize: 12, fontWeight: 800, color: 'var(--text2)', background: 'var(--surface)', padding: '6px 10px', borderRadius: 8, border: '1px solid var(--border)' }}>{t.time}</div>
+                </div>
+              ))}
+              {viewTasks.length === 0 && <div style={{ color: 'var(--text3)', fontSize: 13, textAlign: 'center', padding: '20px' }}>Tidak ada tugas yang dijadwalkan.</div>}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {view === 'roadmap' && (
+        <>
+          <div className="card card-p" style={{ marginBottom: 24 }}>
+            <div className="between" style={{ marginBottom: 12 }}>
+              <span style={{ fontSize: 15, fontWeight: 700, color: 'var(--text2)', textTransform: 'uppercase' }}>Penguasaan Syllabus Total</span>
+              <span style={{ fontSize: 18, fontWeight: 800, color: 'var(--purple)' }}>{Math.round((totalDoneRoadmap / Math.max(totalAllRoadmap, 1)) * 100)}%</span>
+            </div>
+            <PBar cur={totalDoneRoadmap} tot={totalAllRoadmap} cls="p" />
+          </div>
+          <div className="grid2">
+            {safeToefl.map((p, idx) => {
+              const all = (p.items || []).map(i => i.id);
+              const done = all.filter(id => safeToeflProg[id]).length;
+              const pct = Math.round((done / (all.length || 1)) * 100);
+              return (
+                <div key={p.id} className="card" style={{ cursor: 'pointer' }} onClick={() => setToeflPhase(p.id)}>
+                  <div className="between" style={{ marginBottom: 20 }}>
+                    <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+                      <div style={{ width: 48, height: 48, borderRadius: 12, background: `${p.color || '#8b5cf6'}15`, border: `1px solid ${p.color || '#8b5cf6'}40`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, fontWeight: 800, color: p.color || '#8b5cf6', flexShrink: 0 }}>{idx + 1}</div>
+                      <div>
+                        <div style={{ fontSize: 16, fontWeight: 800, color: 'var(--text)', marginBottom: 4 }}>{p.title}</div>
+                        <div style={{ fontSize: 13, color: 'var(--text3)', fontWeight: 600 }}>Week {p.week} · {all.length} materi</div>
+                      </div>
+                    </div>
+                    <span style={{ fontSize: 24, fontWeight: 800, color: pct === 100 ? 'var(--green)' : 'var(--text3)' }}>{pct}%</span>
+                  </div>
+                  <PBar cur={done} tot={all.length} cls={p.color === '#8b5cf6' ? 'p' : ''} />
+                  <div style={{ fontSize: 13, color: 'var(--text2)', marginTop: 12, fontWeight: 500 }}>{done}/{all.length} — {p.desc}</div>
+                </div>
+              );
+            })}
+          </div>
+
+          <Modal open={!!activeRoadmap} onClose={() => setToeflPhase(null)} title={activeRoadmap?.title || ''} wide>
+            {activeRoadmap && (() => {
+              const pitems = activeRoadmap.items || [];
+              return (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+                  <p style={{ fontSize: 14, color: 'var(--text2)', lineHeight: 1.7, fontWeight: 500 }}>{activeRoadmap.desc}</p>
+                  <div>
+                    <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>Checklist Materi ({pitems.filter(i => safeToeflProg[i.id]).length}/{pitems.length})</div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 8, maxHeight: 400, overflowY: 'auto' }}>
+                      {pitems.map((it, i) => {
+                        const done = safeToeflProg[it.id];
+                        return (
+                          <div key={it.id} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px', borderRadius: 10, border: `1px solid ${done ? 'var(--blue-border)' : 'var(--border)'}`, background: done ? 'var(--blue-dim)' : 'var(--surface2)', cursor: 'pointer', transition: 'all 0.2s' }} onClick={() => toggleToeflProg(it.id)}>
+                            <div style={{ width: 20, height: 20, borderRadius: 6, border: `2px solid ${done ? 'var(--blue)' : 'var(--text3)'}`, background: done ? 'var(--blue)' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{done && <I n="check" size={12} style={{ color: 'white' }} />}</div>
+                            <div style={{ flex: 1, fontSize: 14, fontWeight: 700, color: done ? 'var(--text3)' : 'var(--text)', textDecoration: done ? 'line-through' : 'none' }}>{i + 1}. {it.title}</div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
+          </Modal>
+        </>
+      )}
+    </div>
+  );
+};
+
+const SettingsModal = ({ open, onClose, tab, setTab, roadmap, setRoadmap, workout, setWorkout, toeflSched, setToeflSched, setRprog, setExDone, setHabitLog, setDiary, setToeflProg }) => (
+  <Modal open={open} onClose={onClose} title="Settings & Protocols" wide>
     <div style={{ display: 'flex', gap: 8, marginBottom: 24, padding: '6px', background: 'var(--surface)', borderRadius: 14, border: '1px solid var(--border)', overflowX: 'auto' }}>
-      {[ { id: 'roadmap', l: 'Roadmap' }, { id: 'workout', l: 'Workout' }, { id: 'reset', l: 'Data' } ].map(t => (
+      {[ { id: 'roadmap', l: 'Modul IT' }, { id: 'workout', l: 'Fisik' }, { id: 'toefl', l: 'Jadwal TOEFL' }, { id: 'reset', l: 'Erase Data' } ].map(t => (
         <button key={t.id} className={`stab${tab === t.id ? ' on' : ''}`} style={{ flex: 1 }} onClick={() => setTab(t.id)}>{t.l}</button>
       ))}
     </div>
     {tab === 'roadmap' && <RoadmapMgr roadmap={roadmap} setRoadmap={setRoadmap} />}
     {tab === 'workout' && <WorkoutMgr workout={workout} setWorkout={setWorkout} />}
-    {tab === 'reset' && <ResetPanel setRprog={setRprog} setExDone={setExDone} setHabitLog={setHabitLog} setDiary={setDiary} setRoadmap={setRoadmap} />}
+    {tab === 'toefl' && <ToeflMgr toeflSched={toeflSched} setToeflSched={setToeflSched} />}
+    {tab === 'reset' && <ResetPanel setRprog={setRprog} setExDone={setExDone} setHabitLog={setHabitLog} setDiary={setDiary} setRoadmap={setRoadmap} setToeflProg={setToeflProg} />}
   </Modal>
 );
 
-const ResetPanel = ({ setRprog, setExDone, setHabitLog, setDiary, setRoadmap }) => {
+const ResetPanel = ({ setRprog, setExDone, setHabitLog, setDiary, setRoadmap, setToeflProg }) => {
   const [confirm, setConfirm] = useState(null);
   const resets = [
-    { id: 'rprog', label: 'Roadmap Progress', desc: 'Reset semua checklist video & project', icon: 'map', color: 'var(--blue)', fn: () => setRprog({}) },
-    { id: 'habits', label: 'Daily Activity Log', desc: 'Reset semua log daily habits', icon: 'habits', color: 'var(--green)', fn: () => setHabitLog({}) },
-    { id: 'exdone', label: 'Exercise Log', desc: 'Reset semua log checklist workout harian', icon: 'fitness', color: 'var(--amber)', fn: () => setExDone({}) },
-    { id: 'diary', label: 'Diary & AI History', desc: 'Hapus semua entri diary permanen', icon: 'diary', color: 'var(--red)', fn: () => setDiary([]) },
-    { id: 'roadmapdata', label: 'Reset Konten Roadmap', desc: 'Kembalikan roadmap Python ke default awal', icon: 'settings', color: 'var(--red)', fn: () => setRoadmap(DEFAULT_ROADMAP) },
+    { id: 'rprog', label: 'Progress Coding', desc: 'Hapus semua checklist belajar pemrograman', icon: 'map', color: 'var(--blue)', fn: () => setRprog({}) },
+    { id: 'toeflprog', label: 'Progress TOEFL', desc: 'Hapus semua checklist modul materi TOEFL', icon: 'book', color: 'var(--purple)', fn: () => setToeflProg({}) },
+    { id: 'habits', label: 'Daily Habits', desc: 'Hapus riwayat aktivitas harian', icon: 'habits', color: 'var(--green)', fn: () => setHabitLog({}) },
+    { id: 'exdone', label: 'Riwayat Fisik', desc: 'Hapus riwayat penyelesaian latihan fisik', icon: 'fitness', color: 'var(--amber)', fn: () => setExDone({}) },
+    { id: 'diary', label: 'Audit & AI History', desc: 'Hapus permanen semua evaluasi diri', icon: 'diary', color: 'var(--red)', fn: () => setDiary([]) },
   ];
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-      <div style={{ padding: '12px 16px', borderRadius: 10, border: '1px solid rgba(244,63,94,0.3)', background: 'rgba(244,63,94,0.1)', fontSize: 13, color: 'var(--red)', display: 'flex', gap: 10, alignItems: 'flex-start', marginBottom: 8 }}><I n="warn" size={16} /><span>Semua reset bersifat permanen. Pastikan kamu yakin sebelum melakukan reset data.</span></div>
+      <div style={{ padding: '12px 16px', borderRadius: 10, border: '1px solid rgba(225,29,72,0.4)', background: 'rgba(225,29,72,0.1)', fontSize: 13, color: 'var(--red)', display: 'flex', gap: 10, alignItems: 'flex-start', marginBottom: 8, fontWeight: 600 }}><I n="warn" size={16} /><span>Semua aksi di bawah bersifat merusak secara permanen. Pastikan kesadaran penuh sebelum mengeksekusi penghapusan riwayat penderitaanmu.</span></div>
       {resets.map(r => (
         <div key={r.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px', border: '1px solid var(--border)', borderRadius: 12, background: 'var(--surface2)', gap: 16 }}>
           <div style={{ display: 'flex', gap: 16, alignItems: 'center', flex: 1 }}>
             <div style={{ width: 40, height: 40, borderRadius: 10, background: `${r.color}15`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: r.color }}><I n={r.icon} size={20} /></div>
-            <div><div style={{ fontSize: 15, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>{r.label}</div><div style={{ fontSize: 13, color: 'var(--text3)', lineHeight: 1.5 }}>{r.desc}</div></div>
+            <div><div style={{ fontSize: 15, fontWeight: 800, color: 'var(--text)', marginBottom: 4, textTransform: 'uppercase' }}>{r.label}</div><div style={{ fontSize: 13, color: 'var(--text3)', lineHeight: 1.5, fontWeight: 500 }}>{r.desc}</div></div>
           </div>
-          <button className="btn btn-red" style={{ fontSize: 13, flexShrink: 0 }} onClick={() => setConfirm(r)}>Reset</button>
+          <button className="btn btn-red" style={{ fontSize: 13, flexShrink: 0 }} onClick={() => setConfirm(r)}>HANCURKAN</button>
         </div>
       ))}
       {confirm && (
-        <Modal open={!!confirm} onClose={() => setConfirm(null)} title={`Reset ${confirm.label}?`}>
+        <Modal open={!!confirm} onClose={() => setConfirm(null)} title={`Hancurkan ${confirm.label}?`}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-            <div style={{ padding: '16px', background: 'rgba(244,63,94,0.1)', borderRadius: 12, fontSize: 14, color: 'var(--red)', lineHeight: 1.6 }}>{confirm.desc}.<br /><br /><strong>Tindakan ini tidak bisa dibatalkan.</strong></div>
+            <div style={{ padding: '16px', background: 'rgba(225,29,72,0.1)', borderRadius: 12, fontSize: 14, color: 'var(--red)', lineHeight: 1.6, fontWeight: 600 }}>{confirm.desc}.<br /><br /><strong>Apakah Anda yakin akan membuang pengorbanan ini ke dalam kehampaan?</strong></div>
             <div style={{ display: 'flex', gap: 12 }}>
-              <button className="btn btn-ghost" style={{ flex: 1 }} onClick={() => setConfirm(null)}>Batal</button>
-              <button className="btn btn-red" style={{ flex: 1 }} onClick={() => { confirm.fn(); setConfirm(null); }}>Ya, Eksekusi Reset</button>
+              <button className="btn btn-ghost" style={{ flex: 1 }} onClick={() => setConfirm(null)}>Kembali</button>
+              <button className="btn btn-red" style={{ flex: 1 }} onClick={() => { confirm.fn(); setConfirm(null); }}>Eksekusi</button>
             </div>
           </div>
         </Modal>
@@ -1967,11 +2305,11 @@ const RoadmapMgr = ({ roadmap, setRoadmap }) => {
   return (
     <div style={{ display: 'grid', gridTemplateColumns: sel ? '240px 1fr' : '1fr', gap: 20, minHeight: 400 }}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        <div className="between" style={{ marginBottom: 8 }}><span style={{ fontSize: 12, fontWeight: 600, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Modul Belajar</span><button className="btn btn-ghost" style={{ padding: '6px 12px', fontSize: 12 }} onClick={() => setEditPhase({ isNew: true, title: '', week: '', desc: '', color: '#3b82f6', pl: '' })}>+ Tambah</button></div>
+        <div className="between" style={{ marginBottom: 8 }}><span style={{ fontSize: 12, fontWeight: 700, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Modul IT</span><button className="btn btn-ghost" style={{ padding: '6px 12px', fontSize: 12 }} onClick={() => setEditPhase({ isNew: true, title: '', week: '', desc: '', color: '#3b82f6', pl: '' })}>+ Tambah</button></div>
         {safeRM.map((p, i) => (
           <div key={p.id} onClick={() => setSel(p.id === sel ? null : p.id)} style={{ padding: '12px', borderRadius: 10, border: `1px solid ${sel === p.id ? 'var(--blue-border)' : 'var(--border)'}`, background: sel === p.id ? 'var(--blue-dim)' : 'var(--surface2)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 12, transition: 'all 0.2s' }}>
             <div style={{ width: 28, height: 28, borderRadius: 8, background: `${p.color || '#3b82f6'}15`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 800, color: p.color || '#3b82f6', flexShrink: 0 }}>{i + 1}</div>
-            <div style={{ flex: 1, minWidth: 0 }}><div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.title}</div><div style={{ fontSize: 11, color: 'var(--text3)', marginTop: 2 }}>{(p.videos || []).length}v · {(p.casestudies || []).length}cs</div></div>
+            <div style={{ flex: 1, minWidth: 0 }}><div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.title}</div><div style={{ fontSize: 11, color: 'var(--text3)', marginTop: 2, fontWeight: 600 }}>{(p.videos || []).length}v · {(p.casestudies || []).length}cs</div></div>
             <button className="icon-btn" style={{ width: 28, height: 28, flexShrink: 0 }} onClick={e => { e.stopPropagation(); setEditPhase({ ...p }); }}><I n="pencil" /></button>
           </div>
         ))}
@@ -1979,16 +2317,16 @@ const RoadmapMgr = ({ roadmap, setRoadmap }) => {
       {sel && phase && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16, overflowY: 'auto', maxHeight: 500, paddingRight: 8 }}>
           <div className="between">
-            <div><div style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)' }}>{phase.title}</div><div style={{ fontSize: 13, color: 'var(--text2)', marginTop: 4 }}>Week {phase.week}</div></div>
+            <div><div style={{ fontSize: 18, fontWeight: 800, color: 'var(--text)' }}>{phase.title}</div><div style={{ fontSize: 13, color: 'var(--text2)', marginTop: 4, fontWeight: 600 }}>Week {phase.week}</div></div>
             <div style={{ display: 'flex', gap: 8 }}><button className="icon-btn red" onClick={() => delPhase(phase.id)}><I n="trash" /></button><button className="icon-btn" onClick={() => setSel(null)}><I n="x" /></button></div>
           </div>
           <div>
-            <div className="between" style={{ marginBottom: 12 }}><span style={{ fontSize: 12, fontWeight: 600, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Video ({(phase.videos || []).length})</span><button className="btn btn-ghost" style={{ padding: '6px 12px', fontSize: 12 }} onClick={() => setEditItem({ isNew: true, type: 'video', title: '', url: '' })}>+ Tambah</button></div>
+            <div className="between" style={{ marginBottom: 12 }}><span style={{ fontSize: 12, fontWeight: 700, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Video ({(phase.videos || []).length})</span><button className="btn btn-ghost" style={{ padding: '6px 12px', fontSize: 12 }} onClick={() => setEditItem({ isNew: true, type: 'video', title: '', url: '' })}>+ Tambah</button></div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {(phase.videos || []).map((v, i) => (
                 <div key={v.id} style={{ padding: '10px 14px', borderRadius: 10, background: 'var(--surface)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', gap: 10 }}>
-                  <span style={{ fontSize: 12, color: 'var(--text3)', fontWeight: 600, width: 20, flexShrink: 0 }}>{i + 1}</span>
-                  <div style={{ flex: 1, fontSize: 13, color: 'var(--text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontWeight: 500 }}>{v.title}</div>
+                  <span style={{ fontSize: 12, color: 'var(--text3)', fontWeight: 700, width: 20, flexShrink: 0 }}>{i + 1}</span>
+                  <div style={{ flex: 1, fontSize: 13, color: 'var(--text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontWeight: 600 }}>{v.title}</div>
                   {v.url && <a href={v.url} target="_blank" rel="noopener" className="icon-btn" style={{ width: 28, height: 28, flexShrink: 0 }} onClick={e => e.stopPropagation()}><I n="play" /></a>}
                   <button className="icon-btn" style={{ width: 28, height: 28, flexShrink: 0 }} onClick={() => setEditItem({ isNew: false, type: 'video', index: i, id: v.id, title: v.title, url: v.url || '' })}><I n="pencil" /></button>
                   <button className="icon-btn red" style={{ width: 28, height: 28, flexShrink: 0 }} onClick={() => delItem('video', i)}><I n="trash" /></button>
@@ -1997,11 +2335,11 @@ const RoadmapMgr = ({ roadmap, setRoadmap }) => {
             </div>
           </div>
           <div>
-            <div className="between" style={{ marginBottom: 12 }}><span style={{ fontSize: 12, fontWeight: 600, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Projects ({(phase.casestudies || []).length})</span><button className="btn btn-ghost" style={{ padding: '6px 12px', fontSize: 12 }} onClick={() => setEditItem({ isNew: true, type: 'case', title: '', desc: '' })}>+ Tambah</button></div>
+            <div className="between" style={{ marginBottom: 12 }}><span style={{ fontSize: 12, fontWeight: 700, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Projects ({(phase.casestudies || []).length})</span><button className="btn btn-ghost" style={{ padding: '6px 12px', fontSize: 12 }} onClick={() => setEditItem({ isNew: true, type: 'case', title: '', desc: '' })}>+ Tambah</button></div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {(phase.casestudies || []).map((cs, i) => (
                 <div key={cs.id} style={{ padding: '12px 14px', borderRadius: 10, background: 'var(--surface)', border: '1px solid var(--border)', display: 'flex', alignItems: 'flex-start', gap: 10 }}>
-                  <div style={{ flex: 1 }}><div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text)', marginBottom: 4 }}>{cs.title}</div>{cs.desc && <div style={{ fontSize: 13, color: 'var(--text3)' }}>{cs.desc}</div>}</div>
+                  <div style={{ flex: 1 }}><div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>{cs.title}</div>{cs.desc && <div style={{ fontSize: 13, color: 'var(--text3)' }}>{cs.desc}</div>}</div>
                   <button className="icon-btn" style={{ width: 28, height: 28, flexShrink: 0 }} onClick={() => setEditItem({ isNew: false, type: 'case', index: i, id: cs.id, title: cs.title, desc: cs.desc || '' })}><I n="pencil" /></button>
                   <button className="icon-btn red" style={{ width: 28, height: 28, flexShrink: 0 }} onClick={() => delItem('case', i)}><I n="trash" /></button>
                 </div>
@@ -2031,7 +2369,7 @@ const ItemForm = ({ init, onSave, onClose }) => {
 
 const PhaseForm = ({ init, onSave, onClose }) => {
   const [title, setTitle] = useState(init.title || ''); const [week, setWeek] = useState(init.week || ''); const [desc, setDesc] = useState(init.desc || ''); const [color, setColor] = useState(init.color || '#3b82f6'); const [pl, setPl] = useState(init.pl || '');
-  const cols = ['#3b82f6', '#0ea5e9', '#6366f1', '#10b981', '#f59e0b', '#f43f5e', '#8b5cf6'];
+  const cols = ['#3b82f6', '#0ea5e9', '#6366f1', '#10b981', '#f59e0b', '#e11d48', '#8b5cf6'];
   return (
     <form onSubmit={e => { e.preventDefault(); onSave({ ...init, title, week, desc, color, pl }); }} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div><span className="label">Nama Modul</span><input value={title} onChange={e => setTitle(e.target.value)} className="inp" required /></div>
@@ -2049,18 +2387,22 @@ const WorkoutMgr = ({ workout, setWorkout }) => {
   const day = safeWO[activeDay] || { type: '', focus: '', exercises: [] };
   const saveMeta = (f, v) => setWorkout(p => ({ ...typeof p === 'object' && !Array.isArray(p) ? p : DEFAULT_WORKOUT, [activeDay]: { ...day, [f]: v } }));
   const saveEx = data => { setWorkout(p => { const s = typeof p === 'object' && !Array.isArray(p) ? p : DEFAULT_WORKOUT; const d = s[activeDay] || { exercises: [] }; const list = d.exercises || []; if (data.isNew) return { ...s, [activeDay]: { ...d, exercises: [...list, { name: data.name, detail: data.detail, target: data.target, category: 'primary' }] } }; return { ...s, [activeDay]: { ...d, exercises: list.map((e, i) => i === data.index ? { name: data.name, detail: data.detail, target: data.target, category: e.category } : e) } }; }); setEditEx(null); };
-  const delEx = i => { if (!confirm('Hapus?')) return; setWorkout(p => { const s = typeof p === 'object' && !Array.isArray(p) ? p : DEFAULT_WORKOUT; const d = s[activeDay] || { exercises: [] }; const list = [...(d.exercises || [])]; list.splice(i, 1); return { ...s, [activeDay]: { ...d, exercises: list } }; }); };
+  const delEx = i => { if (!confirm('Hapus?')) return; setWorkout(p => { const s = typeof p === 'object' && !Array.isArray(p) ? p : DEFAULT_WORKOUT; const d = s[activeDay] || { exercises: [] }; const list = [...(d.exercises || [])].filter(e => e.category === 'primary');
+      list.splice(i, 1);
+      return { ...s, [activeDay]: { ...d, exercises: list } };
+    });
+  };
   const priEx = (day.exercises || []).filter(e => e.category === 'primary');
   
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>{DAYS.map(d => <button key={d} className={`day-btn${activeDay === d ? ' on' : ''}`} onClick={() => setActiveDay(d)}>{d}</button>)}</div>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}><div><span className="label">Tipe Sesi</span><input value={day.type || ''} onChange={e => saveMeta('type', e.target.value)} className="inp" placeholder="Push Day..." /></div><div><span className="label">Fokus</span><input value={day.focus || ''} onChange={e => saveMeta('focus', e.target.value)} className="inp" placeholder="Dada, Bahu..." /></div></div>
-      <div className="between" style={{ marginTop: 8 }}><span style={{ fontSize: 12, fontWeight: 600, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Latihan ({priEx.length})</span><button className="btn btn-ghost" style={{ padding: '6px 12px', fontSize: 12 }} onClick={() => setEditEx({ isNew: true, index: -1, name: '', detail: '', target: '' })}>+ Tambah</button></div>
+      <div className="between" style={{ marginTop: 8 }}><span style={{ fontSize: 12, fontWeight: 700, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Latihan ({priEx.length})</span><button className="btn btn-ghost" style={{ padding: '6px 12px', fontSize: 12 }} onClick={() => setEditEx({ isNew: true, index: -1, name: '', detail: '', target: '' })}>+ Tambah</button></div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8, maxHeight: 300, overflowY: 'auto' }}>
         {priEx.map((ex, i) => (
           <div key={i} style={{ padding: '12px 16px', borderRadius: 10, background: 'var(--surface)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', gap: 12 }}>
-            <div style={{ flex: 1 }}><div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text)', marginBottom: 2 }}>{ex.name}</div><div style={{ fontSize: 12, color: 'var(--text3)' }}>{ex.detail} — {ex.target}</div></div>
+            <div style={{ flex: 1 }}><div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)', marginBottom: 2 }}>{ex.name}</div><div style={{ fontSize: 12, color: 'var(--text3)', fontWeight: 500 }}>{ex.detail} — {ex.target}</div></div>
             <button className="icon-btn" onClick={() => setEditEx({ isNew: false, index: i, ...ex })}><I n="pencil" /></button>
             <button className="icon-btn red" onClick={() => delEx(i)}><I n="trash" /></button>
           </div>
@@ -2068,6 +2410,52 @@ const WorkoutMgr = ({ workout, setWorkout }) => {
       </div>
       {editEx && <Modal open={!!editEx} onClose={() => setEditEx(null)} title={editEx.isNew ? 'Tambah Gerakan' : 'Edit Gerakan'}><ExForm init={editEx} onSave={saveEx} onClose={() => setEditEx(null)} /></Modal>}
     </div>
+  );
+};
+
+const ToeflMgr = ({ toeflSched, setToeflSched }) => {
+  const [activeDay, setActiveDay] = useState('Senin'); const [editTask, setEditTask] = useState(null);
+  const safeSched = typeof toeflSched === 'object' && !Array.isArray(toeflSched) ? toeflSched : DEFAULT_TOEFL_SCHEDULE;
+  const day = safeSched[activeDay] || { type: '', focus: '', tasks: [] };
+  const saveMeta = (f, v) => setToeflSched(p => ({ ...typeof p === 'object' && !Array.isArray(p) ? p : DEFAULT_TOEFL_SCHEDULE, [activeDay]: { ...day, [f]: v } }));
+  const saveTask = data => { setToeflSched(p => { const s = typeof p === 'object' && !Array.isArray(p) ? p : DEFAULT_TOEFL_SCHEDULE; const d = s[activeDay] || { tasks: [] }; const list = d.tasks || []; if (data.isNew) return { ...s, [activeDay]: { ...d, tasks: [...list, { name: data.name, detail: data.detail, time: data.time }] } }; return { ...s, [activeDay]: { ...d, tasks: list.map((t, i) => i === data.index ? { name: data.name, detail: data.detail, time: data.time } : t) } }; }); setEditTask(null); };
+  const delTask = i => { if (!confirm('Hapus task belajar ini?')) return; setToeflSched(p => { const s = typeof p === 'object' && !Array.isArray(p) ? p : DEFAULT_TOEFL_SCHEDULE; const d = s[activeDay] || { tasks: [] }; const list = [...(d.tasks || [])]; list.splice(i, 1); return { ...s, [activeDay]: { ...d, tasks: list } }; }); };
+  const tasks = day.tasks || [];
+  
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>{DAYS.map(d => <button key={d} className={`day-btn${activeDay === d ? ' on' : ''}`} onClick={() => setActiveDay(d)}>{d}</button>)}</div>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}><div><span className="label">Fokus Section</span><input value={day.type || ''} onChange={e => saveMeta('type', e.target.value)} className="inp" placeholder="Listening Focus..." /></div><div><span className="label">Detail Sub-Fokus</span><input value={day.focus || ''} onChange={e => saveMeta('focus', e.target.value)} className="inp" placeholder="Note-taking..." /></div></div>
+      <div className="between" style={{ marginTop: 8 }}><span style={{ fontSize: 12, fontWeight: 700, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Task Belajar ({tasks.length})</span><button className="btn btn-ghost" style={{ padding: '6px 12px', fontSize: 12 }} onClick={() => setEditTask({ isNew: true, index: -1, name: '', detail: '', time: '' })}>+ Tambah</button></div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8, maxHeight: 300, overflowY: 'auto' }}>
+        {tasks.map((t, i) => (
+          <div key={i} style={{ padding: '12px 16px', borderRadius: 10, background: 'var(--surface)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', gap: 12 }}>
+            <div style={{ flex: 1 }}><div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)', marginBottom: 2 }}>{t.name}</div><div style={{ fontSize: 12, color: 'var(--text3)', fontWeight: 500 }}>{t.detail} — {t.time}</div></div>
+            <button className="icon-btn" onClick={() => setEditTask({ isNew: false, index: i, ...t })}><I n="pencil" /></button>
+            <button className="icon-btn red" onClick={() => delTask(i)}><I n="trash" /></button>
+          </div>
+        ))}
+      </div>
+      {editTask && <Modal open={!!editTask} onClose={() => setEditTask(null)} title={editTask.isNew ? 'Tambah Task TOEFL' : 'Edit Task'}><ToeflTaskForm init={editTask} onSave={saveTask} onClose={() => setEditTask(null)} /></Modal>}
+    </div>
+  );
+};
+
+const ToeflTaskForm = ({ init, onSave, onClose }) => {
+  const [name, setName] = useState(init.name || ''); const [detail, setDetail] = useState(init.detail || ''); const [time, setTime] = useState(init.time || '');
+  const sub = e => { e.preventDefault(); onSave({ ...init, name, detail, time }); };
+  return (
+    <form onSubmit={sub} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <div><span className="label">Nama Task</span><input value={name} onChange={e => setName(e.target.value)} className="inp" required placeholder="Shadowing Latihan..." /></div>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+        <div><span className="label">Instruksi</span><input value={detail} onChange={e => setDetail(e.target.value)} className="inp" required placeholder="Tirukan intonasi..." /></div>
+        <div><span className="label">Durasi Waktu</span><input value={time} onChange={e => setTime(e.target.value)} className="inp" required placeholder="15m" /></div>
+      </div>
+      <div style={{ display: 'flex', gap: 12, marginTop: 8 }}>
+        <button type="button" onClick={onClose} className="btn btn-ghost" style={{ flex: 1 }}>Batal</button>
+        <button type="submit" className="btn btn-blue" style={{ flex: 2 }}>Simpan</button>
+      </div>
+    </form>
   );
 };
 
