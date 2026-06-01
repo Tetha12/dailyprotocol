@@ -531,7 +531,16 @@ const DEFAULT_ROADMAP = [
       { id: 'pf10', title: '#10 — Import Module & Package', url: '' }
     ],
     casestudies: [
-      { id: 'pfcs1', title: 'Project: Ekstraksi Data Sederhana', desc: 'Gunakan List dan Dictionary untuk memanipulasi data dummy.' }
+      { id: 'pfcs1', title: '1. Sistem Manajemen Perpustakaan CLI', desc: 'CRUD buku, cari, pinjam, kembalikan, validasi stok. Bonus JSON & Stats.' },
+      { id: 'pfcs2', title: '2. Sistem Kasir Modern', desc: 'Keranjang, subtotal, pajak 11%, diskon bertingkat, cetak struk lengkap.' },
+      { id: 'pfcs3', title: '3. Game Tebak Angka Pintar', desc: 'Random 1-100, max 10 try, high/low hint, sistem skor dinamis.' },
+      { id: 'pfcs4', title: '4. To-Do List Professional', desc: 'CRUD task, filter status, urutkan prioritas, fitur deadline.' },
+      { id: 'pfcs5', title: '5. Sistem Login & User Management', desc: 'Auth, validasi password kuat, role admin/user, edit profil.' },
+      { id: 'pfcs6', title: '6. Aplikasi Manajemen Keuangan', desc: 'Catat income/expense, saldo otomatis, kategori. Bonus grafik Matplotlib.' },
+      { id: 'pfcs7', title: '7. Sistem Reservasi Hotel', desc: 'Booking kamar, checkout, hitung harga per inap. Bonus diskon member.' },
+      { id: 'pfcs8', title: '8. Quiz App', desc: '20 soal ABCD, skor otomatis (benar 15, salah 5), timer & acak soal.' },
+      { id: 'pfcs9', title: '9. Sistem Inventaris Gudang', desc: 'CRUD barang, validasi stok tidak boleh negatif, alert stok menipis.' },
+      { id: 'pfcs10', title: '10. Mini Banking System', desc: 'Buat rekening, deposit, withdraw, transfer saldo antar rekening.' }
     ]
   },
   {
@@ -1781,6 +1790,12 @@ const FitnessPage = ({ safeWO, setWorkout, dayName, dateKey, safeExDone, setExDo
       const s = typeof p === 'object' && !Array.isArray(p) ? p : DEFAULT_WORKOUT;
       const day = s[data.dayKey] || { type: '', focus: '', exercises: [] };
       const list = [...(day.exercises || [])].filter(e => e.category === 'primary');
+
+      if (data.isBulk) {
+        const newExs = (data.bulkItems || []).map(e => ({ name: e.name || 'Gerakan Tanpa Nama', detail: e.detail || '', target: e.target || '', category: 'primary' }));
+        return { ...s, [data.dayKey]: { ...day, exercises: [...list, ...newExs] } };
+      }
+
       const ne = { name: data.name, detail: data.detail, target: data.target, category: 'primary' };
       if (data.isNew) list.push(ne); else list[data.index] = ne;
       return { ...s, [data.dayKey]: { ...day, exercises: list } };
@@ -1851,7 +1866,10 @@ const FitnessPage = ({ safeWO, setWorkout, dayName, dateKey, safeExDone, setExDo
           
           <div className="sep"><div className="sep-line" /><div className="sep-label">Latihan Inti</div><div className="sep-line" /></div>
           
-          <button className="btn btn-ghost" style={{ alignSelf: 'flex-start' }} onClick={() => setEditEx({ isNew: true, dayKey: dayName, name: '', detail: '', target: '' })}><I n="plus" />Tambah Latihan Inti</button>
+          <div style={{display: 'flex', gap: 8}}>
+              <button className="btn btn-ghost" style={{ padding: '8px 16px', fontSize: 13, color: 'var(--blue-hover)' }} onClick={() => setEditEx({ isNew: true, isBulk: true, dayKey: dayName })}><I n="sparkles" size={16} /> AI Bulk Import</button>
+              <button className="btn btn-ghost" style={{ padding: '8px 16px', fontSize: 13 }} onClick={() => setEditEx({ isNew: true, dayKey: dayName, name: '', detail: '', target: '' })}><I n="plus" />Tambah Latihan</button>
+          </div>
           
           {priToday.length > 0 && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -1909,7 +1927,10 @@ const FitnessPage = ({ safeWO, setWorkout, dayName, dateKey, safeExDone, setExDo
               </div>
             )}
             
-            <button className="btn btn-ghost" style={{ marginBottom: 16 }} onClick={() => setEditEx({ isNew: true, dayKey: selDay, name: '', detail: '', target: '' })}><I n="plus" />Tambah Latihan</button>
+            <div style={{display: 'flex', gap: 8, marginBottom: 16}}>
+                <button className="btn btn-ghost" style={{ padding: '8px 16px', fontSize: 13, color: 'var(--blue-hover)' }} onClick={() => setEditEx({ isNew: true, isBulk: true, dayKey: selDay })}><I n="sparkles" size={16} /> AI Bulk Import</button>
+                <button className="btn btn-ghost" style={{ padding: '8px 16px', fontSize: 13 }} onClick={() => setEditEx({ isNew: true, dayKey: selDay, name: '', detail: '', target: '' })}><I n="plus" />Tambah Latihan</button>
+            </div>
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8, maxHeight: 300, overflowY: 'auto' }}>
               {viewPri.map((ex, i) => (
@@ -1924,28 +1945,10 @@ const FitnessPage = ({ safeWO, setWorkout, dayName, dateKey, safeExDone, setExDo
           </div>
         </div>
       )}
-      <Modal open={!!editEx} onClose={() => setEditEx(null)} title={editEx?.isNew ? `Tambah Latihan — ${editEx?.dayKey}` : 'Edit Latihan'}>
-        {editEx && <ExForm init={editEx} onSave={saveEx} onClose={() => setEditEx(null)} />}
+      <Modal open={!!editEx} onClose={() => setEditEx(null)} title={editEx?.isBulk ? `AI Bulk Import Latihan — ${editEx?.dayKey}` : editEx?.isNew ? `Tambah Latihan — ${editEx?.dayKey}` : 'Edit Latihan'}>
+        {editEx?.isBulk ? <BulkExForm init={editEx} onSave={saveEx} onClose={() => setEditEx(null)} /> : editEx && <ExForm init={editEx} onSave={saveEx} onClose={() => setEditEx(null)} />}
       </Modal>
     </div>
-  );
-};
-
-const ExForm = ({ init, onSave, onClose }) => {
-  const [name, setName] = useState(init.name || ''); const [detail, setDetail] = useState(init.detail || ''); const [target, setTarget] = useState(init.target || '');
-  const sub = e => { e.preventDefault(); onSave({ ...init, name, detail, target, category: 'primary' }); };
-  return (
-    <form onSubmit={sub} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-      <div><span className="label">Nama Gerakan</span><input value={name} onChange={e => setName(e.target.value)} className="inp" required placeholder="Bench Press..." /></div>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-        <div><span className="label">Set & Rep</span><input value={detail} onChange={e => setDetail(e.target.value)} className="inp" required placeholder="3 x 10–12" /></div>
-        <div><span className="label">Target Otot</span><input value={target} onChange={e => setTarget(e.target.value)} className="inp" required placeholder="Dada..." /></div>
-      </div>
-      <div style={{ display: 'flex', gap: 12, marginTop: 8 }}>
-        <button type="button" onClick={onClose} className="btn btn-ghost" style={{ flex: 1 }}>Batal</button>
-        <button type="submit" className="btn btn-blue" style={{ flex: 2 }}>Simpan</button>
-      </div>
-    </form>
   );
 };
 
@@ -2289,9 +2292,22 @@ const RoadmapMgr = ({ roadmap, setRoadmap }) => {
     setEditPhase(null);
   };
   const delPhase = id => { if (!confirm('Hapus modul ini?')) return; setRoadmap(p => (Array.isArray(p) ? p : DEFAULT_ROADMAP).filter(x => x.id !== id)); if (sel === id) setSel(null); };
+  
   const saveItem = data => {
     setRoadmap(p => (Array.isArray(p) ? p : DEFAULT_ROADMAP).map(ph => {
       if (ph.id !== sel) return ph;
+      
+      if (data.isBulk) {
+        const newVideos = [];
+        const newCases = [];
+        (data.bulkItems || []).forEach(item => {
+            const id = `${item.type === 'video' ? 'v' : 'cs'}_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`;
+            if (item.type === 'video') newVideos.push({ id, title: item.title || 'Video Tanpa Judul', url: item.url || '' });
+            else newCases.push({ id, title: item.title || 'Project Tanpa Judul', desc: item.desc || '' });
+        });
+        return { ...ph, videos: [...(ph.videos || []), ...newVideos], casestudies: [...(ph.casestudies || []), ...newCases] };
+      }
+
       const key = data.type === 'video' ? 'videos' : 'casestudies';
       const list = [...(ph[key] || [])];
       const item = data.type === 'video' ? { id: data.id || `v_${Date.now()}`, title: data.title, url: data.url || '' } : { id: data.id || `cs_${Date.now()}`, title: data.title, desc: data.desc || '' };
@@ -2300,6 +2316,7 @@ const RoadmapMgr = ({ roadmap, setRoadmap }) => {
     }));
     setEditItem(null);
   };
+
   const delItem = (type, index) => { if (!confirm('Hapus item?')) return; setRoadmap(p => (Array.isArray(p) ? p : DEFAULT_ROADMAP).map(ph => { if (ph.id !== sel) return ph; const key = type === 'video' ? 'videos' : 'casestudies'; const list = [...(ph[key] || [])]; list.splice(index, 1); return { ...ph, [key]: list }; })); };
 
   return (
@@ -2316,12 +2333,19 @@ const RoadmapMgr = ({ roadmap, setRoadmap }) => {
       </div>
       {sel && phase && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16, overflowY: 'auto', maxHeight: 500, paddingRight: 8 }}>
-          <div className="between">
+          <div className="between" style={{ paddingBottom: 16, borderBottom: '1px solid var(--border)' }}>
             <div><div style={{ fontSize: 18, fontWeight: 800, color: 'var(--text)' }}>{phase.title}</div><div style={{ fontSize: 13, color: 'var(--text2)', marginTop: 4, fontWeight: 600 }}>Week {phase.week}</div></div>
-            <div style={{ display: 'flex', gap: 8 }}><button className="icon-btn red" onClick={() => delPhase(phase.id)}><I n="trash" /></button><button className="icon-btn" onClick={() => setSel(null)}><I n="x" /></button></div>
+            <div style={{ display: 'flex', gap: 8 }}>
+              <button className="btn btn-blue" style={{ padding: '6px 12px', fontSize: 12 }} onClick={() => setEditItem({ isNew: true, isBulk: true })}><I n="sparkles" size={14} /> AI Bulk Import</button>
+              <button className="icon-btn red" onClick={() => delPhase(phase.id)}><I n="trash" /></button>
+              <button className="icon-btn" onClick={() => setSel(null)}><I n="x" /></button>
+            </div>
           </div>
           <div>
-            <div className="between" style={{ marginBottom: 12 }}><span style={{ fontSize: 12, fontWeight: 700, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Video ({(phase.videos || []).length})</span><button className="btn btn-ghost" style={{ padding: '6px 12px', fontSize: 12 }} onClick={() => setEditItem({ isNew: true, type: 'video', title: '', url: '' })}>+ Tambah</button></div>
+            <div className="between" style={{ marginBottom: 12 }}>
+                <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Video ({(phase.videos || []).length})</span>
+                <button className="btn btn-ghost" style={{ padding: '6px 12px', fontSize: 12 }} onClick={() => setEditItem({ isNew: true, type: 'video', title: '', url: '' })}>+ Tambah</button>
+            </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {(phase.videos || []).map((v, i) => (
                 <div key={v.id} style={{ padding: '10px 14px', borderRadius: 10, background: 'var(--surface)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -2335,7 +2359,10 @@ const RoadmapMgr = ({ roadmap, setRoadmap }) => {
             </div>
           </div>
           <div>
-            <div className="between" style={{ marginBottom: 12 }}><span style={{ fontSize: 12, fontWeight: 700, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Projects ({(phase.casestudies || []).length})</span><button className="btn btn-ghost" style={{ padding: '6px 12px', fontSize: 12 }} onClick={() => setEditItem({ isNew: true, type: 'case', title: '', desc: '' })}>+ Tambah</button></div>
+            <div className="between" style={{ marginBottom: 12 }}>
+                <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Projects ({(phase.casestudies || []).length})</span>
+                <button className="btn btn-ghost" style={{ padding: '6px 12px', fontSize: 12 }} onClick={() => setEditItem({ isNew: true, type: 'case', title: '', desc: '' })}>+ Tambah</button>
+            </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {(phase.casestudies || []).map((cs, i) => (
                 <div key={cs.id} style={{ padding: '12px 14px', borderRadius: 10, background: 'var(--surface)', border: '1px solid var(--border)', display: 'flex', alignItems: 'flex-start', gap: 10 }}>
@@ -2349,8 +2376,68 @@ const RoadmapMgr = ({ roadmap, setRoadmap }) => {
         </div>
       )}
       {editPhase && <Modal open={!!editPhase} onClose={() => setEditPhase(null)} title={editPhase.isNew ? 'Tambah Modul' : 'Edit Modul'}><PhaseForm init={editPhase} onSave={savePhase} onClose={() => setEditPhase(null)} /></Modal>}
-      {editItem && <Modal open={!!editItem} onClose={() => setEditItem(null)} title={editItem.isNew ? (editItem.type === 'video' ? 'Tambah Video' : 'Tambah Project') : (editItem.type === 'video' ? 'Edit Video' : 'Edit Project')}><ItemForm init={editItem} onSave={saveItem} onClose={() => setEditItem(null)} /></Modal>}
+      {editItem && <Modal open={!!editItem} onClose={() => setEditItem(null)} title={editItem.isBulk ? 'AI Bulk Import (Video & Tugas)' : editItem.isNew ? (editItem.type === 'video' ? 'Tambah Video' : 'Tambah Project') : (editItem.type === 'video' ? 'Edit Video' : 'Edit Project')}>
+        {editItem.isBulk ? <BulkItemForm init={editItem} onSave={saveItem} onClose={() => setEditItem(null)} /> : <ItemForm init={editItem} onSave={saveItem} onClose={() => setEditItem(null)} />}
+      </Modal>}
     </div>
+  );
+};
+
+const BulkItemForm = ({ init, onSave, onClose }) => {
+  const [text, setText] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState('');
+
+  const sub = async e => {
+    e.preventDefault();
+    if (!text.trim()) return;
+    setLoading(true); setErr('');
+    
+    const prompt = `Analisis teks berikut yang merupakan kumpulan daftar materi atau tugas/project pemrograman. Bedah teks tersebut menjadi format JSON murni.
+    Aturan Kategori (type):
+    - "video": Jika item tersebut terdengar seperti materi, teori, tontonan, atau mengandung URL.
+    - "case": Jika item tersebut adalah soal tugas, project (contoh: "Sistem Manajemen Perpustakaan", "Mini Banking", dll), "Fitur Wajib", "Requirement", atau "Bonus".
+    
+    Format JSON Wajib (kembalikan hanya format array berikut):
+    [
+      {"type": "video", "title": "Nama Materi/Video", "url": "URL (jika ada, kosongkan jika tidak)"},
+      {"type": "case", "title": "Judul Tugas/Project", "desc": "Penjelasan deskripsi atau daftar requirements"}
+    ]
+    
+    Teks Mentah:
+    ${text}`;
+
+    const sys = "Kamu asisten sistem JSON data extractor yang efisien. Kembalikan HANYA JSON array murni tanpa blockquote ```json, tanpa penjelasan awal, dan tanpa teks akhir apa pun.";
+
+    try {
+      const res = await callFridayAI(prompt, sys);
+      const parsed = JSON.parse(res.trim());
+      if (!Array.isArray(parsed)) throw new Error("Format JSON dikembalikan salah");
+      onSave({ ...init, bulkItems: parsed, isBulk: true });
+    } catch (e) {
+      setErr("Gagal diproses AI. Pastikan format teks tidak terlalu ambigu, atau hapus karakter aneh.");
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <form onSubmit={sub} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      {err && <div style={{ color: 'var(--red)', fontSize: 13, background: 'rgba(225,29,72,0.1)', padding: 12, borderRadius: 8 }}>{err}</div>}
+      <div>
+        <span className="label">Paste Daftar Tugas/Materi Mentah</span>
+        <div style={{fontSize: 12, color: 'var(--text3)', marginBottom: 8}}>Friday AI akan otomatis membedah judul, merangkum requirement, dan membaginya jadi <strong style={{color:'var(--blue-hover)'}}>Video</strong> atau <strong style={{color:'var(--blue-hover)'}}>Project</strong>. Paste raw text secara frontal di bawah ini.</div>
+        <textarea value={text} onChange={e => setText(e.target.value)} className="inp" style={{ minHeight: 220, whiteSpace: 'pre-wrap', lineHeight: 1.6 }} placeholder="Contoh:&#10;1. Sistem Manajemen Perpustakaan CLI&#10;Fitur Wajib: Tambah buku, Lihat semua, Cari...&#10;Bonus: Simpan data ke JSON.&#10;&#10;2. Pengenalan Pandas Fundamental&#10;[https://youtube.com/contoh-link](https://youtube.com/contoh-link)" required />
+      </div>
+      <div style={{ display: 'flex', gap: 12, marginTop: 8 }}>
+        <button type="button" onClick={onClose} className="btn btn-ghost" style={{ flex: 1 }} disabled={loading}>Batal</button>
+        <button type="submit" className="btn btn-blue" style={{ flex: 2 }} disabled={loading}>
+          {loading ? <span className="spin-it"><I n="loader" /></span> : <I n="sparkles" />}
+          {loading ? ' Friday Menganalisis...' : ' AI Eksekusi Import'}
+        </button>
+      </div>
+    </form>
   );
 };
 
@@ -2360,7 +2447,7 @@ const ItemForm = ({ init, onSave, onClose }) => {
   return (
     <form onSubmit={sub} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div><span className="label">Judul</span><input value={title} onChange={e => setTitle(e.target.value)} className="inp" required placeholder={init.type === 'video' ? '#01 — Intro Python...' : 'Project: Data Analysis...'} /></div>
-      {init.type === 'video' && <div><span className="label">YouTube URL (opsional)</span><input value={url} onChange={e => setUrl(e.target.value)} className="inp" placeholder="https://youtube.com/..." /></div>}
+      {init.type === 'video' && <div><span className="label">YouTube URL (opsional)</span><input value={url} onChange={e => setUrl(e.target.value)} className="inp" placeholder="[https://youtube.com/](https://youtube.com/)..." /></div>}
       {init.type === 'case' && <div><span className="label">Deskripsi Project</span><textarea value={desc} onChange={e => setDesc(e.target.value)} className="inp" style={{ minHeight: 90 }} placeholder="Buat analisis data..." /></div>}
       <div style={{ display: 'flex', gap: 12, marginTop: 8 }}><button type="button" onClick={onClose} className="btn btn-ghost" style={{ flex: 1 }}>Batal</button><button type="submit" className="btn btn-blue" style={{ flex: 2 }}>Simpan</button></div>
     </form>
@@ -2386,7 +2473,24 @@ const WorkoutMgr = ({ workout, setWorkout }) => {
   const safeWO = typeof workout === 'object' && !Array.isArray(workout) ? workout : DEFAULT_WORKOUT;
   const day = safeWO[activeDay] || { type: '', focus: '', exercises: [] };
   const saveMeta = (f, v) => setWorkout(p => ({ ...typeof p === 'object' && !Array.isArray(p) ? p : DEFAULT_WORKOUT, [activeDay]: { ...day, [f]: v } }));
-  const saveEx = data => { setWorkout(p => { const s = typeof p === 'object' && !Array.isArray(p) ? p : DEFAULT_WORKOUT; const d = s[activeDay] || { exercises: [] }; const list = d.exercises || []; if (data.isNew) return { ...s, [activeDay]: { ...d, exercises: [...list, { name: data.name, detail: data.detail, target: data.target, category: 'primary' }] } }; return { ...s, [activeDay]: { ...d, exercises: list.map((e, i) => i === data.index ? { name: data.name, detail: data.detail, target: data.target, category: e.category } : e) } }; }); setEditEx(null); };
+  
+  const saveEx = data => { 
+    setWorkout(p => { 
+      const s = typeof p === 'object' && !Array.isArray(p) ? p : DEFAULT_WORKOUT; 
+      const d = s[activeDay] || { exercises: [] }; 
+      const list = d.exercises || []; 
+      
+      if (data.isBulk) {
+        const newExs = (data.bulkItems || []).map(e => ({ name: e.name || 'Gerakan Tanpa Nama', detail: e.detail || '', target: e.target || '', category: 'primary' }));
+        return { ...s, [activeDay]: { ...d, exercises: [...list, ...newExs] } };
+      }
+      
+      if (data.isNew) return { ...s, [activeDay]: { ...d, exercises: [...list, { name: data.name, detail: data.detail, target: data.target, category: 'primary' }] } }; 
+      return { ...s, [activeDay]: { ...d, exercises: list.map((e, i) => i === data.index ? { name: data.name, detail: data.detail, target: data.target, category: e.category } : e) } }; 
+    }); 
+    setEditEx(null); 
+  };
+  
   const delEx = i => { if (!confirm('Hapus?')) return; setWorkout(p => { const s = typeof p === 'object' && !Array.isArray(p) ? p : DEFAULT_WORKOUT; const d = s[activeDay] || { exercises: [] }; const list = [...(d.exercises || [])].filter(e => e.category === 'primary');
       list.splice(i, 1);
       return { ...s, [activeDay]: { ...d, exercises: list } };
@@ -2398,7 +2502,13 @@ const WorkoutMgr = ({ workout, setWorkout }) => {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>{DAYS.map(d => <button key={d} className={`day-btn${activeDay === d ? ' on' : ''}`} onClick={() => setActiveDay(d)}>{d}</button>)}</div>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}><div><span className="label">Tipe Sesi</span><input value={day.type || ''} onChange={e => saveMeta('type', e.target.value)} className="inp" placeholder="Push Day..." /></div><div><span className="label">Fokus</span><input value={day.focus || ''} onChange={e => saveMeta('focus', e.target.value)} className="inp" placeholder="Dada, Bahu..." /></div></div>
-      <div className="between" style={{ marginTop: 8 }}><span style={{ fontSize: 12, fontWeight: 700, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Latihan ({priEx.length})</span><button className="btn btn-ghost" style={{ padding: '6px 12px', fontSize: 12 }} onClick={() => setEditEx({ isNew: true, index: -1, name: '', detail: '', target: '' })}>+ Tambah</button></div>
+      <div className="between" style={{ marginTop: 8 }}>
+        <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Latihan ({priEx.length})</span>
+        <div style={{display: 'flex', gap: 8}}>
+            <button className="btn btn-ghost" style={{ padding: '6px 12px', fontSize: 12, color: 'var(--blue-hover)' }} onClick={() => setEditEx({ isNew: true, isBulk: true, dayKey: activeDay })}><I n="sparkles" size={14} /> AI Bulk Import</button>
+            <button className="btn btn-ghost" style={{ padding: '6px 12px', fontSize: 12 }} onClick={() => setEditEx({ isNew: true, index: -1, name: '', detail: '', target: '' })}>+ Tambah</button>
+        </div>
+      </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8, maxHeight: 300, overflowY: 'auto' }}>
         {priEx.map((ex, i) => (
           <div key={i} style={{ padding: '12px 16px', borderRadius: 10, background: 'var(--surface)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', gap: 12 }}>
@@ -2408,8 +2518,86 @@ const WorkoutMgr = ({ workout, setWorkout }) => {
           </div>
         ))}
       </div>
-      {editEx && <Modal open={!!editEx} onClose={() => setEditEx(null)} title={editEx.isNew ? 'Tambah Gerakan' : 'Edit Gerakan'}><ExForm init={editEx} onSave={saveEx} onClose={() => setEditEx(null)} /></Modal>}
+      {editEx && <Modal open={!!editEx} onClose={() => setEditEx(null)} title={editEx.isBulk ? `AI Bulk Import Latihan — ${activeDay}` : editEx.isNew ? `Tambah Gerakan — ${activeDay}` : 'Edit Gerakan'}>
+        {editEx.isBulk ? <BulkExForm init={editEx} onSave={saveEx} onClose={() => setEditEx(null)} /> : <ExForm init={editEx} onSave={saveEx} onClose={() => setEditEx(null)} />}
+      </Modal>}
     </div>
+  );
+};
+
+const BulkExForm = ({ init, onSave, onClose }) => {
+  const [text, setText] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState('');
+
+  const sub = async e => {
+    e.preventDefault();
+    if (!text.trim()) return;
+    setLoading(true); setErr('');
+    
+    const prompt = `Analisis teks jadwal latihan fisik/fitness berikut. Ekstrak menjadi format JSON murni array of objects.
+    Aturan Kategori:
+    - "name": Nama gerakan latihan (contoh: Bench Press, Squat, Push up).
+    - "detail": Informasi set, repetisi, durasi, atau repetisi hingga failure (contoh: 3x12, 10 menit, To failure). Jika tidak ada, buatkan default logis (misal 3x10).
+    - "target": Target otot utama (contoh: Dada, Kaki, Kardio). Jika tidak dicantumkan, tebak berdasarkan pengetahuan kebugaranmu.
+    
+    Format JSON Wajib (kembalikan hanya format array berikut):
+    [
+      {"name": "Nama Gerakan", "detail": "Set/Rep/Durasi", "target": "Target Otot"}
+    ]
+    
+    Teks Mentah:
+    ${text}`;
+
+    const sys = "Kamu asisten AI Fitness JSON Extractor. Kembalikan HANYA JSON array murni tanpa blockquote ```json, tanpa penjelasan awal, dan tanpa teks akhir apa pun.";
+
+    try {
+      const res = await callFridayAI(prompt, sys);
+      const parsed = JSON.parse(res.trim());
+      if (!Array.isArray(parsed)) throw new Error("Format JSON dikembalikan salah");
+      onSave({ ...init, bulkItems: parsed, isBulk: true });
+    } catch (e) {
+      setErr("Gagal diproses AI. Pastikan format teks bisa dipahami.");
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <form onSubmit={sub} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      {err && <div style={{ color: 'var(--red)', fontSize: 13, background: 'rgba(225,29,72,0.1)', padding: 12, borderRadius: 8 }}>{err}</div>}
+      <div>
+        <span className="label">Paste Daftar Latihan Fisik Mentah</span>
+        <div style={{fontSize: 12, color: 'var(--text3)', marginBottom: 8}}>Friday akan otomatis mendeteksi nama gerakan, set/repetisi, dan mengkategorikan target otot. Paste daftar latihanmu di sini.</div>
+        <textarea value={text} onChange={e => setText(e.target.value)} className="inp" style={{ minHeight: 220, whiteSpace: 'pre-wrap', lineHeight: 1.6 }} placeholder="Contoh:&#10;Incline Dumbell Press 3x10&#10;Cable Crossover 4 set 12 rep&#10;Tricep Pushdown 3x15 (failure)" required />
+      </div>
+      <div style={{ display: 'flex', gap: 12, marginTop: 8 }}>
+        <button type="button" onClick={onClose} className="btn btn-ghost" style={{ flex: 1 }} disabled={loading}>Batal</button>
+        <button type="submit" className="btn btn-blue" style={{ flex: 2 }} disabled={loading}>
+          {loading ? <span className="spin-it"><I n="loader" /></span> : <I n="sparkles" />}
+          {loading ? ' Memproses Jadwal Fisik...' : ' AI Eksekusi Import'}
+        </button>
+      </div>
+    </form>
+  );
+};
+
+const ExForm = ({ init, onSave, onClose }) => {
+  const [name, setName] = useState(init.name || ''); const [detail, setDetail] = useState(init.detail || ''); const [target, setTarget] = useState(init.target || '');
+  const sub = e => { e.preventDefault(); onSave({ ...init, name, detail, target, category: 'primary' }); };
+  return (
+    <form onSubmit={sub} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <div><span className="label">Nama Gerakan</span><input value={name} onChange={e => setName(e.target.value)} className="inp" required placeholder="Bench Press..." /></div>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+        <div><span className="label">Set & Rep</span><input value={detail} onChange={e => setDetail(e.target.value)} className="inp" required placeholder="3 x 10–12" /></div>
+        <div><span className="label">Target Otot</span><input value={target} onChange={e => setTarget(e.target.value)} className="inp" required placeholder="Dada..." /></div>
+      </div>
+      <div style={{ display: 'flex', gap: 12, marginTop: 8 }}>
+        <button type="button" onClick={onClose} className="btn btn-ghost" style={{ flex: 1 }}>Batal</button>
+        <button type="submit" className="btn btn-blue" style={{ flex: 2 }}>Simpan</button>
+      </div>
+    </form>
   );
 };
 
@@ -2418,7 +2606,24 @@ const ToeflMgr = ({ toeflSched, setToeflSched }) => {
   const safeSched = typeof toeflSched === 'object' && !Array.isArray(toeflSched) ? toeflSched : DEFAULT_TOEFL_SCHEDULE;
   const day = safeSched[activeDay] || { type: '', focus: '', tasks: [] };
   const saveMeta = (f, v) => setToeflSched(p => ({ ...typeof p === 'object' && !Array.isArray(p) ? p : DEFAULT_TOEFL_SCHEDULE, [activeDay]: { ...day, [f]: v } }));
-  const saveTask = data => { setToeflSched(p => { const s = typeof p === 'object' && !Array.isArray(p) ? p : DEFAULT_TOEFL_SCHEDULE; const d = s[activeDay] || { tasks: [] }; const list = d.tasks || []; if (data.isNew) return { ...s, [activeDay]: { ...d, tasks: [...list, { name: data.name, detail: data.detail, time: data.time }] } }; return { ...s, [activeDay]: { ...d, tasks: list.map((t, i) => i === data.index ? { name: data.name, detail: data.detail, time: data.time } : t) } }; }); setEditTask(null); };
+  
+  const saveTask = data => { 
+    setToeflSched(p => { 
+      const s = typeof p === 'object' && !Array.isArray(p) ? p : DEFAULT_TOEFL_SCHEDULE; 
+      const d = s[activeDay] || { tasks: [] }; 
+      const list = d.tasks || []; 
+      
+      if (data.isBulk) {
+        const newTasks = (data.bulkItems || []).map(t => ({ name: t.name || 'Task Tanpa Nama', detail: t.detail || '', time: t.time || '15m' }));
+        return { ...s, [activeDay]: { ...d, tasks: [...list, ...newTasks] } };
+      }
+      
+      if (data.isNew) return { ...s, [activeDay]: { ...d, tasks: [...list, { name: data.name, detail: data.detail, time: data.time }] } }; 
+      return { ...s, [activeDay]: { ...d, tasks: list.map((t, i) => i === data.index ? { name: data.name, detail: data.detail, time: data.time } : t) } }; 
+    }); 
+    setEditTask(null); 
+  };
+  
   const delTask = i => { if (!confirm('Hapus task belajar ini?')) return; setToeflSched(p => { const s = typeof p === 'object' && !Array.isArray(p) ? p : DEFAULT_TOEFL_SCHEDULE; const d = s[activeDay] || { tasks: [] }; const list = [...(d.tasks || [])]; list.splice(i, 1); return { ...s, [activeDay]: { ...d, tasks: list } }; }); };
   const tasks = day.tasks || [];
   
@@ -2426,7 +2631,13 @@ const ToeflMgr = ({ toeflSched, setToeflSched }) => {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>{DAYS.map(d => <button key={d} className={`day-btn${activeDay === d ? ' on' : ''}`} onClick={() => setActiveDay(d)}>{d}</button>)}</div>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}><div><span className="label">Fokus Section</span><input value={day.type || ''} onChange={e => saveMeta('type', e.target.value)} className="inp" placeholder="Listening Focus..." /></div><div><span className="label">Detail Sub-Fokus</span><input value={day.focus || ''} onChange={e => saveMeta('focus', e.target.value)} className="inp" placeholder="Note-taking..." /></div></div>
-      <div className="between" style={{ marginTop: 8 }}><span style={{ fontSize: 12, fontWeight: 700, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Task Belajar ({tasks.length})</span><button className="btn btn-ghost" style={{ padding: '6px 12px', fontSize: 12 }} onClick={() => setEditTask({ isNew: true, index: -1, name: '', detail: '', time: '' })}>+ Tambah</button></div>
+      <div className="between" style={{ marginTop: 8 }}>
+        <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Task Belajar ({tasks.length})</span>
+        <div style={{display: 'flex', gap: 8}}>
+            <button className="btn btn-ghost" style={{ padding: '6px 12px', fontSize: 12, color: 'var(--blue-hover)' }} onClick={() => setEditTask({ isNew: true, isBulk: true, dayKey: activeDay })}><I n="sparkles" size={14} /> AI Bulk Import</button>
+            <button className="btn btn-ghost" style={{ padding: '6px 12px', fontSize: 12 }} onClick={() => setEditTask({ isNew: true, index: -1, name: '', detail: '', time: '' })}>+ Tambah</button>
+        </div>
+      </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8, maxHeight: 300, overflowY: 'auto' }}>
         {tasks.map((t, i) => (
           <div key={i} style={{ padding: '12px 16px', borderRadius: 10, background: 'var(--surface)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', gap: 12 }}>
@@ -2436,8 +2647,68 @@ const ToeflMgr = ({ toeflSched, setToeflSched }) => {
           </div>
         ))}
       </div>
-      {editTask && <Modal open={!!editTask} onClose={() => setEditTask(null)} title={editTask.isNew ? 'Tambah Task TOEFL' : 'Edit Task'}><ToeflTaskForm init={editTask} onSave={saveTask} onClose={() => setEditTask(null)} /></Modal>}
+      {editTask && <Modal open={!!editTask} onClose={() => setEditTask(null)} title={editTask.isBulk ? `AI Bulk Import TOEFL — ${activeDay}` : editTask.isNew ? `Tambah Task TOEFL — ${activeDay}` : 'Edit Task'}>
+        {editTask.isBulk ? <BulkToeflTaskForm init={editTask} onSave={saveTask} onClose={() => setEditTask(null)} /> : <ToeflTaskForm init={editTask} onSave={saveTask} onClose={() => setEditTask(null)} />}
+      </Modal>}
     </div>
+  );
+};
+
+const BulkToeflTaskForm = ({ init, onSave, onClose }) => {
+  const [text, setText] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState('');
+
+  const sub = async e => {
+    e.preventDefault();
+    if (!text.trim()) return;
+    setLoading(true); setErr('');
+    
+    const prompt = `Analisis teks jadwal belajar Bahasa Inggris / TOEFL berikut. Ekstrak menjadi format JSON murni array of objects.
+    Aturan Kategori:
+    - "name": Nama tugas/task (contoh: Latihan Reading, Shadowing Audio, Menulis Essay).
+    - "detail": Instruksi atau penjelasan tugas (contoh: Kerjakan 1 passage, rekam suara, cek di grammarly).
+    - "time": Estimasi waktu (contoh: 20m, 1h, 15 menit). Jika tidak ada durasi waktu yang diberikan, tebak estimasi waktu yang wajar (contoh: "30m").
+    
+    Format JSON Wajib (kembalikan hanya format array berikut):
+    [
+      {"name": "Nama Task", "detail": "Instruksi detail", "time": "Durasi"}
+    ]
+    
+    Teks Mentah:
+    ${text}`;
+
+    const sys = "Kamu asisten AI Pendidikan JSON Extractor. Kembalikan HANYA JSON array murni tanpa blockquote ```json, tanpa penjelasan awal, dan tanpa teks akhir apa pun.";
+
+    try {
+      const res = await callFridayAI(prompt, sys);
+      const parsed = JSON.parse(res.trim());
+      if (!Array.isArray(parsed)) throw new Error("Format JSON dikembalikan salah");
+      onSave({ ...init, bulkItems: parsed, isBulk: true });
+    } catch (e) {
+      setErr("Gagal diproses AI. Pastikan format teks bisa dipahami.");
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <form onSubmit={sub} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      {err && <div style={{ color: 'var(--red)', fontSize: 13, background: 'rgba(225,29,72,0.1)', padding: 12, borderRadius: 8 }}>{err}</div>}
+      <div>
+        <span className="label">Paste Daftar Task TOEFL Mentah</span>
+        <div style={{fontSize: 12, color: 'var(--text3)', marginBottom: 8}}>Friday akan mengurai jadwal belajarmu menjadi Nama Tugas, Instruksi Spesifik, dan Estimasi Durasi (misal: 15m, 30m).</div>
+        <textarea value={text} onChange={e => setText(e.target.value)} className="inp" style={{ minHeight: 220, whiteSpace: 'pre-wrap', lineHeight: 1.6 }} placeholder="Contoh:&#10;Latihan Listening Part A (15 menit)&#10;Hafal 20 Vocab akademik di Quizlet&#10;Tulis 1 essay argumentatif lalu cek di Grammarly (45 menit)" required />
+      </div>
+      <div style={{ display: 'flex', gap: 12, marginTop: 8 }}>
+        <button type="button" onClick={onClose} className="btn btn-ghost" style={{ flex: 1 }} disabled={loading}>Batal</button>
+        <button type="submit" className="btn btn-blue" style={{ flex: 2 }} disabled={loading}>
+          {loading ? <span className="spin-it"><I n="loader" /></span> : <I n="sparkles" />}
+          {loading ? ' Memproses Jadwal Akademik...' : ' AI Eksekusi Import'}
+        </button>
+      </div>
+    </form>
   );
 };
 
