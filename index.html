@@ -377,6 +377,11 @@
     }
     .cal-cell:hover:not(.empty) { border-color: var(--border2); transform: scale(1.05); }
     .cal-cell.empty { cursor: default; background: transparent; }
+    .cal-cell.sel-day { outline: 2px solid var(--blue-hover); outline-offset: -2px; }
+    .date-nav { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); }
+    .date-nav-btn { width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); color: var(--text2); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s; flex-shrink: 0; }
+    .date-nav-btn:hover:not(:disabled) { border-color: var(--blue-border); color: var(--blue-hover); background: var(--blue-dim); }
+    .date-nav-btn:disabled { opacity: 0.35; cursor: not-allowed; }
 
     @media (max-width: 768px) {
       .sidebar { display: none; }
@@ -1389,14 +1394,36 @@ const HabitsPage = ({ habitLog, setHabitLog, today, dateKey, fmtDate }) => {
   const [view, setView] = useState('today');
   const [selHabit, setSelHabit] = useState('coding');
   const [calMonth, setCalMonth] = useState({ y: today.getFullYear(), m: today.getMonth() });
+  const [selDate, setSelDate] = useState(() => {
+    const [y, m, d] = dateKey.split('-').map(Number);
+    return new Date(y, m - 1, d);
+  });
+
+  const toKey = d => { const x = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 12); return x.toISOString().split('T')[0]; };
+  const stripDay = d => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  const todayKey = toKey(today);
+  const selDateKey = toKey(selDate);
+  const isSelToday = selDateKey === todayKey;
+  const fmtSelDate = selDate.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+  const canGoPrev = stripDay(selDate) > stripDay(START);
+  const canGoNext = stripDay(selDate) < stripDay(today);
+  const goPrevDay = () => { if (!canGoPrev) return; const d = new Date(selDate); d.setDate(d.getDate() - 1); setSelDate(d); };
+  const goNextDay = () => { if (!canGoNext) return; const d = new Date(selDate); d.setDate(d.getDate() + 1); setSelDate(d); };
+  const goToday = () => setSelDate(new Date(today.getFullYear(), today.getMonth(), today.getDate()));
+  const openDayChecklist = (y, m, d) => {
+    const target = new Date(y, m, d);
+    if (stripDay(target) > stripDay(today)) return;
+    setSelDate(target);
+    setView('today');
+  };
 
   const safeLog = safeObj(habitLog);
-  const todayData = safeObj(safeLog[dateKey]);
-  const doneTodayCount = HABITS.filter(h => todayData[h.id]).length;
+  const selDayData = safeObj(safeLog[selDateKey]);
+  const doneSelCount = HABITS.filter(h => selDayData[h.id]).length;
 
   const toggleH = id => setHabitLog(p => {
-    const s = safeObj(p); const d = safeObj(s[dateKey]);
-    return { ...s, [dateKey]: { ...d, [id]: !d[id] } };
+    const s = safeObj(p); const d = safeObj(s[selDateKey]);
+    return { ...s, [selDateKey]: { ...d, [id]: !d[id] } };
   });
   
   const getStreak = hid => {
@@ -1426,7 +1453,7 @@ const HabitsPage = ({ habitLog, setHabitLog, today, dateKey, fmtDate }) => {
       <div className="between" style={{ flexWrap: 'wrap', gap: 16 }}>
         <div>
           <div style={{ fontSize: 24, fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.02em', marginBottom: 4 }}>Daily Activity</div>
-          <div style={{ fontSize: 14, color: 'var(--text2)', fontWeight: 600 }}>{fmtDate} — {doneTodayCount}/{HABITS.length} selesai hari ini</div>
+          <div style={{ fontSize: 14, color: 'var(--text2)', fontWeight: 600 }}>{fmtSelDate} — {doneSelCount}/{HABITS.length} selesai{isSelToday ? ' hari ini' : ''}</div>
         </div>
         <div style={{ display: 'flex', gap: 0, background: 'var(--surface)', borderRadius: 12, border: '1px solid var(--border)', overflow: 'hidden' }}>
           {[
@@ -1441,17 +1468,25 @@ const HabitsPage = ({ habitLog, setHabitLog, today, dateKey, fmtDate }) => {
 
       {view === 'today' && (
         <div style={{ maxWidth: 600, display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <div className="date-nav">
+            <button className="date-nav-btn" onClick={goPrevDay} disabled={!canGoPrev} title="Hari sebelumnya"><I n="chL" size={16} /></button>
+            <div style={{ flex: 1, textAlign: 'center' }}>
+              <div style={{ fontSize: 15, fontWeight: 800, color: 'var(--text)' }}>{fmtSelDate}</div>
+              {isSelToday ? <span className="tag tag-blue" style={{ marginTop: 6 }}>Hari Ini</span> : <button className="btn btn-ghost" style={{ marginTop: 6, padding: '4px 12px', fontSize: 12 }} onClick={goToday}>Kembali ke Hari Ini</button>}
+            </div>
+            <button className="date-nav-btn" onClick={goNextDay} disabled={!canGoNext} title="Hari berikutnya"><I n="chR" size={16} /></button>
+          </div>
           <div className="card card-p">
             <div className="between" style={{ marginBottom: 20 }}>
-              <div style={{ fontSize: 18, fontWeight: 800, color: 'var(--text)' }}>Checklist Hari Ini</div>
+              <div style={{ fontSize: 18, fontWeight: 800, color: 'var(--text)' }}>{isSelToday ? 'Checklist Hari Ini' : 'Checklist'}</div>
               <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: 48, fontWeight: 800, color: 'var(--text)', lineHeight: 1 }}>{doneTodayCount}</div>
+                <div style={{ fontSize: 48, fontWeight: 800, color: 'var(--text)', lineHeight: 1 }}>{doneSelCount}</div>
                 <div style={{ fontSize: 13, color: 'var(--text3)', fontWeight: 700 }}>/ {HABITS.length}</div>
               </div>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 20 }}>
               {HABITS.map(h => {
-                const done = !!todayData[h.id];
+                const done = !!selDayData[h.id];
                 return (
                   <div key={h.id} className={`habit-card${done ? ' done' : ''}`} onClick={() => toggleH(h.id)} style={{ borderColor: done ? h.color + '40' : 'var(--border)', padding: '18px' }}>
                     <div className="habit-check" style={{ borderColor: done ? h.color : 'var(--text3)', width: 26, height: 26 }}>
@@ -1469,14 +1504,15 @@ const HabitsPage = ({ habitLog, setHabitLog, today, dateKey, fmtDate }) => {
                 );
               })}
             </div>
-            <PBar cur={doneTodayCount} tot={HABITS.length} cls="g" />
+            <PBar cur={doneSelCount} tot={HABITS.length} cls="g" />
+            {doneSelCount === HABITS.length && <div style={{ textAlign: 'center', marginTop: 16, fontSize: 14, color: 'var(--green)', fontWeight: 700 }}>Semua Target Selesai{isSelToday ? ' Hari Ini' : ''}!</div>}
           </div>
 
           <div className="grid2">
             {HABITS.map(h => {
               const streak = getStreak(h.id); const rate = getRate(h.id);
               return (
-                <div key={h.id} className="card card-p" style={{ cursor: 'pointer', borderColor: todayData[h.id] ? h.color + '40' : 'var(--border)', background: todayData[h.id] ? h.color + '0a' : 'var(--surface)' }} onClick={() => { setSelHabit(h.id); setView('calendar'); }}>
+                <div key={h.id} className="card card-p" style={{ cursor: 'pointer', borderColor: selDayData[h.id] ? h.color + '40' : 'var(--border)', background: selDayData[h.id] ? h.color + '0a' : 'var(--surface)' }} onClick={() => { setSelHabit(h.id); setView('calendar'); }}>
                   <div style={{ fontSize: 26, marginBottom: 10, color: h.color }}>{h.emoji}</div>
                   <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>{h.label}</div>
                   <div style={{ fontSize: 12, color: 'var(--text2)', marginBottom: 12, fontWeight: 600 }}>Streak: <b style={{ color: h.color }}>{streak} hari</b></div>
@@ -1514,12 +1550,11 @@ const HabitsPage = ({ habitLog, setHabitLog, today, dateKey, fmtDate }) => {
             const { y, m } = calMonth;
             const firstDay = new Date(y, m, 1).getDay();
             const daysInMonth = new Date(y, m + 1, 0).getDate();
-            const todayKey = today.toISOString().split('T')[0];
             const dayLabels = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
             const cells = [];
             for (let i = 0; i < firstDay; i++) cells.push(null);
             for (let d = 1; d <= daysInMonth; d++) cells.push(d);
-            const doneCount = cells.filter(d => { if (!d) return false; const k = `${y}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`; return !!safeLog[k]?.[activeHabit.id]; }).length;
+            const doneCount = cells.filter(d => { if (!d) return false; return !!safeLog[toKey(new Date(y, m, d))]?.[activeHabit.id]; }).length;
             
             return (
               <div className="card">
@@ -1534,17 +1569,25 @@ const HabitsPage = ({ habitLog, setHabitLog, today, dateKey, fmtDate }) => {
                   </div>
                   <div style={{ fontSize: 36, fontWeight: 800, color: activeHabit.color }}>{getRate(activeHabit.id, daysInMonth)}%</div>
                 </div>
+                <div style={{ fontSize: 12, color: 'var(--text3)', marginBottom: 12, fontWeight: 600 }}>Klik tanggal untuk buka checklist hari tersebut</div>
                 <div className="cal-grid" style={{ marginBottom: 8 }}>{dayLabels.map(d => <div key={d} className="cal-day-label">{d}</div>)}</div>
                 <div className="cal-grid">
                   {cells.map((d, i) => {
                     if (d === null) return <div key={`e${i}`} className="cal-cell empty" />;
-                    const dateStr = `${y}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-                    const isFuture = new Date(y, m, d) > today;
+                    const dateStr = toKey(new Date(y, m, d));
+                    const isFuture = stripDay(new Date(y, m, d)) > stripDay(today);
                     const isDone = !!safeLog[dateStr]?.[activeHabit.id];
                     const isToday = dateStr === todayKey;
+                    const isSel = dateStr === selDateKey;
                     
                     return (
-                      <div key={d} className="cal-cell" style={{ background: isFuture ? 'var(--surface2)' : isDone ? activeHabit.color + '20' : 'var(--surface)', color: isFuture ? 'var(--text3)' : isDone ? activeHabit.color : 'var(--text2)', outline: isToday ? `2px solid ${activeHabit.color}` : 'none', outlineOffset: -2, borderColor: isDone ? activeHabit.color + '50' : 'var(--border)' }} title={dateStr}>
+                      <div
+                        key={d}
+                        className={`cal-cell${isSel ? ' sel-day' : ''}`}
+                        style={{ background: isFuture ? 'var(--surface2)' : isDone ? activeHabit.color + '20' : 'var(--surface)', color: isFuture ? 'var(--text3)' : isDone ? activeHabit.color : 'var(--text2)', outline: isToday ? `2px solid ${activeHabit.color}` : 'none', outlineOffset: -2, borderColor: isDone ? activeHabit.color + '50' : 'var(--border)', cursor: isFuture ? 'default' : 'pointer', opacity: isFuture ? 0.5 : 1 }}
+                        title={isFuture ? dateStr : `${dateStr} — klik untuk checklist`}
+                        onClick={() => !isFuture && openDayChecklist(y, m, d)}
+                      >
                         {d}
                       </div>
                     );
