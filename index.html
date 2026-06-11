@@ -1634,6 +1634,7 @@ const DiaryPage = ({ diary, setDiary, dateKey, fmtDate, safeHL, safeExDone, toda
   const [viewTab, setViewTab] = useState('daily');
   const [aiLoading, setAiLoading] = useState(false);
   const [aiDailyDraft, setAiDailyDraft] = useState(null);
+  const [confirmDialog, setConfirmDialog] = useState(null);
 
   const todayEntry = diary.find(e => e.date === dateKey);
 
@@ -1651,8 +1652,12 @@ const DiaryPage = ({ diary, setDiary, dateKey, fmtDate, safeHL, safeExDone, toda
   };
   
   const deleteEntry = id => {
-    if (!confirm('Hapus entri ini?')) return;
+    setConfirmDialog({ id, title: 'Hapus Entri?', desc: 'Entri diary ini akan dihapus secara permanen.' });
+  };
+  
+  const execDeleteEntry = id => {
     setDiary(p => Array.isArray(p) ? p.filter(e => e.id !== id) : []);
+    setConfirmDialog(null);
   };
   
   const askFridayDaily = async () => {
@@ -1813,6 +1818,17 @@ const DiaryPage = ({ diary, setDiary, dateKey, fmtDate, safeHL, safeExDone, toda
           </div>
         </div>
       </Modal>
+      {confirmDialog && (
+        <Modal open={!!confirmDialog} onClose={() => setConfirmDialog(null)} title={confirmDialog.title}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            <div style={{ padding: '16px', background: 'rgba(225,29,72,0.1)', borderRadius: 12, fontSize: 14, color: 'var(--text2)', lineHeight: 1.6 }}>{confirmDialog.desc}</div>
+            <div style={{ display: 'flex', gap: 12 }}>
+              <button className="btn btn-ghost" style={{ flex: 1 }} onClick={() => setConfirmDialog(null)}>Batal</button>
+              <button className="btn btn-red" style={{ flex: 1 }} onClick={() => execDeleteEntry(confirmDialog.id)}>Hapus</button>
+            </div>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 };
@@ -2325,7 +2341,7 @@ const ResetPanel = ({ setRprog, setExDone, setHabitLog, setDiary, setRoadmap, se
 };
 
 const RoadmapMgr = ({ roadmap, setRoadmap }) => {
-  const [sel, setSel] = useState(null); const [editPhase, setEditPhase] = useState(null); const [editItem, setEditItem] = useState(null);
+  const [sel, setSel] = useState(null); const [editPhase, setEditPhase] = useState(null); const [editItem, setEditItem] = useState(null); const [draggedIdx, setDraggedIdx] = useState(null); const [confirmDialog, setConfirmDialog] = useState(null);
   const safeRM = Array.isArray(roadmap) ? roadmap : DEFAULT_ROADMAP;
   const phase = safeRM.find(p => p.id === sel);
 
@@ -2334,7 +2350,32 @@ const RoadmapMgr = ({ roadmap, setRoadmap }) => {
     else { setRoadmap(p => (Array.isArray(p) ? p : DEFAULT_ROADMAP).map(x => x.id === d.id ? { ...x, ...d } : x)); }
     setEditPhase(null);
   };
-  const delPhase = id => { if (!confirm('Hapus modul ini?')) return; setRoadmap(p => (Array.isArray(p) ? p : DEFAULT_ROADMAP).filter(x => x.id !== id)); if (sel === id) setSel(null); };
+  const delPhase = id => { setConfirmDialog({ type: 'delete_phase', id, title: 'Hapus Modul?', desc: 'Modul ini akan dihapus secara permanen.' }); };
+  const execDelPhase = id => { setRoadmap(p => (Array.isArray(p) ? p : DEFAULT_ROADMAP).filter(x => x.id !== id)); if (sel === id) setSel(null); setConfirmDialog(null); };
+  
+  const movePhase = (idx, direction) => {
+    const newIdx = idx + direction;
+    if (newIdx < 0 || newIdx >= safeRM.length) return;
+    setRoadmap(p => {
+      const arr = Array.isArray(p) ? [...p] : [...DEFAULT_ROADMAP];
+      [arr[idx], arr[newIdx]] = [arr[newIdx], arr[idx]];
+      return arr;
+    });
+  };
+  
+  const onDragStart = (e, idx) => { e.dataTransfer.effectAllowed = 'move'; setDraggedIdx(idx); };
+  const onDragOver = e => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; };
+  const onDrop = (e, targetIdx) => {
+    e.preventDefault();
+    if (draggedIdx === null || draggedIdx === targetIdx) return;
+    setRoadmap(p => {
+      const arr = Array.isArray(p) ? [...p] : [...DEFAULT_ROADMAP];
+      const [item] = arr.splice(draggedIdx, 1);
+      arr.splice(targetIdx, 0, item);
+      return arr;
+    });
+    setDraggedIdx(null);
+  };
   
   const saveItem = data => {
     setRoadmap(p => (Array.isArray(p) ? p : DEFAULT_ROADMAP).map(ph => {
@@ -2360,17 +2401,21 @@ const RoadmapMgr = ({ roadmap, setRoadmap }) => {
     setEditItem(null);
   };
 
-  const delItem = (type, index) => { if (!confirm('Hapus item?')) return; setRoadmap(p => (Array.isArray(p) ? p : DEFAULT_ROADMAP).map(ph => { if (ph.id !== sel) return ph; const key = type === 'video' ? 'videos' : 'casestudies'; const list = [...(ph[key] || [])]; list.splice(index, 1); return { ...ph, [key]: list }; })); };
+  const delItem = (type, index) => { setConfirmDialog({ type: 'delete_item', itemType: type, index, title: 'Hapus Item?', desc: 'Item ini akan dihapus secara permanen.' }); };
+  const execDelItem = (type, index) => { setRoadmap(p => (Array.isArray(p) ? p : DEFAULT_ROADMAP).map(ph => { if (ph.id !== sel) return ph; const key = type === 'video' ? 'videos' : 'casestudies'; const list = [...(ph[key] || [])]; list.splice(index, 1); return { ...ph, [key]: list }; })); setConfirmDialog(null); };
 
   return (
     <div style={{ display: 'grid', gridTemplateColumns: sel ? '240px 1fr' : '1fr', gap: 20, minHeight: 400 }}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         <div className="between" style={{ marginBottom: 8 }}><span style={{ fontSize: 12, fontWeight: 700, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Modul IT</span><button className="btn btn-ghost" style={{ padding: '6px 12px', fontSize: 12 }} onClick={() => setEditPhase({ isNew: true, title: '', week: '', desc: '', color: '#3b82f6', pl: '' })}>+ Tambah</button></div>
         {safeRM.map((p, i) => (
-          <div key={p.id} onClick={() => setSel(p.id === sel ? null : p.id)} style={{ padding: '12px', borderRadius: 10, border: `1px solid ${sel === p.id ? 'var(--blue-border)' : 'var(--border)'}`, background: sel === p.id ? 'var(--blue-dim)' : 'var(--surface2)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 12, transition: 'all 0.2s' }}>
+          <div key={p.id} draggable onDragStart={e => onDragStart(e, i)} onDragOver={onDragOver} onDrop={e => onDrop(e, i)} onClick={() => setSel(p.id === sel ? null : p.id)} style={{ padding: '12px', borderRadius: 10, border: `1px solid ${sel === p.id ? 'var(--blue-border)' : 'var(--border)'}`, background: sel === p.id ? 'var(--blue-dim)' : draggedIdx === i ? 'var(--blue-dim)' : 'var(--surface2)', cursor: 'grab', display: 'flex', alignItems: 'center', gap: 8, transition: 'all 0.2s', opacity: draggedIdx === i ? 0.6 : 1 }}>
             <div style={{ width: 28, height: 28, borderRadius: 8, background: `${p.color || '#3b82f6'}15`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 800, color: p.color || '#3b82f6', flexShrink: 0 }}>{i + 1}</div>
             <div style={{ flex: 1, minWidth: 0 }}><div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.title}</div><div style={{ fontSize: 11, color: 'var(--text3)', marginTop: 2, fontWeight: 600 }}>{(p.videos || []).length}v · {(p.casestudies || []).length}cs</div></div>
+            <button className="icon-btn" style={{ width: 28, height: 28, flexShrink: 0, opacity: i > 0 ? 1 : 0.3 }} onClick={e => { e.stopPropagation(); movePhase(i, -1); }} disabled={i === 0} title="Pindah ke atas"><I n="chL" /></button>
+            <button className="icon-btn" style={{ width: 28, height: 28, flexShrink: 0, opacity: i < safeRM.length - 1 ? 1 : 0.3 }} onClick={e => { e.stopPropagation(); movePhase(i, 1); }} disabled={i === safeRM.length - 1} title="Pindah ke bawah"><I n="chR" /></button>
             <button className="icon-btn" style={{ width: 28, height: 28, flexShrink: 0 }} onClick={e => { e.stopPropagation(); setEditPhase({ ...p }); }}><I n="pencil" /></button>
+            <button className="icon-btn red" style={{ width: 28, height: 28, flexShrink: 0 }} onClick={e => { e.stopPropagation(); delPhase(p.id); }} title="Hapus"><I n="trash" /></button>
           </div>
         ))}
       </div>
@@ -2379,8 +2424,9 @@ const RoadmapMgr = ({ roadmap, setRoadmap }) => {
           <div className="between" style={{ paddingBottom: 16, borderBottom: '1px solid var(--border)' }}>
             <div><div style={{ fontSize: 18, fontWeight: 800, color: 'var(--text)' }}>{phase.title}</div><div style={{ fontSize: 13, color: 'var(--text2)', marginTop: 4, fontWeight: 600 }}>Week {phase.week}</div></div>
             <div style={{ display: 'flex', gap: 8 }}>
-              <button className="btn btn-blue" style={{ padding: '6px 12px', fontSize: 12 }} onClick={() => setEditItem({ isNew: true, isBulk: true })}><I n="sparkles" size={14} /> AI Bulk Import</button>
-              <button className="icon-btn red" onClick={() => delPhase(phase.id)}><I n="trash" /></button>
+              <button className="btn btn-blue" style={{ padding: '6px 12px', fontSize: 12 }} onClick={() => setEditItem({ isNew: true, isBulk: true })}><I n="sparkles" size={14} /> AI Bulk</button>
+              <button className="icon-btn" onClick={() => { setEditPhase({ ...phase }); }}><I n="pencil" /></button>
+              <button className="icon-btn red" onClick={() => delPhase(phase.id)} title="Hapus Modul"><I n="trash" /></button>
               <button className="icon-btn" onClick={() => setSel(null)}><I n="x" /></button>
             </div>
           </div>
@@ -2422,6 +2468,20 @@ const RoadmapMgr = ({ roadmap, setRoadmap }) => {
       {editItem && <Modal open={!!editItem} onClose={() => setEditItem(null)} title={editItem.isBulk ? 'AI Bulk Import (Video & Tugas)' : editItem.isNew ? (editItem.type === 'video' ? 'Tambah Video' : 'Tambah Project') : (editItem.type === 'video' ? 'Edit Video' : 'Edit Project')}>
         {editItem.isBulk ? <BulkItemForm init={editItem} onSave={saveItem} onClose={() => setEditItem(null)} /> : <ItemForm init={editItem} onSave={saveItem} onClose={() => setEditItem(null)} />}
       </Modal>}
+      {confirmDialog && (
+        <Modal open={!!confirmDialog} onClose={() => setConfirmDialog(null)} title={confirmDialog.title}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            <div style={{ padding: '16px', background: 'rgba(225,29,72,0.1)', borderRadius: 12, fontSize: 14, color: 'var(--text2)', lineHeight: 1.6 }}>{confirmDialog.desc}</div>
+            <div style={{ display: 'flex', gap: 12 }}>
+              <button className="btn btn-ghost" style={{ flex: 1 }} onClick={() => setConfirmDialog(null)}>Batal</button>
+              <button className="btn btn-red" style={{ flex: 1 }} onClick={() => {
+                if (confirmDialog.type === 'delete_phase') execDelPhase(confirmDialog.id);
+                else if (confirmDialog.type === 'delete_item') execDelItem(confirmDialog.itemType, confirmDialog.index);
+              }}>Hapus</button>
+            </div>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 };
@@ -2512,7 +2572,7 @@ const PhaseForm = ({ init, onSave, onClose }) => {
 };
 
 const WorkoutMgr = ({ workout, setWorkout }) => {
-  const [activeDay, setActiveDay] = useState('Senin'); const [editEx, setEditEx] = useState(null);
+  const [activeDay, setActiveDay] = useState('Senin'); const [editEx, setEditEx] = useState(null); const [confirmDialog, setConfirmDialog] = useState(null);
   const safeWO = typeof workout === 'object' && !Array.isArray(workout) ? workout : DEFAULT_WORKOUT;
   const day = safeWO[activeDay] || { type: '', focus: '', exercises: [] };
   const saveMeta = (f, v) => setWorkout(p => ({ ...typeof p === 'object' && !Array.isArray(p) ? p : DEFAULT_WORKOUT, [activeDay]: { ...day, [f]: v } }));
@@ -2534,10 +2594,16 @@ const WorkoutMgr = ({ workout, setWorkout }) => {
     setEditEx(null); 
   };
   
-  const delEx = i => { if (!confirm('Hapus?')) return; setWorkout(p => { const s = typeof p === 'object' && !Array.isArray(p) ? p : DEFAULT_WORKOUT; const d = s[activeDay] || { exercises: [] }; const list = [...(d.exercises || [])].filter(e => e.category === 'primary');
+  const delEx = i => { setConfirmDialog({ index: i, title: 'Hapus Gerakan?', desc: 'Latihan ini akan dihapus dari jadwal.' }); };
+  const execDelEx = i => { 
+    setWorkout(p => { 
+      const s = typeof p === 'object' && !Array.isArray(p) ? p : DEFAULT_WORKOUT; 
+      const d = s[activeDay] || { exercises: [] }; 
+      const list = [...(d.exercises || [])].filter(e => e.category === 'primary');
       list.splice(i, 1);
       return { ...s, [activeDay]: { ...d, exercises: list } };
-    });
+    }); 
+    setConfirmDialog(null);
   };
   const priEx = (day.exercises || []).filter(e => e.category === 'primary');
   
@@ -2564,6 +2630,17 @@ const WorkoutMgr = ({ workout, setWorkout }) => {
       {editEx && <Modal open={!!editEx} onClose={() => setEditEx(null)} title={editEx.isBulk ? `AI Bulk Import Latihan — ${activeDay}` : editEx.isNew ? `Tambah Gerakan — ${activeDay}` : 'Edit Gerakan'}>
         {editEx.isBulk ? <BulkExForm init={editEx} onSave={saveEx} onClose={() => setEditEx(null)} /> : <ExForm init={editEx} onSave={saveEx} onClose={() => setEditEx(null)} />}
       </Modal>}
+      {confirmDialog && (
+        <Modal open={!!confirmDialog} onClose={() => setConfirmDialog(null)} title={confirmDialog.title}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            <div style={{ padding: '16px', background: 'rgba(225,29,72,0.1)', borderRadius: 12, fontSize: 14, color: 'var(--text2)', lineHeight: 1.6 }}>{confirmDialog.desc}</div>
+            <div style={{ display: 'flex', gap: 12 }}>
+              <button className="btn btn-ghost" style={{ flex: 1 }} onClick={() => setConfirmDialog(null)}>Batal</button>
+              <button className="btn btn-red" style={{ flex: 1 }} onClick={() => execDelEx(confirmDialog.index)}>Hapus</button>
+            </div>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 };
@@ -2645,7 +2722,7 @@ const ExForm = ({ init, onSave, onClose }) => {
 };
 
 const ToeflMgr = ({ toeflSched, setToeflSched }) => {
-  const [activeDay, setActiveDay] = useState('Senin'); const [editTask, setEditTask] = useState(null);
+  const [activeDay, setActiveDay] = useState('Senin'); const [editTask, setEditTask] = useState(null); const [confirmDialog, setConfirmDialog] = useState(null);
   const safeSched = typeof toeflSched === 'object' && !Array.isArray(toeflSched) ? toeflSched : DEFAULT_TOEFL_SCHEDULE;
   const day = safeSched[activeDay] || { type: '', focus: '', tasks: [] };
   const saveMeta = (f, v) => setToeflSched(p => ({ ...typeof p === 'object' && !Array.isArray(p) ? p : DEFAULT_TOEFL_SCHEDULE, [activeDay]: { ...day, [f]: v } }));
@@ -2667,7 +2744,17 @@ const ToeflMgr = ({ toeflSched, setToeflSched }) => {
     setEditTask(null); 
   };
   
-  const delTask = i => { if (!confirm('Hapus task belajar ini?')) return; setToeflSched(p => { const s = typeof p === 'object' && !Array.isArray(p) ? p : DEFAULT_TOEFL_SCHEDULE; const d = s[activeDay] || { tasks: [] }; const list = [...(d.tasks || [])]; list.splice(i, 1); return { ...s, [activeDay]: { ...d, tasks: list } }; }); };
+  const delTask = i => { setConfirmDialog({ index: i, title: 'Hapus Task?', desc: 'Task belajar ini akan dihapus dari jadwal TOEFL.' }); };
+  const execDelTask = i => { 
+    setToeflSched(p => { 
+      const s = typeof p === 'object' && !Array.isArray(p) ? p : DEFAULT_TOEFL_SCHEDULE; 
+      const d = s[activeDay] || { tasks: [] }; 
+      const list = [...(d.tasks || [])]; 
+      list.splice(i, 1); 
+      return { ...s, [activeDay]: { ...d, tasks: list } }; 
+    }); 
+    setConfirmDialog(null);
+  };
   const tasks = day.tasks || [];
   
   return (
@@ -2693,6 +2780,17 @@ const ToeflMgr = ({ toeflSched, setToeflSched }) => {
       {editTask && <Modal open={!!editTask} onClose={() => setEditTask(null)} title={editTask.isBulk ? `AI Bulk Import TOEFL — ${activeDay}` : editTask.isNew ? `Tambah Task TOEFL — ${activeDay}` : 'Edit Task'}>
         {editTask.isBulk ? <BulkToeflTaskForm init={editTask} onSave={saveTask} onClose={() => setEditTask(null)} /> : <ToeflTaskForm init={editTask} onSave={saveTask} onClose={() => setEditTask(null)} />}
       </Modal>}
+      {confirmDialog && (
+        <Modal open={!!confirmDialog} onClose={() => setConfirmDialog(null)} title={confirmDialog.title}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            <div style={{ padding: '16px', background: 'rgba(225,29,72,0.1)', borderRadius: 12, fontSize: 14, color: 'var(--text2)', lineHeight: 1.6 }}>{confirmDialog.desc}</div>
+            <div style={{ display: 'flex', gap: 12 }}>
+              <button className="btn btn-ghost" style={{ flex: 1 }} onClick={() => setConfirmDialog(null)}>Batal</button>
+              <button className="btn btn-red" style={{ flex: 1 }} onClick={() => execDelTask(confirmDialog.index)}>Hapus</button>
+            </div>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 };
