@@ -25,27 +25,9 @@
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-    import { 
-      getFirestore, 
-      doc, 
-      getDoc, 
-      setDoc, 
-      onSnapshot 
-    } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-    
-    window.firebaseModules = { 
-      initializeApp, 
-      getFirestore, 
-      doc, 
-      getDoc, 
-      setDoc, 
-      onSnapshot 
-    };
-    
-    window.dispatchEvent(new Event('firebaseReady'));
-  </script>
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
   
   <style>
     /* ==========================================================================
@@ -414,11 +396,22 @@ const FB = {
 };
 
 let _db = null;
+let _fbInitialized = false;
 
 const getDB = () => {
   if (_db) return _db;
-  const { initializeApp, getFirestore } = window.firebaseModules;
-  _db = getFirestore(initializeApp(FB));
+  if (typeof firebase === 'undefined') return null;
+  
+  if (!_fbInitialized) {
+    try {
+      firebase.initializeApp(FB);
+      _fbInitialized = true;
+    } catch (e) {
+      // Firebase already initialized
+    }
+  }
+  
+  _db = firebase.firestore();
   return _db;
 };
 
@@ -790,11 +783,13 @@ const useSync = (key, def, uid) => {
   const defRef = useRef(def);
   
   useEffect(() => {
-    if (!uid || !window.firebaseModules) return;
-    const { doc, onSnapshot } = window.firebaseModules;
-    const ref = doc(getDB(), 'friday_users', uid, 'data', key);
-    const unsub = onSnapshot(ref, snap => {
-      setVal(snap.exists() && snap.data().val != null ? snap.data().val : defRef.current);
+    if (!uid || typeof firebase === 'undefined') return;
+    const db = getDB();
+    if (!db) return;
+    
+    const ref = db.collection('friday_users').doc(uid).collection('data').doc(key);
+    const unsub = ref.onSnapshot(snap => {
+      setVal(snap.exists && snap.data()?.val != null ? snap.data().val : defRef.current);
       setReady(true);
     }, () => {
       setVal(defRef.current);
@@ -806,10 +801,11 @@ const useSync = (key, def, uid) => {
   const save = useCallback((v) => {
     if (timer.current) clearTimeout(timer.current);
     timer.current = setTimeout(async () => {
-      if (!uid || !window.firebaseModules) return;
+      if (!uid || typeof firebase === 'undefined') return;
       try {
-        const { doc, setDoc } = window.firebaseModules;
-        await setDoc(doc(getDB(), 'friday_users', uid, 'data', key), { val: v }, { merge: true });
+        const db = getDB();
+        if (!db) return;
+        await db.collection('friday_users').doc(uid).collection('data').doc(key).set({ val: v }, { merge: true });
       } catch (e) {
         console.error("Firebase save error:", e);
       }
@@ -945,14 +941,15 @@ const AuthGate = ({ onLogin }) => {
     if (!id || id.length < 3) return setErr('Minimal 3 karakter.');
     setLoading(true); setErr('');
     try {
-      if (!window.firebaseModules) {
-        await new Promise(r => window.addEventListener('firebaseReady', r, { once: true }));
+      if (typeof firebase === 'undefined') {
+        await new Promise(r => window.addEventListener('load', r, { once: true }));
       }
       const db = getDB();
-      const { doc, getDoc, setDoc } = window.firebaseModules;
-      const ref = doc(db, 'friday_users', id);
-      const snap = await getDoc(ref);
-      if (!snap.exists()) await setDoc(ref, { username: id, createdAt: new Date().toISOString() });
+      if (!db) throw new Error('Firebase not initialized');
+      
+      const ref = db.collection('friday_users').doc(id);
+      const snap = await ref.get();
+      if (!snap.exists) await ref.set({ username: id, createdAt: new Date().toISOString() });
       onLogin(id);
     } catch {
       setErr('Gagal terhubung ke database server.');
